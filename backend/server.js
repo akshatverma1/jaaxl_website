@@ -29,6 +29,11 @@ const transporter = nodemailer.createTransport({
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
+// Root route
+app.get('/', (req, res) => {
+  res.send('JAAXL Backend API — Operational');
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'JAAXL backend is running' });
