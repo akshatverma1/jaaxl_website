@@ -1,7 +1,7 @@
 {
-  "name": "jaaxl-backend",
+  "name": "jaqyi-backend",
   "version": "1.0.0",
-  "description": "JAAXL backend API with contact form email notifications",
+  "description": "JAQYI backend API with contact form email notifications",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

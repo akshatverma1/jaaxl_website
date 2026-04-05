@@ -1,7 +1,7 @@
-// Mock data for JAAXL website
+// Mock data for JAQYI website
 
 export const heroData = {
-  company: "JAAXL",
+  company: "JAQYI",
   tagline: "A creative software studio for ambitious businesses",
   description: "We develop exceptional software solutions - from CRMs to AI SaaS platforms. Only the kind of work we're proud to sign. No shortcuts. No soulless, throwaway fluff.",
   cta: {
@@ -191,7 +191,7 @@ export const portfolioData = {
 
 export const aboutData = {
   title: "Make it the best version of what it can be",
-  mission: "We're not just another agency. We're your path to exceptional web projects. JAAXL combines technical excellence with creative innovation to deliver software solutions that stand out.",
+  mission: "We're not just another agency. We're your path to exceptional web projects. JAQYI combines technical excellence with creative innovation to deliver software solutions that stand out.",
   values: [
     {
       title: "Quality First",
@@ -219,14 +219,14 @@ export const testimonialsData = [
     id: 1,
     name: "Sarah Johnson",
     role: "CEO, TechStart Inc",
-    content: "JAAXL transformed our vision into reality. Their AI-powered CRM solution has revolutionized how we manage customer relationships. Exceptional work!",
+    content: "JAQYI transformed our vision into reality. Their AI-powered CRM solution has revolutionized how we manage customer relationships. Exceptional work!",
     avatar: "SJ"
   },
   {
     id: 2,
     name: "Michael Chen",
     role: "Founder, E-Shop Pro",
-    content: "The mobile app JAAXL developed exceeded all expectations. Beautiful design, flawless performance, and delivered on time. Highly recommended!",
+    content: "The mobile app JAQYI developed exceeded all expectations. Beautiful design, flawless performance, and delivered on time. Highly recommended!",
     avatar: "MC"
   },
   {
@@ -241,7 +241,7 @@ export const testimonialsData = [
 export const contactData = {
   title: "Let's Build Something Amazing",
   subtitle: "Ready to transform your ideas into exceptional software? Get in touch.",
-  email: "hello@jaaxl.com",
+  email: "hello@jaqyi.com",
   phone: "+1 (555) 123-4567",
   address: "123 Innovation Street, Tech City, TC 12345",
   socials: [

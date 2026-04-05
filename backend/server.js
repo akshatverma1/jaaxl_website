@@ -31,12 +31,12 @@ const transporter = nodemailer.createTransport({
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('JAAXL Backend API — Operational');
+  res.send('JAQYI Backend API — Operational');
 });
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'JAAXL backend is running' });
+  res.json({ status: 'ok', message: 'JAQYI backend is running' });
 });
 
 // Contact form submission
@@ -62,16 +62,16 @@ app.post('/api/contact', async (req, res) => {
   try {
     // Email to YOU (notification)
     const notificationMail = {
-      from: `"JAAXL Website" <${process.env.EMAIL_USER}>`,
+      from: `"JAQYI Website" <${process.env.EMAIL_USER}>`,
       to: process.env.NOTIFY_EMAIL || process.env.EMAIL_USER,
-      subject: `[JAAXL Contact] ${subject}`,
+      subject: `[JAQYI Contact] ${subject}`,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
           <div style="background: #111111; padding: 32px 40px; border-bottom: 1px solid #222;">
             <h1 style="margin: 0; font-size: 24px; font-weight: 300; letter-spacing: -0.02em; color: #ffffff;">
               New Contact Request
             </h1>
-            <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.5); font-size: 14px;">via JAAXL Website</p>
+            <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.5); font-size: 14px;">via JAQYI Website</p>
           </div>
           <div style="padding: 40px;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -97,7 +97,7 @@ app.post('/api/contact', async (req, res) => {
             </div>
           </div>
           <div style="padding: 24px 40px; background: #111111; border-top: 1px solid #222; text-align: center;">
-            <p style="margin: 0; color: rgba(255,255,255,0.3); font-size: 12px;">JAAXL — Creative Software Studio</p>
+            <p style="margin: 0; color: rgba(255,255,255,0.3); font-size: 12px;">JAQYI — Creative Software Studio</p>
           </div>
         </div>
       `,
@@ -105,13 +105,13 @@ app.post('/api/contact', async (req, res) => {
 
     // Auto-reply to the user
     const autoReplyMail = {
-      from: `"JAAXL Studio" <${process.env.EMAIL_USER}>`,
+      from: `"JAQYI Studio" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: `We received your message — JAAXL`,
+      subject: `We received your message — JAQYI`,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
           <div style="background: #111111; padding: 32px 40px; border-bottom: 1px solid #222;">
-            <h1 style="margin: 0; font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: #ffffff;">JAAXL</h1>
+            <h1 style="margin: 0; font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: #ffffff;">JAQYI</h1>
             <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.5); font-size: 14px;">Creative Software Studio</p>
           </div>
           <div style="padding: 40px;">
@@ -124,11 +124,11 @@ app.post('/api/contact', async (req, res) => {
               <p style="color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 8px 0;">Your message</p>
               <p style="color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${message}</p>
             </div>
-            <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin: 0;">— The JAAXL Team</p>
+            <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin: 0;">— The JAQYI Team</p>
           </div>
           <div style="padding: 24px 40px; background: #111111; border-top: 1px solid #222; text-align: center;">
             <p style="margin: 0; color: rgba(255,255,255,0.3); font-size: 12px;">
-              © ${new Date().getFullYear()} JAAXL. All rights reserved.
+              © ${new Date().getFullYear()} JAQYI. All rights reserved.
             </p>
           </div>
         </div>
@@ -156,7 +156,7 @@ app.post('/api/contact', async (req, res) => {
 // ─── Start Server (Skip when deploying on Vercel) ─────────────────────────────
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
-    console.log(`\n🚀 JAAXL backend running on http://localhost:${PORT}`);
+    console.log(`\n🚀 JAQYI backend running on http://localhost:${PORT}`);
     console.log(`   Health: http://localhost:${PORT}/api/health\n`);
   });
 }

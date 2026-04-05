@@ -27,7 +27,7 @@ const Footer = () => {
         <div className="footer-grid">
           {/* Company Info */}
           <div className="footer-column">
-            <h3 className="footer-brand">JAAXL</h3>
+            <h3 className="footer-brand">JAQYI</h3>
             <p className="footer-tagline">
               A creative software studio for ambitious businesses
             </p>
@@ -108,7 +108,7 @@ const Footer = () => {
             <div className="footer-contact">
               <div className="footer-contact-item">
                 <Mail size={16} />
-                <span>hello@jaaxl.com</span>
+                <span>hello@jaqyi.com</span>
               </div>
               <div className="footer-contact-item">
                 <Phone size={16} />
@@ -121,7 +121,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © {currentYear} JAAXL. All rights reserved.
+            © {currentYear} JAQYI. All rights reserved.
           </p>
           <div className="footer-legal">
             <a href="#" className="footer-legal-link">Privacy Policy</a>
