@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { contactData } from '../data/mock';
-import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github, Instagram, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -10,6 +10,8 @@ const iconMap = {
   Linkedin, Twitter, Github, Instagram
 };
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -17,6 +19,8 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [statusMessage, setStatusMessage] = useState('');
 
   const titleRef = React.useRef(null);
   const formRef = React.useRef(null);
@@ -28,14 +32,36 @@ const Contact = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Clear status when user starts typing again
+    if (status !== 'idle') setStatus('idle');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Mock submission - will be replaced with backend integration
-    alert('Thank you for reaching out! We will get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setStatus('loading');
+    setStatusMessage('');
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus('success');
+        setStatusMessage(data.message || 'Your message has been sent successfully!');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+        setStatusMessage(data.message || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setStatus('error');
+      setStatusMessage('Unable to connect to the server. Please try again later.');
+    }
   };
 
   return (
@@ -124,6 +150,7 @@ const Contact = () => {
                 onChange={handleChange}
                 placeholder="Your name"
                 required
+                disabled={status === 'loading'}
                 className="form-input"
               />
             </div>
@@ -138,6 +165,7 @@ const Contact = () => {
                 onChange={handleChange}
                 placeholder="your.email@example.com"
                 required
+                disabled={status === 'loading'}
                 className="form-input"
               />
             </div>
@@ -151,6 +179,7 @@ const Contact = () => {
                 onChange={handleChange}
                 placeholder="How can we help?"
                 required
+                disabled={status === 'loading'}
                 className="form-input"
               />
             </div>
@@ -164,14 +193,60 @@ const Contact = () => {
                 onChange={handleChange}
                 placeholder="Tell us about your project..."
                 required
+                disabled={status === 'loading'}
                 className="form-textarea"
                 rows={6}
               />
             </div>
 
-            <Button type="submit" className="form-submit">
-              Send Message
-              <Send className="cta-icon" />
+            {/* Status feedback */}
+            {(status === 'success' || status === 'error') && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '12px 16px',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  background: status === 'success'
+                    ? 'rgba(34, 197, 94, 0.1)'
+                    : 'rgba(239, 68, 68, 0.1)',
+                  border: status === 'success'
+                    ? '1px solid rgba(34, 197, 94, 0.3)'
+                    : '1px solid rgba(239, 68, 68, 0.3)',
+                  color: status === 'success'
+                    ? 'rgb(134, 239, 172)'
+                    : 'rgb(252, 165, 165)',
+                }}
+              >
+                {status === 'success'
+                  ? <CheckCircle size={16} />
+                  : <AlertCircle size={16} />
+                }
+                {statusMessage}
+              </motion.div>
+            )}
+
+            <Button
+              type="submit"
+              className="form-submit"
+              disabled={status === 'loading'}
+            >
+              {status === 'loading' ? (
+                <>
+                  <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <Send className="cta-icon" />
+                </>
+              )}
             </Button>
           </motion.form>
         </div>
