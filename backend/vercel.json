@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "env": {
+    "CORS_ORIGINS": "https://jaqyi.com,https://www.jaqyi.com"
+  },
   "builds": [
     {
       "src": "server.js",
