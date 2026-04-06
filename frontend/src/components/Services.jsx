@@ -75,7 +75,7 @@ const Services = () => {
   const isTitleInView = useInView(titleRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="services-section">
+    <section id="services" className="services-section">
       <div className="services-container">
         <motion.div
           ref={titleRef}

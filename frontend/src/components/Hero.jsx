@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 
 const Hero = () => {
   return (
-    <section className="hero-section">
+    <section id="home" className="hero-section">
       <div className="hero-container">
         {/* Animated Background Circle */}
         <motion.div
@@ -71,12 +71,16 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <Button className="cta-primary">
-              {heroData.cta.primary}
-              <ArrowRight className="cta-icon" />
+            <Button asChild className="cta-primary">
+              <a href="#portfolio">
+                {heroData.cta.primary}
+                <ArrowRight className="cta-icon" />
+              </a>
             </Button>
-            <Button variant="outline" className="cta-secondary">
-              {heroData.cta.secondary}
+            <Button asChild variant="outline" className="cta-secondary hover:text-white">
+              <a href="#contact">
+                {heroData.cta.secondary}
+              </a>
             </Button>
           </motion.div>
         </motion.div>

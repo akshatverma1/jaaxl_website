@@ -54,7 +54,7 @@ const About = () => {
   const isMissionInView = useInView(missionRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="about-section">
+    <section id="about" className="about-section">
       <div className="about-container">
         <motion.div
           ref={titleRef}

@@ -227,10 +227,10 @@ export const aboutData = {
     }
   ],
   stats: [
-    { label: "Projects Delivered", value: "500+" },
-    { label: "Happy Clients", value: "200+" },
-    { label: "Team Members", value: "50+" },
-    { label: "Years of Excellence", value: "8+" }
+    { label: "Projects Delivered", value: "50+" },
+    { label: "Happy Clients", value: "20+" },
+    { label: "Team Members", value: "5+" },
+    { label: "Years of Excellence", value: "7+" }
   ]
 };
 
@@ -263,7 +263,7 @@ export const contactData = {
   subtitle: "Ready to transform your ideas into exceptional software? Get in touch.",
   email: "akshat@jaqyi.com",
   phone: "+91 9109621850",
-  address: "Industrial Estate , Sector-C ,Indore,MP,India",
+  address: "Industrial Estate , Sector-C , Indore , MP , India",
   socials: [
     { name: "LinkedIn", url: "https://www.linkedin.com/company/jaqyi/", icon: "Linkedin" },
     { name: "Twitter", url: "https://x.com/jaqyi_com?s=21", icon: "Twitter" },
