@@ -243,7 +243,7 @@ export const contactData = {
   subtitle: "Ready to transform your ideas into exceptional software? Get in touch.",
   email: "akshat@jaqyi.com",
   phone: "+91 9109621850",
-  address: "Instrial Estate , Sector-C ,Indore,MP,India",
+  address: "Industrial Estate , Sector-C ,Indore,MP,India",
   socials: [
     { name: "LinkedIn", url: "#", icon: "Linkedin" },
     { name: "Twitter", url: "#", icon: "Twitter" },
