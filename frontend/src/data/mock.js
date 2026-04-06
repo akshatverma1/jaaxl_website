@@ -245,9 +245,7 @@ export const contactData = {
   phone: "+91 9109621850",
   address: "Industrial Estate , Sector-C ,Indore,MP,India",
   socials: [
-    { name: "LinkedIn", url: "#", icon: "Linkedin" },
-    { name: "Twitter", url: "#", icon: "Twitter" },
-    { name: "GitHub", url: "#", icon: "Github" },
-    { name: "Instagram", url: "#", icon: "Instagram" }
+    { name: "LinkedIn", url: "https://www.linkedin.com/company/jaqyi/", icon: "Linkedin" },
+    { name: "Twitter", url: "https://x.com/jaqyi_com?s=21", icon: "Twitter" },
   ]
 };

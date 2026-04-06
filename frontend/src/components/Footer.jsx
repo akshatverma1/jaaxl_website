@@ -33,7 +33,9 @@ const Footer = () => {
             </p>
             <div className="footer-socials">
               <motion.a
-                href="#"
+                href="https://www.linkedin.com/company/jaqyi/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="footer-social-link"
                 whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
@@ -42,7 +44,9 @@ const Footer = () => {
                 <Linkedin size={20} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://x.com/jaqyi_com?s=21"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="footer-social-link"
                 whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
@@ -50,7 +54,7 @@ const Footer = () => {
               >
                 <Twitter size={20} />
               </motion.a>
-              <motion.a
+              {/* <motion.a
                 href="#"
                 className="footer-social-link"
                 whileHover={{ y: -3 }}
@@ -58,8 +62,8 @@ const Footer = () => {
                 aria-label="GitHub"
               >
                 <Github size={20} />
-              </motion.a>
-              <motion.a
+              </motion.a> */}
+              {/* <motion.a
                 href="#"
                 className="footer-social-link"
                 whileHover={{ y: -3 }}
@@ -67,7 +71,7 @@ const Footer = () => {
                 aria-label="Instagram"
               >
                 <Instagram size={20} />
-              </motion.a>
+              </motion.a> */}
             </div>
           </div>
 
