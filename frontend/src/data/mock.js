@@ -241,9 +241,9 @@ export const testimonialsData = [
 export const contactData = {
   title: "Let's Build Something Amazing",
   subtitle: "Ready to transform your ideas into exceptional software? Get in touch.",
-  email: "hello@jaqyi.com",
-  phone: "+1 (555) 123-4567",
-  address: "123 Innovation Street, Tech City, TC 12345",
+  email: "akshat@jaqyi.com",
+  phone: "+91 9109621850",
+  address: "Instrial Estate , Sector-C ,Indore,MP,India",
   socials: [
     { name: "LinkedIn", url: "#", icon: "Linkedin" },
     { name: "Twitter", url: "#", icon: "Twitter" },

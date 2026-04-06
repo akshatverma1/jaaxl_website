@@ -108,11 +108,11 @@ const Footer = () => {
             <div className="footer-contact">
               <div className="footer-contact-item">
                 <Mail size={16} />
-                <span>hello@jaqyi.com</span>
+                <span>akshat@jaqyi.com</span>
               </div>
               <div className="footer-contact-item">
                 <Phone size={16} />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 9109621850</span>
               </div>
             </div>
           </div>
