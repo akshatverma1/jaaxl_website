@@ -185,6 +185,26 @@ export const portfolioData = {
       category: "SaaS Development",
       description: "Real-time analytics and reporting for financial data",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+    }, {
+      id: 7,
+      name: "Map Lead Scraper",
+      category: "AI Automation",
+      description: "Location-based business discovery engine that extracts leads from map data — including website, contact number, and description — using LLM-powered enrichment.",
+      image: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80"
+    },
+    {
+      id: 8,
+      name: "Multi-Link Web Scraper",
+      category: "AI Automation",
+      description: "Scrapes millions of websites at scale using pipeline architecture, Google Search APIs, and LLM processing to extract structured data from any web source.",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
+    },
+    {
+      id: 9,
+      name: "Sales Intelligence Agent",
+      category: "Multi-Agent Systems",
+      description: "End-to-end outbound engine for robotics market intelligence: ICP scraping, decision-maker enrichment (Clay, Apollo), LLM-personalized outreach via SMTP/SMS, and automated lead scoring with a Google Sheets reporting dashboard.",
+      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
     }
   ]
 };
