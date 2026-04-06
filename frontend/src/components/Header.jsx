@@ -73,8 +73,8 @@ const Header = () => {
         </nav>
 
         <div className="header-actions">
-          <Button className="header-cta">Get Started</Button>
-          
+          {/* <Button className="header-cta">Get Started</Button> */}
+
           {/* Mobile Menu Button */}
           <button
             className="mobile-menu-button"
