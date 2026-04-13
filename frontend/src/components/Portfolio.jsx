@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { portfolioData } from '../data/mock';
 import { ArrowUpRight } from 'lucide-react';
+import MobileSlider from './ui/MobileSlider';
 
+/** Mobile version — full-bleed image card */
+const ProjectCardMobile = ({ project }) => (
+  <div className="proj-card-mobile">
+    <div className="proj-card-mobile__img-wrap">
+      <img
+        src={project.image}
+        alt={project.name}
+        className="proj-card-mobile__img"
+      />
+      <div className="proj-card-mobile__overlay">
+        <div className="proj-card-mobile__overlay-icon">
+          <ArrowUpRight size={20} />
+        </div>
+      </div>
+    </div>
+    <div className="proj-card-mobile__info">
+      <span className="proj-card-mobile__cat">{project.category}</span>
+      <h3 className="proj-card-mobile__name">{project.name}</h3>
+      <p className="proj-card-mobile__desc">{project.description}</p>
+    </div>
+  </div>
+);
+
+/** Desktop version — original animated card */
 const ProjectCard = ({ project, index }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <motion.div
@@ -44,8 +69,8 @@ const ProjectCard = ({ project, index }) => {
 };
 
 const Portfolio = () => {
-  const titleRef = React.useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: "-100px" });
+  const titleRef = useRef(null);
+  const isTitleInView = useInView(titleRef, { once: true, margin: '-100px' });
 
   return (
     <section id="portfolio" className="portfolio-section">
@@ -61,10 +86,20 @@ const Portfolio = () => {
           <p className="section-subtitle">{portfolioData.subtitle}</p>
         </motion.div>
 
-        <div className="projects-grid">
+        {/* ── Desktop: 3-column grid ── */}
+        <div className="projects-grid hide-on-mobile">
           {portfolioData.projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
+        </div>
+
+        {/* ── Mobile: smooth slider ── */}
+        <div className="show-on-mobile">
+          <MobileSlider darkTheme>
+            {portfolioData.projects.map((project) => (
+              <ProjectCardMobile key={project.id} project={project} />
+            ))}
+          </MobileSlider>
         </div>
       </div>
     </section>

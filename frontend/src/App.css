@@ -905,126 +905,408 @@
 }
 
 /* =================================
-   RESPONSIVE STYLES
+   SHOW / HIDE HELPERS
+   Desktop default: show grid, hide slider
+   ================================= */
+.hide-on-mobile { display: grid; }   /* services/projects grid — grid on desktop */
+.show-on-mobile { display: none; }   /* slider wrapper — hidden on desktop */
+
+/* =================================
+   RESPONSIVE — TABLET (≤1024px)
    ================================= */
 @media (max-width: 1024px) {
-  .hero-title {
-    font-size: 72px;
-  }
-
-  .hero-tagline {
-    font-size: 28px;
-  }
-
-  .section-title {
-    font-size: 48px;
-  }
-
-  .category-title {
-    font-size: 36px;
-  }
+  .hero-title    { font-size: 72px; }
+  .hero-tagline  { font-size: 28px; }
+  .section-title { font-size: 48px; }
+  .category-title { font-size: 36px; }
 
   .services-grid,
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
 
-  .values-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .values-grid  { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid   { grid-template-columns: repeat(2, 1fr); }
 
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid  { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* =================================
+   RESPONSIVE — MOBILE (≤768px)
+   ================================= */
 @media (max-width: 768px) {
-  .header-container {
-    padding: 20px 24px;
-  }
 
-  .header-nav {
-    display: none;
-  }
+  /* ── Header ── */
+  .header-container   { padding: 20px 24px; }
+  .header-nav         { display: none; }
+  .header-cta         { display: none; }
+  .mobile-menu-button { display: block; }
+  .mobile-nav         { padding: 24px; }
 
-  .header-cta {
-    display: none;
-  }
-
-  .mobile-menu-button {
-    display: block;
-  }
-
-  .mobile-nav {
-    padding: 24px;
-  }
-
+  /* ── Containers ── */
   .hero-container,
+  .about-container,
+  .contact-container,
+  .footer-container { padding: 0 24px; }
+
+  /* Full-width so slider bleeds edge-to-edge */
   .services-container,
-  .portfolio-container,
+  .portfolio-container { padding: 0; }
+
+  /* Text headers keep padding */
+  .services-container .section-header,
+  .portfolio-container .section-header,
+  .category-header { padding: 0 20px; }
+
+  /* ── Hero ── */
+  .hero-title       { font-size: 48px; }
+  .hero-tagline     { font-size: 24px; }
+  .hero-description { font-size: 16px; }
+  .hero-cta         { flex-direction: column; width: 100%; }
+  .cta-primary,
+  .cta-secondary    { width: 100%; justify-content: center; }
+
+  /* ── Typography ── */
+  .section-title  { font-size: 36px; }
+  .category-title { font-size: 28px; }
+
+  /* ── Other grids ── */
+  .values-grid,
+  .stats-grid { grid-template-columns: 1fr; }
+  .categories-wrapper { gap: 48px; }
+
+  /* ── Footer ── */
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+
+  /* ── Toggle grid ↔ slider ── */
+  .hide-on-mobile { display: none !important; }
+  .show-on-mobile { display: block; width: 100%; }
+}
+
+/* =================================
+   MOBILE SLIDER COMPONENT
+   ================================= */
+
+/* Outer: clips the overflowing track */
+.mslider-outer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 40px; /* room for dots */
+}
+
+/* Track: all cards in a row, animated via transform */
+.mslider-track {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 14px;
+  transition: transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Each slide slot */
+.mslider-item {
+  flex: 0 0 82vw;
+  max-width: 340px;
+  min-width: 220px;
+}
+
+/* ── Dots ── */
+.mslider-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mslider-dot {
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background 0.3s ease;
+}
+
+.mslider-dot--active {
+  width: 22px; /* elongated active dot like Apple */
+}
+
+/* ── Circular next arrow ── */
+.mslider-arrow {
+  position: absolute;
+  right: 10px;
+  top: 42%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Frosted glass — light */
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.18);
+  color: #1d1d1f;
+
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.mslider-arrow:active {
+  transform: translateY(-50%) scale(0.90);
+}
+
+/* Dark variant — for Portfolio section */
+.mslider-arrow--dark {
+  background: rgba(38, 38, 40, 0.90);
+  color: #ffffff;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+/* =================================
+   SERVICE CARD — MOBILE VERSION
+   Premium tall card design
+   ================================= */
+.svc-card-mobile {
+  width: 100%;
+  min-height: 340px;
+  background: #f5f5f7;           /* Apple light grey */
+  border-radius: 20px;
+  padding: 28px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  position: relative;
+}
+
+.svc-card-mobile__top {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.svc-card-mobile__icon {
+  width: 52px;
+  height: 52px;
+  background: #000;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.svc-card-mobile__name {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.svc-card-mobile__desc {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.55);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.svc-card-mobile__footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 12px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+/* =================================
+   PROJECT CARD — MOBILE VERSION
+   Full-bleed image card
+   ================================= */
+.proj-card-mobile {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1c1c1e;           /* Apple dark */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.proj-card-mobile__img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.proj-card-mobile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%);
+  transition: filter 0.4s ease, transform 0.4s ease;
+  display: block;
+}
+
+.proj-card-mobile__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.proj-card-mobile__overlay-icon {
+  width: 38px;
+  height: 38px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.proj-card-mobile__info {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.proj-card-mobile__cat {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.proj-card-mobile__name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.proj-card-mobile__desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* =================================
+   SPINNER ANIMATION
+   ================================= */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* =================================
+   RESPONSIVE — TABLET (≤1024px)
+   ================================= */
+@media (max-width: 1024px) {
+  .hero-title    { font-size: 72px; }
+  .hero-tagline  { font-size: 28px; }
+  .section-title { font-size: 48px; }
+  .category-title { font-size: 36px; }
+
+  .services-grid,
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .values-grid  { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid   { grid-template-columns: repeat(2, 1fr); }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid  { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =================================
+   RESPONSIVE — MOBILE (≤768px)
+   ================================= */
+@media (max-width: 768px) {
+
+  /* ── Header ── */
+  .header-container   { padding: 20px 24px; }
+  .header-nav         { display: none; }
+  .header-cta         { display: none; }
+  .mobile-menu-button { display: block; }
+  .mobile-nav         { padding: 24px; }
+
+  /* ── Containers ── */
+  .hero-container,
   .about-container,
   .contact-container,
   .footer-container {
     padding: 0 24px;
   }
 
-  .hero-title {
-    font-size: 48px;
+  /* Services & Portfolio go full-width so carousel bleeds edge-to-edge */
+  .services-container,
+  .portfolio-container {
+    padding: 0;
   }
 
-  .hero-tagline {
-    font-size: 24px;
+  /* But text headers keep inset padding */
+  .services-container .section-header,
+  .portfolio-container .section-header,
+  .category-header {
+    padding: 0 20px;
   }
 
-  .hero-description {
-    font-size: 16px;
-  }
-
-  .hero-cta {
-    flex-direction: column;
-    width: 100%;
-  }
-
+  /* ── Hero ── */
+  .hero-title       { font-size: 48px; }
+  .hero-tagline     { font-size: 24px; }
+  .hero-description { font-size: 16px; }
+  .hero-cta         { flex-direction: column; width: 100%; }
   .cta-primary,
-  .cta-secondary {
-    width: 100%;
-    justify-content: center;
-  }
+  .cta-secondary    { width: 100%; justify-content: center; }
 
-  .section-title {
-    font-size: 36px;
-  }
+  /* ── Typography ── */
+  .section-title  { font-size: 36px; }
+  .category-title { font-size: 28px; }
 
-  .category-title {
-    font-size: 28px;
-  }
-
-  .services-grid,
-  .projects-grid,
+  /* ── Other grids ── */
   .values-grid,
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
+  .stats-grid { grid-template-columns: 1fr; }
 
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
+  .categories-wrapper { gap: 56px; }
 
+  /* ── Footer ── */
+  .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
   }
-}
+} /* end @media (max-width: 768px) */
 
 /* =================================
    SPINNER ANIMATION

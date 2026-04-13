@@ -1,23 +1,44 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { servicesData } from '../data/mock';
-import { 
-  Search, Target, Share2, FileText, MapPin, 
+import {
+  Search, Target, Share2, FileText, MapPin,
   Smartphone, Tablet, Layers, Code, Grid, Globe,
   Monitor, Box, Cloud, Database, Cpu, Brain,
-  MessageSquare, BarChart, ArrowRight
+  MessageSquare, BarChart, ArrowRight,
 } from 'lucide-react';
+import MobileSlider from './ui/MobileSlider';
 
 const iconMap = {
   Search, Target, Share2, FileText, MapPin,
   Smartphone, Tablet, Layers, Code, Grid, Globe,
   Monitor, Box, Cloud, Database, Cpu, Brain,
-  MessageSquare, BarChart
+  MessageSquare, BarChart,
 };
 
+/**  Mobile version — tall, premium card */
+const ServiceCardMobile = ({ service }) => {
+  const Icon = iconMap[service.icon];
+  return (
+    <div className="svc-card-mobile">
+      <div className="svc-card-mobile__top">
+        <div className="svc-card-mobile__icon">
+          <Icon size={28} />
+        </div>
+        <h3 className="svc-card-mobile__name">{service.name}</h3>
+        <p className="svc-card-mobile__desc">{service.description}</p>
+      </div>
+      <div className="svc-card-mobile__footer">
+        <ArrowRight size={18} />
+      </div>
+    </div>
+  );
+};
+
+/** Desktop version — original animated card */
 const ServiceCard = ({ service, index }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
   const Icon = iconMap[service.icon];
 
   return (
@@ -34,7 +55,7 @@ const ServiceCard = ({ service, index }) => {
       </div>
       <h3 className="service-name">{service.name}</h3>
       <p className="service-description">{service.description}</p>
-      <motion.div 
+      <motion.div
         className="service-arrow"
         whileHover={{ x: 5 }}
         transition={{ duration: 0.2 }}
@@ -45,9 +66,9 @@ const ServiceCard = ({ service, index }) => {
   );
 };
 
-const ServiceCategory = ({ category, index }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+const ServiceCategory = ({ category, catIndex }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <motion.div
@@ -55,24 +76,36 @@ const ServiceCategory = ({ category, index }) => {
       className="service-category"
       initial={{ opacity: 0, y: 60 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 0.8, delay: index * 0.2 }}
+      transition={{ duration: 0.8, delay: catIndex * 0.2 }}
     >
+      {/* Category heading — padded on mobile */}
       <div className="category-header">
         <h2 className="category-title">{category.category}</h2>
         <p className="category-description">{category.description}</p>
       </div>
-      <div className="services-grid">
+
+      {/* ── Desktop: 3-column grid ── */}
+      <div className="services-grid hide-on-mobile">
         {category.services.map((service, idx) => (
           <ServiceCard key={service.name} service={service} index={idx} />
         ))}
+      </div>
+
+      {/* ── Mobile: smooth slider ── */}
+      <div className="show-on-mobile">
+        <MobileSlider>
+          {category.services.map((service) => (
+            <ServiceCardMobile key={service.name} service={service} />
+          ))}
+        </MobileSlider>
       </div>
     </motion.div>
   );
 };
 
 const Services = () => {
-  const titleRef = React.useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: "-100px" });
+  const titleRef = useRef(null);
+  const isTitleInView = useInView(titleRef, { once: true, margin: '-100px' });
 
   return (
     <section id="services" className="services-section">
@@ -90,7 +123,11 @@ const Services = () => {
 
         <div className="categories-wrapper">
           {servicesData.categories.map((category, index) => (
-            <ServiceCategory key={category.id} category={category} index={index} />
+            <ServiceCategory
+              key={category.id}
+              category={category}
+              catIndex={index}
+            />
           ))}
         </div>
       </div>
