@@ -21,10 +21,15 @@ const Header = () => {
     { name: 'Services', href: '#services' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Contact', href: '#contact' },
+    { name: 'Careers', href: '/careers', isRoute: true }
   ];
 
-  const scrollToSection = (href) => {
+  const scrollToSection = (href, isRoute) => {
+    if (isRoute) {
+      window.location.href = href;
+      return;
+    }
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -62,7 +67,7 @@ const Header = () => {
               className="nav-link"
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection(item.href);
+                scrollToSection(item.href, item.isRoute);
               }}
               whileHover={{ y: -2 }}
               transition={{ duration: 0.2 }}
@@ -104,7 +109,7 @@ const Header = () => {
                   className="mobile-nav-link"
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection(item.href);
+                    scrollToSection(item.href, item.isRoute);
                   }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
