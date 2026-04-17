@@ -13,12 +13,11 @@ const sections = [
     title: 'Basic Info',
     color: '#ffffff',
     fields: [
-      { name: 'fullName',    label: 'Full Name',                         type: 'input',    placeholder: 'John Doe',                  required: true },
-      { name: 'email',       label: 'Email Address',                     type: 'email',    placeholder: 'you@example.com',            required: true },
-      { name: 'phone',       label: 'Phone Number',                      type: 'input',    placeholder: '+91 98765 43210',            required: true },
-      { name: 'location',    label: 'City / Location',                   type: 'input',    placeholder: 'Mumbai, India',              required: true },
-      { name: 'linkedin',    label: 'LinkedIn / Portfolio URL',          type: 'url',      placeholder: 'https://linkedin.com/in/…',  required: true },
-      { name: 'experience',  label: 'Years of Experience in Sales',      type: 'number',   placeholder: 'e.g. 5',                    required: true },
+      { name: 'fullName',  label: 'What is your full name?',          type: 'input', placeholder: 'John Doe',                required: true },
+      { name: 'email',     label: 'Email Address',                    type: 'email', placeholder: 'you@example.com',          required: true },
+      { name: 'phone',     label: 'Phone Number',                     type: 'input', placeholder: '+91 98765 43210',          required: true },
+      { name: 'location',  label: 'City / Location',                  type: 'input', placeholder: 'Mumbai, India',            required: true },
+      { name: 'linkedin',  label: 'LinkedIn / Portfolio URL',         type: 'url',   placeholder: 'https://linkedin.com/in/…', required: true },
     ]
   },
   {
@@ -27,50 +26,70 @@ const sections = [
     title: 'Sales Background',
     color: '#ffffff',
     fields: [
-      { name: 'recentRole',      label: 'What is your current or most recent role? Describe what you sold and to whom.',                                                                                      type: 'textarea', rows: 3, required: true },
-      { name: 'achievement',     label: 'What is your highest sales achievement? Give numbers — deal size, revenue generated, quota %, team rank.',                                                          type: 'textarea', rows: 3, required: true },
-      { name: 'techSales',       label: 'Have you sold software development, digital marketing, or tech services before? If yes, describe the services and average deal size.',                              type: 'textarea', rows: 3, required: true },
-      { name: 'clientsClosed',   label: 'How many new clients did you close in the last 6 months? What was the average sales cycle length?',                                                                 type: 'textarea', rows: 2, required: true },
-      { name: 'process',         label: 'Walk us through your personal sales process — from first contact to close. Be specific.',                                                                           type: 'textarea', rows: 4, required: true },
-      { name: 'international',   label: 'Have you worked with international clients (US, UK, UAE, Australia, Canada)? If yes, which markets and how did you reach them?',                                   type: 'textarea', rows: 3, required: true },
+      { name: 'techSalesYears', label: 'How many years of sales experience do you have specifically in software, IT services, or digital agencies?', type: 'textarea', rows: 2, required: true },
     ]
   },
   {
-    id: 'mindset',
+    id: 'jaqyiKnowledge',
     label: '03',
-    title: 'Mindset & Market Thinking',
+    title: 'JAQYI Knowledge',
     color: '#ffffff',
     fields: [
-      { name: 'agencyThinking',  label: 'As a startup, what do you think an agency actually does? Share your own thoughts — not GPT or copied research.',                                                                                                                                                                              type: 'textarea', rows: 4, required: true },
-      { name: 'servicesHandled', label: 'From our listed services, which ones can you personally handle end-to-end without core team support? Also mention services you can manage via your network — include contact names, role, background, and how they add value.',                                                                  type: 'textarea', rows: 4, required: true },
-      { name: 'idealCustomer',   label: 'Who do you believe is our ideal customer? Be specific — industry, company size, decision-maker role, and pain points we solve better than others.',                                                                                                                                            type: 'textarea', rows: 3, required: true },
-      { name: 'boomingServices', label: 'Which of our services do you believe are currently booming in the market — and why? Base this on observation, not hype.',                                                                                                                                                                     type: 'textarea', rows: 3, required: true },
+      { name: 'serviceVerticals',    label: "From JAQYI's four service verticals, which have you personally sold or worked closely with before? (Digital Marketing / Mobile App Dev / Web Development / AI & Automation)", type: 'textarea', rows: 3, required: true },
+      { name: 'agencyUnderstanding', label: "As a startup, what do you think an agency like JAQYI actually does? Write your own understanding — not a GPT answer or copied research.",                               type: 'textarea', rows: 5, required: true },
     ]
   },
   {
-    id: 'execution',
+    id: 'salesCapability',
     label: '04',
-    title: 'Execution Ability',
+    title: 'Sales Capability',
     color: '#ffffff',
     fields: [
-      { name: 'marketingMethods', label: 'Which marketing methods can you execute immediately (not just theoretically)? Explain your skill level for each. (e.g. cold email, LinkedIn, cold calling, WhatsApp, Upwork, CRM…)', type: 'textarea', rows: 4, required: true },
-      { name: 'practicalWays',    label: 'How many practical ways can you think of to find and reach our ideal customers? Explain the channel and your specific approach for each.',                                            type: 'textarea', rows: 4, required: true },
-      { name: 'toolsUsed',        label: 'What tools and software do you currently use for sales and outreach?',                                                                                                               type: 'textarea', rows: 2, required: true },
+      { name: 'endToEndServices', label: "From JAQYI's services, which ones can you handle end-to-end in a sales cycle without leaning on the core team? Also mention any personal network contacts who can support delivery — their name, role, and how they add value.", type: 'textarea', rows: 5, required: true },
+      { name: 'idealCustomer',    label: "Who do you believe is JAQYI's ideal customer? Be specific — industry, company size, decision-maker title, and the exact pain points JAQYI solves better than a freelancer or bigger agency.",                                    type: 'textarea', rows: 4, required: true },
     ]
   },
   {
-    id: 'closing',
+    id: 'marketInsight',
     label: '05',
-    title: 'Closing & Communication',
+    title: 'Market Insight',
     color: '#ffffff',
     fields: [
-      { name: 'pitch',          label: 'Do you believe you can confidently sell our services? If yes, write a 30-second pitch as if you are on a real sales call.',                                      type: 'textarea', rows: 4, required: true },
-      { name: 'lostDeal',       label: 'Describe a time you lost a deal. What happened and what did you learn?',                                                                                          type: 'textarea', rows: 3, required: true },
-      { name: 'priceResponse',  label: 'How do you handle a prospect who says "your price is too high"? Write your actual response.',                                                                     type: 'textarea', rows: 3, required: true },
-      { name: 'compensation',   label: 'What is your expected monthly revenue target you can commit to — and what monthly compensation are you expecting?',                                               type: 'textarea', rows: 2, required: true },
-      { name: 'whyJaqyi',       label: 'Why Jaqyi specifically — and why now? What about this role excites you beyond just a paycheck?',                                                                 type: 'textarea', rows: 3, required: true },
+      { name: 'boomingServices',  label: "From JAQYI's service list, which do you believe are currently booming in the market right now — and why? Base this on what you've personally observed, not trend reports.", type: 'textarea', rows: 4, required: true },
+      { name: 'executionMethods', label: 'Which sales and marketing methods can you execute immediately — not just theoretically? (cold email, cold calling, LinkedIn DMs, LinkedIn content, lead funnels, WhatsApp sales, demo closing, referral network, etc.)',        type: 'textarea', rows: 4, required: true },
     ]
-  }
+  },
+  {
+    id: 'outreach',
+    label: '06',
+    title: 'Outreach & Prospecting',
+    color: '#ffffff',
+    fields: [
+      { name: 'customerChannels', label: "How many practical ways can you think of to find and reach JAQYI's ideal customers? Describe each channel and your specific approach for it.", type: 'textarea', rows: 5, required: true },
+      { name: 'largestDeal',      label: 'What is the largest single deal you have closed (in USD or INR)?',                                                                           type: 'textarea', rows: 2, required: true },
+    ]
+  },
+  {
+    id: 'objectionHandling',
+    label: '07',
+    title: 'Objection Handling',
+    color: '#ffffff',
+    fields: [
+      { name: 'lostDeal',   label: 'Describe a real deal you lost. What happened, where did it break down, and what did you learn from it?',                                      type: 'textarea', rows: 4, required: true },
+      { name: 'fiverr',     label: 'A prospect asks: "Why should I hire JAQYI over a cheaper freelancer on Fiverr or Upwork?" — How do you respond?',                             type: 'textarea', rows: 4, required: true },
+      { name: 'inHouseDev', label: "A client says: 'We already have an in-house developer, we don't need an agency.' — How do you handle this?",                                 type: 'textarea', rows: 4, required: true },
+    ]
+  },
+  {
+    id: 'pitchAndCommitment',
+    label: '08',
+    title: 'Pitch & Commitment',
+    color: '#ffffff',
+    fields: [
+      { name: 'pitch',         label: "Do you believe you can confidently sell JAQYI's services? If yes, give a 30-second pitch right now — as if you're on a live sales call.", type: 'textarea', rows: 5, required: true },
+      { name: 'revenueTarget', label: "What monthly revenue target do you believe you can realistically hit in your first 90 days at JAQYI, and what's your plan to get there?",  type: 'textarea', rows: 5, required: true },
+    ]
+  },
 ];
 
 const allFieldNames = sections.flatMap(s => s.fields.map(f => f.name));
@@ -372,7 +391,7 @@ const JobApplication = () => {
               borderBottom: '1px solid rgba(255,255,255,0.07)',
               marginBottom: '48px'
             }}>
-              <span style={{ fontSize: '13px', fontWeight: 400, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.02em' }}>06</span>
+              <span style={{ fontSize: '13px', fontWeight: 400, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.02em' }}>09</span>
               <h2 style={{ fontSize: '36px', fontWeight: 300, letterSpacing: '-0.02em', color: '#ffffff', margin: 0 }}>Resume</h2>
             </div>
 
