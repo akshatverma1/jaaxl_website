@@ -283,8 +283,11 @@ const JobApplication = () => {
           <div style={{ marginTop: '32px', padding: '16px 20px', backgroundColor: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: '10px', display: 'flex', alignItems: 'flex-start', gap: '12px', maxWidth: '540px' }}>
             <AlertCircle size={20} color="rgba(251,191,36,0.9)" style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              <strong style={{ color: 'rgba(251,191,36,0.9)', fontSize: '15px', fontWeight: 500, display: 'block', margin: '0 0 4px 0' }}>Eligibility Requirement</strong>
-              <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', lineHeight: 1.5, display: 'block' }}>This role is <strong>not</strong> open to individuals currently residing in India. We are only accepting applications from candidates living outside of India (including the Indian diaspora abroad).</span>
+              <strong style={{ color: 'rgba(251,191,36,0.9)', fontSize: '15px', fontWeight: 500, display: 'block', margin: '0 0 8px 0' }}>Eligibility Requirements</strong>
+              <ul style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', lineHeight: 1.5, margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <li>This role is <strong>not</strong> open to individuals residing in India. We are only hiring candidates living outside of India (including Indian diaspora abroad).</li>
+                <li>You must have <strong>more than 1 year</strong> of relevant experience.</li>
+              </ul>
             </div>
           </div>
         </motion.div>
