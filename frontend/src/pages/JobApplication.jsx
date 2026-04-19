@@ -15,8 +15,9 @@ const sections = [
     fields: [
       { name: 'fullName',  label: 'What is your full name?',          type: 'input', placeholder: 'John Doe',                required: true },
       { name: 'email',     label: 'Email Address',                    type: 'email', placeholder: 'you@example.com',          required: true },
-      { name: 'phone',     label: 'Phone Number',                     type: 'input', placeholder: '+91 98765 43210',          required: true },
-      { name: 'location',  label: 'City / Location',                  type: 'input', placeholder: 'Mumbai, India',            required: true },
+      { name: 'phone',     label: 'Phone Number',                     type: 'input', placeholder: '+44 7911 123456',          required: true },
+      { name: 'country',   label: 'Country of Residence',             type: 'input', placeholder: 'United States, UK, UAE, etc.', required: true },
+      { name: 'location',  label: 'City / State',                     type: 'input', placeholder: 'New York, London, Dubai',  required: true },
       { name: 'linkedin',  label: 'LinkedIn / Portfolio URL',         type: 'url',   placeholder: 'https://linkedin.com/in/…', required: true },
     ]
   },
@@ -278,6 +279,14 @@ const JobApplication = () => {
           <p style={{ fontSize: '18px', fontWeight: 300, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: '540px', margin: 0 }}>
             Take your time. Your answers reveal how you think, how you sell, and whether you are a true fit for JAQYI. Be honest. Be specific.
           </p>
+
+          <div style={{ marginTop: '32px', padding: '16px 20px', backgroundColor: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: '10px', display: 'flex', alignItems: 'flex-start', gap: '12px', maxWidth: '540px' }}>
+            <AlertCircle size={20} color="rgba(251,191,36,0.9)" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <div>
+              <strong style={{ color: 'rgba(251,191,36,0.9)', fontSize: '15px', fontWeight: 500, display: 'block', margin: '0 0 4px 0' }}>Eligibility Requirement</strong>
+              <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', lineHeight: 1.5, display: 'block' }}>This role is <strong>not</strong> open to individuals currently residing in India. We are only accepting applications from candidates living outside of India (including the Indian diaspora abroad).</span>
+            </div>
+          </div>
         </motion.div>
       </div>
 
