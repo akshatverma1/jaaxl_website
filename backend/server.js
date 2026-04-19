@@ -235,8 +235,8 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
     const autoReplyMail = {
       from: `"JAQYI Studio" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: \`Application Received - JAQYI Careers\`,
-      html: \`
+      subject: `Application Received - JAQYI Careers`,
+      html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
           <div style="background: #111111; padding: 32px 40px; border-bottom: 1px solid #222;">
             <h1 style="margin: 0; font-size: 28px; font-weight: 300; letter-spacing: -0.02em; color: #ffffff;">JAQYI</h1>
@@ -245,20 +245,20 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
           <div style="padding: 40px;">
             <h2 style="font-size: 20px; font-weight: 400; color: #ffffff; margin: 0 0 16px 0;">Application Received!</h2>
             <p style="color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.7; margin: 0 0 24px 0;">
-              Hi \${fullName},<br><br>
+              Hi ${fullName},<br><br>
               Thank you for applying for the <strong>Sales Person</strong> position at JAQYI. We have successfully received your application responses and resume.<br><br>
               Our team will review your application and try to get back to you soon. We appreciate your interest in joining us!
             </p>
             <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin: 0;">— The JAQYI Team</p>
           </div>
         </div>
-      \`
+      `
     };
 
     await transporter.sendMail(notificationMail);
     await transporter.sendMail(autoReplyMail);
 
-    console.log('[Careers] Application submitted by ${fullName} <${email}>');
+    console.log(`[Careers] Application submitted by ${fullName} <${email}>`);
 
     return res.status(200).json({
       success: true,
