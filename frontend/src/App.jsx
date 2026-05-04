@@ -3,6 +3,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Careers from './pages/Careers';
 import JobApplication from './pages/JobApplication';
+import WebDevelopment from './pages/WebDevelopment';
+import AppDevelopment from './pages/AppDevelopment';
+import AIAutomation from './pages/AIAutomation';
+import DigitalMarketing from './pages/DigitalMarketing';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -12,6 +18,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/sales-person" element={<JobApplication />} />
+          {/* SEO Service Landing Pages — each targets a specific search keyword */}
+          <Route path="/services/web-development" element={<WebDevelopment />} />
+          <Route path="/services/app-development" element={<AppDevelopment />} />
+          <Route path="/services/ai-automation" element={<AIAutomation />} />
+          <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+          {/* Legal Pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -19,3 +33,4 @@ function App() {
 }
 
 export default App;
+

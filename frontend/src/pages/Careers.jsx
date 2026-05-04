@@ -2,6 +2,25 @@ import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Clock, Briefcase, Sparkles, Users, Zap, Star, ChevronLeft } from 'lucide-react';
+import PageSEO from '../components/SEO/PageSEO';
+
+const careersSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://jaqyi.com/careers/#webpage",
+  "url": "https://jaqyi.com/careers",
+  "name": "Careers at JAQYI | Join Our Software Development Team",
+  "description": "Join JAQYI — a creative software studio. We are hiring talented professionals for web development, AI, and sales roles in India.",
+  "isPartOf": { "@id": "https://jaqyi.com/#website" },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jaqyi.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Careers", "item": "https://jaqyi.com/careers" }
+    ]
+  },
+  "inLanguage": "en-IN"
+};
 
 const perks = [
   {
@@ -42,6 +61,17 @@ const Careers = () => {
 
   return (
     <div style={{ backgroundColor: '#000000', minHeight: '100vh', color: '#ffffff' }}>
+      <PageSEO
+        title="Careers at JAQYI | Join Our Software Development Team"
+        description="We are hiring at JAQYI — a creative software studio in Indore, India. Join our elite team and work on cutting-edge web development, AI automation, and digital marketing projects."
+        canonical="https://jaqyi.com/careers"
+        keywords={[
+          'careers JAQYI', 'software jobs indore', 'web developer jobs india',
+          'AI developer jobs', 'sales jobs software company', 'tech jobs india',
+          'remote jobs india', 'software studio hiring'
+        ]}
+        schema={careersSchema}
+      />
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
       <section ref={heroRef} style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>

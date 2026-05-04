@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Linkedin, Twitter, Github, Instagram, Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
@@ -10,16 +11,18 @@ const Footer = () => {
     { name: 'Services', href: '#services' },
     { name: 'Portfolio', href: '#portfolio' },
     { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Contact', href: '#contact' },
+    { name: 'Careers', href: '/careers', isRoute: true }
   ];
 
   const services = [
-    'Web Development',
-    'Mobile Development',
-    'AI & Automation',
-    'Digital Marketing',
-    'SaaS Development'
+    { name: 'Web Development', href: '/services/web-development' },
+    { name: 'App Development', href: '/services/app-development' },
+    { name: 'AI & Automation', href: '/services/ai-automation' },
+    { name: 'Digital Marketing', href: '/services/digital-marketing' },
+    { name: 'SaaS Development', href: '/services/web-development' },
   ];
+
 
   return (
     <footer className="footer">
@@ -99,12 +102,13 @@ const Footer = () => {
             <h4 className="footer-heading">Services</h4>
             <ul className="footer-links">
               {services.map((service) => (
-                <li key={service}>
-                  <span className="footer-link">{service}</span>
+                <li key={service.name}>
+                  <Link to={service.href} className="footer-link">{service.name}</Link>
                 </li>
               ))}
             </ul>
           </div>
+
 
           {/* Contact */}
           <div className="footer-column">
@@ -128,9 +132,9 @@ const Footer = () => {
             © {currentYear} JAQYI. All rights reserved.
           </p>
           <div className="footer-legal">
-            <a href="#" className="footer-legal-link">Privacy Policy</a>
+            <Link to="/privacy-policy" className="footer-legal-link">Privacy Policy</Link>
             <span className="footer-separator">•</span>
-            <a href="#" className="footer-legal-link">Terms of Service</a>
+            <Link to="/terms-of-service" className="footer-legal-link">Terms of Service</Link>
           </div>
         </div>
       </div>

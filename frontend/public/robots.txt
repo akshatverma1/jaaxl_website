@@ -1,0 +1,27 @@
+# robots.txt for jaqyi.com
+# Updated: 2026-05-04
+
+User-agent: *
+Allow: /
+
+# Disallow any potential admin or private paths
+Disallow: /api/
+
+# Allow important bots explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://jaqyi.com/sitemap.xml

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ===================== HOMEPAGE — Priority 1.0 ===================== -->
+  <url>
+    <loc>https://jaqyi.com/</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://jaqyi.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/"/>
+  </url>
+
+  <!-- ===================== SERVICE LANDING PAGES — Priority 0.95 ===================== -->
+  <!-- Each page targets a specific high-volume search keyword -->
+
+  <url>
+    <loc>https://jaqyi.com/services/web-development</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/services/web-development"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://jaqyi.com/services/web-development"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/services/web-development"/>
+  </url>
+
+  <url>
+    <loc>https://jaqyi.com/services/app-development</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/services/app-development"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://jaqyi.com/services/app-development"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/services/app-development"/>
+  </url>
+
+  <url>
+    <loc>https://jaqyi.com/services/ai-automation</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/services/ai-automation"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://jaqyi.com/services/ai-automation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/services/ai-automation"/>
+  </url>
+
+  <url>
+    <loc>https://jaqyi.com/services/digital-marketing</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/services/digital-marketing"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://jaqyi.com/services/digital-marketing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/services/digital-marketing"/>
+  </url>
+
+  <!-- ===================== CAREERS — Priority 0.7 ===================== -->
+  <url>
+    <loc>https://jaqyi.com/careers</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/careers"/>
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://jaqyi.com/careers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/careers"/>
+  </url>
+
+  <url>
+    <loc>https://jaqyi.com/careers/sales-person</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/careers/sales-person"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/careers/sales-person"/>
+  </url>
+
+  <!-- ===================== LEGAL PAGES — Priority 0.3 ===================== -->
+  <url>
+    <loc>https://jaqyi.com/privacy-policy</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/privacy-policy"/>
+  </url>
+
+  <url>
+    <loc>https://jaqyi.com/terms-of-service</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://jaqyi.com/terms-of-service"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://jaqyi.com/terms-of-service"/>
+  </url>
+
+</urlset>

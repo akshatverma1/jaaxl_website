@@ -1,0 +1,19 @@
+{
+  "name": "JAQYI - Web Development & AI Automation Agency",
+  "short_name": "JAQYI",
+  "description": "JAQYI is a creative software studio offering web development, mobile app development, AI automation, and digital marketing services in India and USA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#7c3aed",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "technology", "productivity"],
+  "scope": "/"
+}
