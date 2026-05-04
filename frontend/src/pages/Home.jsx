@@ -18,7 +18,7 @@ const homeSchema = {
       "name": "JAQYI | Web Development, App Development & AI Automation Agency",
       "isPartOf": { "@id": "https://jaqyi.com/#website" },
       "about": { "@id": "https://jaqyi.com/#organization" },
-      "description": "JAQYI is a creative software studio offering web development, mobile app development, AI automation, and digital marketing services for businesses in India and USA.",
+      "description": "JAQYI is a creative software studio offering web development, mobile app development, and AI automation services for businesses in India and USA.",
       "breadcrumb": {
         "@type": "BreadcrumbList",
         "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jaqyi.com/" }]
@@ -31,7 +31,7 @@ const homeSchema = {
         {
           "@type": "Question",
           "name": "What services does JAQYI offer?",
-          "acceptedAnswer": { "@type": "Answer", "text": "JAQYI offers web development, mobile app development (iOS & Android), AI & automation solutions, and digital marketing services including SEO, PPC, and social media management. We serve businesses in India and the USA." }
+          "acceptedAnswer": { "@type": "Answer", "text": "JAQYI offers web development, mobile app development (iOS & Android), and AI & automation solutions. We serve businesses in India and the USA." }
         },
         {
           "@type": "Question",
@@ -63,11 +63,11 @@ const Home = () => {
     <div className="home-page">
       <PageSEO
         title="JAQYI | Web Development, App Development & AI Automation Agency"
-        description="JAQYI is a leading software agency in India offering custom web development, mobile app development, AI & automation solutions, and digital marketing. Trusted by businesses across India and USA. Based in Indore, MP."
+        description="JAQYI is a leading software agency in India offering custom web development, mobile app development, and AI & automation solutions. Trusted by businesses across India and USA. Based in Indore, MP."
         canonical="https://jaqyi.com/"
         keywords={[
           'web development company india', 'app development company india',
-          'AI automation agency', 'software agency indore', 'digital marketing india',
+          'AI automation agency', 'software agency indore',
           'react development', 'flutter app development', 'SaaS development india',
           'machine learning company', 'chatbot development india',
           'web design indore', 'IT company indore madhya pradesh', 'JAQYI',

@@ -6,7 +6,7 @@ import JobApplication from './pages/JobApplication';
 import WebDevelopment from './pages/WebDevelopment';
 import AppDevelopment from './pages/AppDevelopment';
 import AIAutomation from './pages/AIAutomation';
-import DigitalMarketing from './pages/DigitalMarketing';
+
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
@@ -22,7 +22,7 @@ function App() {
           <Route path="/services/web-development" element={<WebDevelopment />} />
           <Route path="/services/app-development" element={<AppDevelopment />} />
           <Route path="/services/ai-automation" element={<AIAutomation />} />
-          <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+
           {/* Legal Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />

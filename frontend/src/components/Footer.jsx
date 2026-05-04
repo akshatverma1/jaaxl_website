@@ -19,7 +19,7 @@ const Footer = () => {
     { name: 'Web Development', href: '/services/web-development' },
     { name: 'App Development', href: '/services/app-development' },
     { name: 'AI & Automation', href: '/services/ai-automation' },
-    { name: 'Digital Marketing', href: '/services/digital-marketing' },
+
     { name: 'SaaS Development', href: '/services/web-development' },
   ];
 

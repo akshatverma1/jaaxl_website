@@ -14,38 +14,7 @@ export const servicesData = {
   title: "Our Services",
   subtitle: "Your vision, engineered to perfection",
   categories: [
-    {
-      id: 1,
-      category: "Digital Marketing Services",
-      description: "Drive growth with data-driven marketing strategies",
-      services: [
-        {
-          name: "SEO",
-          description: "Boost your online visibility with comprehensive search engine optimization",
-          icon: "Search"
-        },
-        {
-          name: "PPC (Performance Marketing)",
-          description: "Maximize ROI with targeted pay-per-click campaigns",
-          icon: "Target"
-        },
-        {
-          name: "Social Media Management",
-          description: "Build your brand presence across all social platforms",
-          icon: "Share2"
-        },
-        {
-          name: "Content Marketing Services",
-          description: "Engage your audience with compelling content strategies",
-          icon: "FileText"
-        },
-        {
-          name: "Local SEO",
-          description: "Dominate local search results and attract nearby customers",
-          icon: "MapPin"
-        }
-      ]
-    },
+
     {
       id: 2,
       category: "Mobile App Development",
