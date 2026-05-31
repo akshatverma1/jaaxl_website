@@ -7,7 +7,7 @@ import { Plus, Minus } from 'lucide-react';
 const faqs = [
   {
     q: 'How much does a website or web app cost?',
-    a: 'Pricing depends on scope and complexity. A professional business website typically starts from ₹25,000–₹75,000. A custom React or Next.js web application ranges from ₹1,00,000–₹5,00,000. A full SaaS or ERP platform starts from ₹5,00,000+. We provide a transparent, milestone-based quote after a free consultation — no surprises.',
+    a: 'Pricing depends on scope and complexity. A professional business website typically starts from $300–$900. A custom React or Next.js web application ranges from $1,200–$6,000. A full SaaS or ERP platform starts from $6,000+. We provide a transparent, milestone-based quote after a free consultation — no surprises.',
   },
   {
     q: 'How long does it take to build a mobile app?',
@@ -38,6 +38,7 @@ const faqs = [
     a: 'Yes — we are a full-service studio. We handle UI/UX design, frontend and backend development, database architecture, cloud infrastructure, app store submissions, SEO, and post-launch support. One team, one point of contact, end-to-end ownership.',
   },
 ];
+
 
 const FAQItem = ({ faq, index, isOpen, onToggle }) => (
   <motion.div

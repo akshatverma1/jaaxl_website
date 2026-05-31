@@ -269,21 +269,21 @@
    TRUSTED PARTNERS SECTION
    ================================= */
 .partners-section {
-  background-color: #0a0a0a;
-  padding: 40px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: #0d0d0d;
+  padding: 56px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
 .partners-label {
   text-align: center;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
-  margin: 0 0 28px 0;
+  margin: 0 0 36px 0;
 }
 
 .partners-track-wrapper {
@@ -300,27 +300,27 @@
 .partner-item {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 48px;
+  gap: 14px;
+  padding: 0 56px;
   white-space: nowrap;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .partner-icon {
-  font-size: 20px;
+  font-size: 26px;
   line-height: 1;
 }
 
 .partner-name {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.75);
   letter-spacing: 0.01em;
   transition: color 0.2s ease;
 }
 
 .partner-item:hover .partner-name {
-  color: rgba(255, 255, 255, 0.9);
+  color: #ffffff;
 }
 
 .partners-fade-left,
