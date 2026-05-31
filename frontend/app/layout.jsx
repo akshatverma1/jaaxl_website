@@ -1,5 +1,6 @@
 import './globals.css';
 import './app.css';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 export const metadata = {
   metadataBase: new URL('https://jaqyi.com'),
@@ -35,7 +36,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="App">{children}</body>
+      <body className="App">
+        <AnalyticsTracker />
+        {children}
+      </body>
     </html>
   );
 }
