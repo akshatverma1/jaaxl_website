@@ -262,6 +262,7 @@
   width: 1px;
   height: 40px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+  border: none;
 }
 
 /* =================================
