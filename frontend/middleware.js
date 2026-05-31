@@ -15,11 +15,11 @@ function unauthorized() {
 export function middleware(request) {
   const { pathname } = request.nextUrl;
 
-  // Protect /analytics pages and /api/analytics data endpoint
-  if (
-    pathname.startsWith('/analytics') ||
-    pathname.startsWith('/api/analytics')
-  ) {
+  // ONLY protect the /analytics dashboard pages.
+  // Do NOT protect /api/analytics — the tracker POSTs there on every page
+  // load, and a 401 + WWW-Authenticate header causes the browser to show
+  // a login popup to every visitor.
+  if (pathname.startsWith('/analytics')) {
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Basic ')) {
@@ -45,5 +45,6 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/analytics/:path*', '/api/analytics/:path*'],
+  // Only run middleware on /analytics/* — NOT on /api/* routes
+  matcher: ['/analytics/:path*'],
 };
