@@ -114,6 +114,18 @@
 }
 
 /* =================================
+   STAR BACKGROUND CANVAS
+   ================================= */
+.star-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* =================================
    HERO SECTION STYLES
    ================================= */
 .hero-section {
@@ -124,6 +136,8 @@
   justify-content: center;
   background-color: #000000;
   overflow: hidden;
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
 }
 
 .hero-container {
@@ -263,6 +277,445 @@
   height: 40px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
   border: none;
+}
+
+/* =================================
+   TABLET SHOWCASE (iPad Mockup)
+   ================================= */
+.home-page {
+  background-color: #ffffff;
+}
+
+.tablet-showcase-section {
+  position: relative;
+  background: #ffffff;
+  padding: 0 24px 100px;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+  z-index: 3;
+}
+
+.tablet-frame {
+  position: relative;
+  max-width: 960px;
+  width: 100%;
+  margin-top: -180px;
+  z-index: 10;
+}
+
+.ipad-bezel {
+  position: relative;
+  background: #0d0d0d;
+  border-radius: 28px;
+  padding: 18px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 0 3px #1a1a1a,
+    0 30px 80px rgba(0, 0, 0, 0.35),
+    0 0 60px rgba(0, 180, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ipad-camera {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #222;
+}
+
+.ipad-screen {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #06090e;
+  aspect-ratio: 4 / 3;
+}
+
+.ipad-screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ipad-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .tablet-showcase-section {
+    padding: 40px 16px 40px;
+    margin-top: -40px;
+  }
+  .ipad-bezel {
+    border-radius: 18px;
+    padding: 12px;
+  }
+  .ipad-screen {
+    border-radius: 6px;
+  }
+  .ipad-camera {
+    width: 5px;
+    height: 5px;
+    top: 4px;
+  }
+  .ipad-reflection {
+    border-radius: 18px 18px 0 0;
+  }
+}
+
+/* iPad screen chatbot variant */
+.ipad-screen--chatbot {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =================================
+   CHATBOT FORM STYLES
+   ================================= */
+.cb-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #06090e;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: #f3f4f6;
+}
+
+.cb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.cb-header__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cb-header__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.6);
+  animation: cb-pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes cb-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.cb-header__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.02em;
+}
+
+.cb-header__sparkle {
+  color: rgba(34, 211, 238, 0.5);
+}
+
+/* Messages container */
+.cb-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: none;
+}
+
+.cb-messages::-webkit-scrollbar {
+  display: none;
+}
+
+/* Message row */
+.cb-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 85%;
+}
+
+.cb-msg--bot {
+  align-self: flex-start;
+}
+
+.cb-msg--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.cb-msg__avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cb-msg--bot .cb-msg__avatar {
+  background: rgba(34, 211, 238, 0.15);
+  color: #22d3ee;
+}
+
+.cb-msg--user .cb-msg__avatar {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cb-msg__bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.cb-msg--bot .cb-msg__bubble {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom-left-radius: 4px;
+  color: #e5e7eb;
+}
+
+.cb-msg--user .cb-msg__bubble {
+  background: linear-gradient(135deg, #0e7490, #0891b2);
+  border-bottom-right-radius: 4px;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.25);
+}
+
+.cb-msg__bubble p {
+  margin: 0;
+}
+
+/* Typing indicator */
+.cb-typing {
+  display: flex;
+  gap: 4px;
+  padding: 2px 0;
+  align-items: center;
+}
+
+.cb-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(34, 211, 238, 0.6);
+  animation: cb-bounce 1.4s ease-in-out infinite;
+}
+
+.cb-typing span:nth-child(2) { animation-delay: 0.16s; }
+.cb-typing span:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes cb-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Input area */
+.cb-input-area {
+  padding: 14px 18px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+/* Options grid */
+.cb-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cb-option-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  background: rgba(34, 211, 238, 0.05);
+  color: #22d3ee;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cb-option-btn:hover {
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.5);
+  color: #e0f2fe;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.2);
+}
+
+/* Text input form */
+.cb-text-form {
+  display: flex;
+  gap: 8px;
+}
+
+.cb-text-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: #f3f4f6;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.cb-text-input:focus {
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cb-text-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.cb-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #0e7490, #0891b2);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+.cb-send-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cb-send-btn:not(:disabled):hover {
+  transform: scale(1.05);
+}
+
+/* Contact form */
+.cb-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cb-contact-input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: #f3f4f6;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.cb-contact-input:focus {
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cb-contact-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.cb-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0e7490, #06b6d4);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  margin-top: 2px;
+}
+
+.cb-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cb-submit-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+/* Spinner */
+.cb-spin {
+  animation: cb-spin-anim 1s linear infinite;
+}
+
+@keyframes cb-spin-anim {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Success message */
+.cb-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #34d399;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 14px;
+}
+
+.cb-success-icon {
+  color: #34d399;
+}
+
+/* Responsive: smaller text on mobile */
+@media (max-width: 768px) {
+  .cb-root { font-size: 12px; }
+  .cb-option-btn { font-size: 11px; padding: 6px 12px; }
+  .cb-text-input, .cb-contact-input { font-size: 12px; padding: 8px 12px; }
+  .cb-msg__avatar { width: 22px; height: 22px; }
+  .cb-msg__avatar svg { width: 12px; height: 12px; }
+  .cb-messages { padding: 12px; gap: 10px; }
+  .cb-input-area { padding: 10px 12px 12px; }
 }
 
 /* =================================
@@ -585,6 +1038,8 @@
 .portfolio-section {
   background-color: #000000;
   padding: 96px 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .portfolio-section .section-title {
@@ -599,6 +1054,8 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 48px;
+  position: relative;
+  z-index: 1;
 }
 
 .projects-grid {
@@ -785,6 +1242,8 @@
 .contact-section {
   background-color: #000000;
   padding: 96px 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .contact-section .section-title {
@@ -799,6 +1258,8 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 48px;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-grid {

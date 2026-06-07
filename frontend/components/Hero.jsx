@@ -4,23 +4,14 @@ import { motion } from 'framer-motion';
 import { heroData } from '@/data/mock';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import GlimmeringMap from '@/components/GlimmeringMap';
 
 const Hero = () => {
   return (
     <section id="home" className="hero-section">
+      <GlimmeringMap dotSpacing={5.5} glimmerRate={6} dimOpacity={0.24} glowBlur={30} />
       <div className="hero-container">
-        {/* Animated Background Circle */}
-        <motion.div
-          className="hero-circle"
-          animate={{
-            rotate: 360,
-            scale: [1, 1.1, 1]
-          }}
-          transition={{
-            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-          }}
-        />
+
 
         {/* Content */}
         <motion.div

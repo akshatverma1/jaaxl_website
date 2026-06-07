@@ -7,6 +7,7 @@ import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github, Instagram, CheckC
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import GlimmeringMap from '@/components/GlimmeringMap';
 
 const iconMap = {
   Linkedin, Twitter, Github, Instagram
@@ -67,6 +68,7 @@ const Contact = () => {
 
   return (
     <section id="contact" className="contact-section">
+      <GlimmeringMap dotSpacing={7} glimmerRate={4} />
       <div className="contact-container">
         <motion.div
           ref={titleRef}

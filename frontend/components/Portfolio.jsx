@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { portfolioData } from '@/data/mock';
 import { ArrowUpRight } from 'lucide-react';
 import MobileSlider from '@/components/ui/MobileSlider';
+import GlimmeringMap from '@/components/GlimmeringMap';
 
 /** Mobile version — full-bleed image card */
 const ProjectCardMobile = ({ project }) => (
@@ -75,6 +76,7 @@ const Portfolio = () => {
 
   return (
     <section id="portfolio" className="portfolio-section">
+      <GlimmeringMap dotSpacing={7} glimmerRate={4} />
       <div className="portfolio-container">
         <motion.div
           ref={titleRef}

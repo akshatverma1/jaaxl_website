@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import TabletShowcase from '@/components/TabletShowcase';
 import TrustedPartners from '@/components/TrustedPartners';
 import Services from '@/components/Services';
 import Portfolio from '@/components/Portfolio';
@@ -71,6 +72,7 @@ export default function Home() {
       <Header />
       <main>
         <div id="home"><Hero /></div>
+        <TabletShowcase />
         <TrustedPartners />
         <div id="services"><Services /></div>
         <div id="portfolio"><Portfolio /></div>
