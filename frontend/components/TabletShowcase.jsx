@@ -1,22 +1,29 @@
 "use client";
 import React, { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import ChatbotForm from "@/components/ChatbotForm";
 
 /**
- * TabletShowcase — an iPad mockup housing an interactive chatbot.
- * It animates smoothly into view once scrolled into the viewport
- * and remains stable so users can type and click without layout jitter.
+ * TabletShowcase — an iPad mockup housing an interactive chatbot
+ * that rises from below the hero as the user scrolls.
  */
 const TabletShowcase = () => {
+  const containerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 0.5], [120, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
+
   return (
-    <section className="tablet-showcase-section">
+    <section ref={containerRef} className="tablet-showcase-section">
       <motion.div
         className="tablet-frame"
-        initial={{ opacity: 0, y: 60, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} // smooth custom ease-out
+        style={{ y, opacity, scale }}
       >
         {/* iPad bezel */}
         <div className="ipad-bezel">

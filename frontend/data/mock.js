@@ -16,6 +16,43 @@ export const servicesData = {
   categories: [
 
     {
+      id: 1,
+      category: "SaaS Co-Build Studio",
+      description: "Have a SaaS idea? We handle 100% of the tech — architecture, development, AI, deployment — so you can focus on the business.",
+      services: [
+        {
+          name: "Product Strategy & Arch",
+          description: "System design, roadmap planning, and tech stack decisions",
+          icon: "Target"
+        },
+        {
+          name: "Full-Stack Development",
+          description: "Robust frontend, backend, database, and auth systems",
+          icon: "Code"
+        },
+        {
+          name: "AI & Automation",
+          description: "OpenAI integrations, copilot flows, and n8n workflows",
+          icon: "Brain"
+        },
+        {
+          name: "SaaS Infrastructure",
+          description: "Multi-tenancy, Stripe billing, and admin dashboards",
+          icon: "Cloud"
+        },
+        {
+          name: "DevOps & Deployment",
+          description: "CI/CD pipelines, staging, and reliable cloud hosting",
+          icon: "Server"
+        },
+        {
+          name: "Post-Launch Retainer",
+          description: "Bug fixes, scaling, and continuous feature iteration",
+          icon: "Activity"
+        }
+      ]
+    },
+    {
       id: 2,
       category: "Mobile App Development",
       description: "Native and cross-platform mobile solutions",

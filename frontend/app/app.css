@@ -289,7 +289,7 @@
 .tablet-showcase-section {
   position: relative;
   background: #ffffff;
-  padding: 0 24px 100px;
+  padding: 0 24px 80px;
   display: flex;
   justify-content: center;
   overflow: visible;
@@ -298,23 +298,26 @@
 
 .tablet-frame {
   position: relative;
-  max-width: 960px;
+  max-width: 720px;
   width: 100%;
-  margin-top: -180px;
+  margin-top: -120px;
   z-index: 10;
 }
 
 .ipad-bezel {
   position: relative;
-  background: #0d0d0d;
+  background: #050505;
   border-radius: 28px;
   padding: 18px;
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 0 0 3px #1a1a1a,
-    0 30px 80px rgba(0, 0, 0, 0.35),
-    0 0 60px rgba(0, 180, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+    inset 0 0 0 1px #111,
+    0 0 0 1px #333,
+    0 0 0 3px #5e5e60,
+    0 0 0 7px #8e8e93,
+    0 0 0 8px #c7c7cc,
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 180, 255, 0.05);
+  border: none;
 }
 
 .ipad-camera {
@@ -349,7 +352,7 @@
   left: 0;
   right: 0;
   height: 40%;
-  border-radius: 28px 28px 0 0;
+  border-radius: 24px 24px 0 0;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.03) 0%,
@@ -358,25 +361,68 @@
   pointer-events: none;
 }
 
+/* Tablet breakpoint */
+@media (max-width: 1024px) {
+  .tablet-frame {
+    max-width: 600px;
+    margin-top: -100px;
+  }
+  .ipad-bezel {
+    border-radius: 24px;
+    padding: 16px;
+  }
+  .ipad-screen {
+    border-radius: 7px;
+  }
+  .ipad-reflection {
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+/* Mobile breakpoint */
 @media (max-width: 768px) {
   .tablet-showcase-section {
-    padding: 40px 16px 40px;
-    margin-top: -40px;
+    padding: 0 16px 50px;
+  }
+  .tablet-frame {
+    max-width: 100%;
+    margin-top: -60px;
   }
   .ipad-bezel {
     border-radius: 18px;
-    padding: 12px;
+    padding: 10px;
+    box-shadow:
+      inset 0 0 0 1px #111,
+      0 0 0 1px #333,
+      0 0 0 2px #5e5e60,
+      0 0 0 4px #8e8e93,
+      0 0 0 5px #c7c7cc,
+      0 10px 30px rgba(0, 0, 0, 0.4);
   }
   .ipad-screen {
     border-radius: 6px;
   }
   .ipad-camera {
-    width: 5px;
-    height: 5px;
-    top: 4px;
+    width: 4px;
+    height: 4px;
+    top: 3px;
   }
   .ipad-reflection {
-    border-radius: 18px 18px 0 0;
+    border-radius: 14px 14px 0 0;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .tablet-showcase-section {
+    padding: 0 10px 40px;
+  }
+  .ipad-bezel {
+    border-radius: 14px;
+    padding: 8px;
+  }
+  .ipad-screen {
+    border-radius: 5px;
   }
 }
 

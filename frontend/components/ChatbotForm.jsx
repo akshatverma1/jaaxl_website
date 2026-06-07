@@ -1,74 +1,9 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Send, Bot, User, CheckCircle, Loader2, Sparkles } from "lucide-react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-
-/* ─── Conversation flow definition ─── */
-const STEPS = [
-  {
-    id: "greeting",
-    bot: "Hi there! 👋 I'm JAQYI's project assistant. Let me help you figure out the perfect solution for your needs.",
-    delay: 600,
-    autoNext: true,
-  },
-  {
-    id: "service",
-    bot: "What type of service are you looking for?",
-    type: "options",
-    options: [
-      "🌐 Web Development",
-      "📱 App Development",
-      "🤖 AI & Automation",
-      "🎨 UI/UX Design",
-      "💡 Other / Not Sure",
-    ],
-    field: "service",
-  },
-  {
-    id: "budget",
-    bot: "Great choice! What's your estimated budget range?",
-    type: "options",
-    options: [
-      "Under $1,000",
-      "$1,000 – $5,000",
-      "$5,000 – $15,000",
-      "$15,000 – $50,000",
-      "$50,000+",
-    ],
-    field: "budget",
-  },
-  {
-    id: "timeline",
-    bot: "When are you looking to get started?",
-    type: "options",
-    options: [
-      "🚀 ASAP",
-      "📅 Within a month",
-      "🗓️ 1 – 3 months",
-      "🤔 Just exploring",
-    ],
-    field: "timeline",
-  },
-  {
-    id: "description",
-    bot: "Tell me a bit more about your project. What problem are you trying to solve?",
-    type: "text",
-    placeholder: "Describe your project idea…",
-    field: "description",
-  },
-  {
-    id: "contact",
-    bot: "Awesome! Let's get your contact info so our team can reach out with a custom proposal.",
-    type: "contact",
-  },
-  {
-    id: "done",
-    bot: "🎉 Thank you! We've received your requirements. Our team will reach out within 24 hours with a tailored proposal.",
-    type: "done",
-  },
-];
 
 /* ─── Typing indicator ─── */
 const TypingDots = () => (
@@ -96,107 +31,186 @@ const MessageBubble = ({ msg, isNew }) => (
   </motion.div>
 );
 
-/* ─── Main Chatbot Component ─── */
+/* ─── Main AI Chatbot Component ─── */
 const ChatbotForm = () => {
-  const [messages, setMessages] = useState([]);
-  const [stepIdx, setStepIdx] = useState(0);
-  const [typing, setTyping] = useState(false);
+  const [messages, setMessages] = useState([]);        // { from: "bot"|"user", text }
+  const [chatHistory, setChatHistory] = useState([]);   // OpenRouter format { role, content }
   const [inputValue, setInputValue] = useState("");
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
   const [contactData, setContactData] = useState({ name: "", email: "", phone: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({});
-  const chatEndRef = useRef(null);
+  const [started, setStarted] = useState(false);
+
+  const messagesRef = useRef(null);
+  const rootRef = useRef(null);
   const inputRef = useRef(null);
+  const isInView = useInView(rootRef, { once: true, amount: 0.3 });
+  const userMsgCount = useRef(0); // track how many times user has messaged
 
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => { scrollToBottom(); }, [messages, typing]);
-
-  /* Push bot message with typing delay */
-  const pushBotMessage = (text, cb) => {
-    setTyping(true);
-    const delay = Math.min(text.length * 18, 1200);
-    setTimeout(() => {
-      setTyping(false);
-      setMessages((prev) => [...prev, { from: "bot", text }]);
-      cb?.();
-    }, delay);
-  };
-
-  /* Kick off conversation */
-  useEffect(() => {
-    const step = STEPS[0];
-    pushBotMessage(step.bot, () => {
-      if (step.autoNext) {
-        setTimeout(() => {
-          const next = STEPS[1];
-          pushBotMessage(next.bot);
-          setStepIdx(1);
-        }, 400);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  /* Auto-scroll within the chat container only */
+  const scrollToBottom = useCallback(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTo({
+        top: messagesRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, []);
 
-  /* Handle option click */
-  const handleOption = (option) => {
-    const step = STEPS[stepIdx];
-    setMessages((prev) => [...prev, { from: "user", text: option }]);
-    setFormData((prev) => ({ ...prev, [step.field]: option }));
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isStreaming, showContactForm, scrollToBottom]);
 
-    const nextIdx = stepIdx + 1;
-    if (nextIdx < STEPS.length) {
-      setTimeout(() => {
-        pushBotMessage(STEPS[nextIdx].bot);
-        setStepIdx(nextIdx);
-      }, 300);
+  /* ─── Start greeting when iPad scrolls into view ─── */
+  useEffect(() => {
+    if (!isInView || started) return;
+    setStarted(true);
+
+    const greeting =
+      "Hi there! 👋 I'm JAQYI's AI assistant. I can help you learn about our services, pricing, and how we can bring your idea to life. What can I help you with today?";
+
+    // Simulate a short typing delay for the greeting
+    setIsStreaming(true);
+    setTimeout(() => {
+      setMessages([{ from: "bot", text: greeting }]);
+      setChatHistory([{ role: "assistant", content: greeting }]);
+      setIsStreaming(false);
+    }, 800);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInView]);
+
+  /* ─── Stream AI response from /api/chat ─── */
+  const streamAIResponse = async (updatedHistory) => {
+    setIsStreaming(true);
+    let fullResponse = "";
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: updatedHistory }),
+      });
+
+      if (!res.ok) throw new Error("Chat API error");
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      // Add a placeholder bot message that we'll update as tokens stream in
+      setMessages((prev) => [...prev, { from: "bot", text: "" }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
+
+        for (const line of lines) {
+          const data = line.slice(6).trim();
+          if (data === "[DONE]") continue;
+
+          try {
+            const parsed = JSON.parse(data);
+            const token = parsed.choices?.[0]?.delta?.content;
+            if (token) {
+              fullResponse += token;
+              // Remove the hidden signal markers from displayed text
+              const displayText = fullResponse
+                .replace(/\[COLLECT_CONTACT\]/g, "")
+                .replace(/\[CONTACT_SUBMITTED\]/g, "")
+                .trim();
+
+              setMessages((prev) => {
+                const updated = [...prev];
+                updated[updated.length - 1] = { from: "bot", text: displayText };
+                return updated;
+              });
+            }
+          } catch {
+            /* skip non-JSON lines */
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Stream error:", err);
+      fullResponse =
+        "I'm having a moment — could you try again? Or feel free to reach out directly at akshat@jaqyi.com!";
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = { from: "bot", text: fullResponse };
+        return updated;
+      });
     }
+
+    // Save to chat history
+    setChatHistory((prev) => [
+      ...prev,
+      { role: "assistant", content: fullResponse },
+    ]);
+
+    // Check if the AI wants to collect contact info
+    if (fullResponse.includes("[COLLECT_CONTACT]")) {
+      setTimeout(() => setShowContactForm(true), 400);
+    }
+
+    setIsStreaming(false);
   };
 
-  /* Handle text submit */
-  const handleTextSubmit = (e) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
-    const step = STEPS[stepIdx];
-    setMessages((prev) => [...prev, { from: "user", text: inputValue }]);
-    setFormData((prev) => ({ ...prev, [step.field]: inputValue }));
+  /* ─── Handle user message ─── */
+  const handleSend = (e) => {
+    e?.preventDefault();
+    const text = inputValue.trim();
+    if (!text || isStreaming) return;
+
+    userMsgCount.current += 1;
     setInputValue("");
 
-    const nextIdx = stepIdx + 1;
-    if (nextIdx < STEPS.length) {
-      setTimeout(() => {
-        pushBotMessage(STEPS[nextIdx].bot);
-        setStepIdx(nextIdx);
-      }, 300);
-    }
+    // Add user message to UI
+    setMessages((prev) => [...prev, { from: "user", text }]);
+
+    // Build updated history
+    const updatedHistory = [
+      ...chatHistory,
+      { role: "user", content: text },
+    ];
+    setChatHistory(updatedHistory);
+
+    // Stream AI response
+    streamAIResponse(updatedHistory);
   };
 
-  /* Handle contact form submit */
+  /* ─── Handle contact form submit ─── */
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     if (!contactData.email && !contactData.phone) return;
     setSubmitting(true);
 
+    // Show user's contact info as a message
     setMessages((prev) => [
       ...prev,
-      { from: "user", text: `${contactData.name || "—"} · ${contactData.email || contactData.phone}` },
+      {
+        from: "user",
+        text: `${contactData.name || "—"} · ${contactData.email || contactData.phone}`,
+      },
     ]);
+
+    // Build conversation summary from chat history
+    const conversationSummary = chatHistory
+      .filter((m) => m.role !== "system")
+      .map((m) => `${m.role === "user" ? "Visitor" : "JAQYI AI"}: ${m.content.replace(/\[COLLECT_CONTACT\]/g, "").replace(/\[CONTACT_SUBMITTED\]/g, "")}`)
+      .join("\n");
 
     try {
       const payload = {
-        name: contactData.name || "Chatbot Lead",
+        name: contactData.name || "AI Chatbot Lead",
         email: contactData.email || "no-email@placeholder.com",
-        subject: `[Chatbot Lead] ${formData.service || "General Inquiry"}`,
+        subject: `[AI Chatbot Lead] New inquiry from ${contactData.name || "Website Visitor"}`,
         message:
-          `── Project Requirements ──\n` +
-          `Service: ${formData.service || "N/A"}\n` +
-          `Budget: ${formData.budget || "N/A"}\n` +
-          `Timeline: ${formData.timeline || "N/A"}\n` +
-          `Description: ${formData.description || "N/A"}\n\n` +
-          `── Contact ──\n` +
+          `── AI Chatbot Conversation ──\n${conversationSummary}\n\n` +
+          `── Contact Information ──\n` +
           `Name: ${contactData.name || "N/A"}\n` +
           `Email: ${contactData.email || "N/A"}\n` +
           `Phone: ${contactData.phone || "N/A"}`,
@@ -208,130 +222,146 @@ const ChatbotForm = () => {
         body: JSON.stringify(payload),
       });
     } catch {
-      /* silent — the thank-you message still shows */
+      /* silent — thank-you message still shows */
     }
+
+    // Tell the AI that contact was submitted
+    const thankYou =
+      "🎉 Thank you! I've sent your details to our team. Someone from JAQYI will reach out within 24 hours with a tailored proposal. Looking forward to working with you!";
+    setMessages((prev) => [...prev, { from: "bot", text: thankYou }]);
+    setChatHistory((prev) => [
+      ...prev,
+      { role: "assistant", content: thankYou },
+    ]);
 
     setSubmitting(false);
     setSubmitted(true);
-    const doneStep = STEPS[STEPS.length - 1];
-    setTimeout(() => {
-      pushBotMessage(doneStep.bot);
-      setStepIdx(STEPS.length - 1);
-    }, 300);
+    setShowContactForm(false);
   };
 
-  const currentStep = STEPS[stepIdx];
-
   return (
-    <div className="cb-root">
+    <div className="cb-root" ref={rootRef}>
       {/* Header bar */}
       <div className="cb-header">
         <div className="cb-header__left">
           <div className="cb-header__dot" />
-          <span className="cb-header__title">JAQYI Assistant</span>
+          <span className="cb-header__title">JAQYI AI Assistant</span>
         </div>
         <Sparkles size={14} className="cb-header__sparkle" />
       </div>
 
       {/* Messages area */}
-      <div className="cb-messages">
+      <div className="cb-messages" ref={messagesRef}>
         {messages.map((msg, i) => (
           <MessageBubble key={i} msg={msg} isNew={i === messages.length - 1} />
         ))}
-        {typing && (
+        {isStreaming && messages[messages.length - 1]?.from !== "bot" && (
           <div className="cb-msg cb-msg--bot">
-            <div className="cb-msg__avatar"><Bot size={14} /></div>
-            <div className="cb-msg__bubble"><TypingDots /></div>
+            <div className="cb-msg__avatar">
+              <Bot size={14} />
+            </div>
+            <div className="cb-msg__bubble">
+              <TypingDots />
+            </div>
           </div>
         )}
-        <div ref={chatEndRef} />
       </div>
 
-      {/* Input area */}
+      {/* Input / Contact area */}
       <AnimatePresence mode="wait">
-        {!typing && currentStep && !submitted && (
+        {/* Contact form — shown when AI triggers it */}
+        {showContactForm && !submitted && (
           <motion.div
-            key={currentStep.id}
+            key="contact"
             className="cb-input-area"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
           >
-            {/* Option buttons */}
-            {currentStep.type === "options" && (
-              <div className="cb-options">
-                {currentStep.options.map((opt) => (
-                  <button
-                    key={opt}
-                    className="cb-option-btn"
-                    onClick={() => handleOption(opt)}
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            )}
+            <form className="cb-contact-form" onSubmit={handleContactSubmit}>
+              <input
+                className="cb-contact-input"
+                placeholder="Your name"
+                value={contactData.name}
+                onChange={(e) =>
+                  setContactData((p) => ({ ...p, name: e.target.value }))
+                }
+              />
+              <input
+                className="cb-contact-input"
+                placeholder="Email address *"
+                type="email"
+                value={contactData.email}
+                onChange={(e) =>
+                  setContactData((p) => ({ ...p, email: e.target.value }))
+                }
+                required
+              />
+              <input
+                className="cb-contact-input"
+                placeholder="Phone number"
+                type="tel"
+                value={contactData.phone}
+                onChange={(e) =>
+                  setContactData((p) => ({ ...p, phone: e.target.value }))
+                }
+              />
+              <button
+                type="submit"
+                className="cb-submit-btn"
+                disabled={submitting || (!contactData.email && !contactData.phone)}
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 size={14} className="cb-spin" /> Sending…
+                  </>
+                ) : (
+                  <>
+                    <Send size={14} /> Get My Proposal
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+        )}
 
-            {/* Free-text input */}
-            {currentStep.type === "text" && (
-              <form className="cb-text-form" onSubmit={handleTextSubmit}>
-                <input
-                  ref={inputRef}
-                  className="cb-text-input"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder={currentStep.placeholder}
-                  autoFocus
-                />
-                <button type="submit" className="cb-send-btn" disabled={!inputValue.trim()}>
+        {/* Normal text input */}
+        {!showContactForm && !submitted && started && (
+          <motion.div
+            key="input"
+            className="cb-input-area"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+          >
+            <form className="cb-text-form" onSubmit={handleSend}>
+              <input
+                ref={inputRef}
+                className="cb-text-input"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask about our services…"
+                disabled={isStreaming}
+              />
+              <button
+                type="submit"
+                className="cb-send-btn"
+                disabled={!inputValue.trim() || isStreaming}
+              >
+                {isStreaming ? (
+                  <Loader2 size={14} className="cb-spin" />
+                ) : (
                   <Send size={14} />
-                </button>
-              </form>
-            )}
-
-            {/* Contact form */}
-            {currentStep.type === "contact" && (
-              <form className="cb-contact-form" onSubmit={handleContactSubmit}>
-                <input
-                  className="cb-contact-input"
-                  placeholder="Your name"
-                  value={contactData.name}
-                  onChange={(e) => setContactData((p) => ({ ...p, name: e.target.value }))}
-                />
-                <input
-                  className="cb-contact-input"
-                  placeholder="Email address *"
-                  type="email"
-                  value={contactData.email}
-                  onChange={(e) => setContactData((p) => ({ ...p, email: e.target.value }))}
-                  required
-                />
-                <input
-                  className="cb-contact-input"
-                  placeholder="Phone number"
-                  type="tel"
-                  value={contactData.phone}
-                  onChange={(e) => setContactData((p) => ({ ...p, phone: e.target.value }))}
-                />
-                <button
-                  type="submit"
-                  className="cb-submit-btn"
-                  disabled={submitting || (!contactData.email && !contactData.phone)}
-                >
-                  {submitting ? (
-                    <><Loader2 size={14} className="cb-spin" /> Sending…</>
-                  ) : (
-                    <><Send size={14} /> Get My Proposal</>
-                  )}
-                </button>
-              </form>
-            )}
+                )}
+              </button>
+            </form>
           </motion.div>
         )}
 
         {/* Success state */}
-        {submitted && !typing && (
+        {submitted && (
           <motion.div
             className="cb-input-area cb-success"
             initial={{ opacity: 0, scale: 0.9 }}

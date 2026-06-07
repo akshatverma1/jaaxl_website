@@ -6,7 +6,7 @@ import {
   Search, Target, Share2, FileText, MapPin,
   Smartphone, Tablet, Layers, Code, Grid, Globe,
   Monitor, Box, Cloud, Database, Cpu, Brain,
-  MessageSquare, BarChart, ArrowRight,
+  MessageSquare, BarChart, ArrowRight, Server, Activity
 } from 'lucide-react';
 import MobileSlider from '@/components/ui/MobileSlider';
 
@@ -14,7 +14,7 @@ const iconMap = {
   Search, Target, Share2, FileText, MapPin,
   Smartphone, Tablet, Layers, Code, Grid, Globe,
   Monitor, Box, Cloud, Database, Cpu, Brain,
-  MessageSquare, BarChart,
+  MessageSquare, BarChart, Server, Activity
 };
 
 /**  Mobile version — tall, premium card */
