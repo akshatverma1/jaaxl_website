@@ -178,8 +178,20 @@ const ChatbotForm = () => {
     ];
     setChatHistory(updatedHistory);
 
-    // Stream AI response
-    streamAIResponse(updatedHistory);
+    if (userMsgCount.current === 1) {
+      // First question: get real AI response
+      streamAIResponse(updatedHistory);
+    } else {
+      // Second question: stop chat, show contact form immediately
+      setIsStreaming(true);
+      setTimeout(() => {
+        const contactMsg = "I'd love to connect you with our team for a more detailed discussion! Could you share your contact details below so we can reach out with a tailored proposal?";
+        setMessages((prev) => [...prev, { from: "bot", text: contactMsg }]);
+        setChatHistory((prev) => [...prev, { role: "assistant", content: contactMsg }]);
+        setShowContactForm(true);
+        setIsStreaming(false);
+      }, 600);
+    }
   };
 
   /* ─── Handle contact form submit ─── */
