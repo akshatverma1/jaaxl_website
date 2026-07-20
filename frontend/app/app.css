@@ -194,8 +194,7 @@
   margin: 0 0 24px 0;
   line-height: 1;
   position: relative;
-  display: inline-block;
-  perspective: 800px;
+  display: block;
 }
 
 /* Layer 1: white letters that animate in */
@@ -219,6 +218,8 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  display: block;
+  text-align: center;
   /* Paint a 300% wide gradient so it can sweep */
   background: linear-gradient(
     100deg,
