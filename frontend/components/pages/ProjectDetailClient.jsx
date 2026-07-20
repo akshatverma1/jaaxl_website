@@ -95,12 +95,9 @@ export default function ProjectDetailClient({ project }) {
                   <Play size={16} /> Watch Full Demo
                 </a>
               )}
-              <a
-                href={`mailto:info@jaqyi.com?subject=${encodeURIComponent(project.name + ' — Inquiry')}`}
-                className="pd-btn pd-btn--ghost"
-              >
+              <Link href="/#contact" className="pd-btn pd-btn--ghost">
                 Request Demo
-              </a>
+              </Link>
             </div>
           </motion.div>
 
@@ -212,12 +209,9 @@ export default function ProjectDetailClient({ project }) {
             <div className="pd-cta-card">
               <p className="pd-cta-title">Interested in this project?</p>
               <p className="pd-cta-sub">Reach out and we'll set up a walkthrough.</p>
-              <a
-                href={`mailto:info@jaqyi.com?subject=${encodeURIComponent(project.name + ' — Demo Request')}`}
-                className="pd-btn pd-btn--primary pd-btn--full"
-              >
+              <Link href="/#contact" className="pd-btn pd-btn--primary pd-btn--full">
                 Get in Touch
-              </a>
+              </Link>
             </div>
           </div>
         </motion.section>
