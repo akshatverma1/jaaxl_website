@@ -3,10 +3,6 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ChatbotForm from "@/components/ChatbotForm";
 
-/**
- * MacbookShowcase — front-facing MacBook Air style mockup (screen only),
- * matching the Apple product-page style screenshot provided.
- */
 const MacbookShowcase = () => {
   const containerRef = useRef(null);
 
@@ -15,50 +11,128 @@ const MacbookShowcase = () => {
     offset: ["start end", "end start"],
   });
 
-  const y       = useTransform(scrollYProgress, [0, 0.5], [120, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
-  const scale   = useTransform(scrollYProgress, [0, 0.5], [0.93, 1]);
+  const y       = useTransform(scrollYProgress, [0, 0.5], [100, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+  const scale   = useTransform(scrollYProgress, [0, 0.5], [0.94, 1]);
+
+  // Function-row keys
+  const fnKeys = Array.from({ length: 13 });
+  // Main keyboard rows
+  const row1 = Array.from({ length: 13 });
+  const row2 = Array.from({ length: 12 });
+  const row3 = Array.from({ length: 11 });
+  const row4 = Array.from({ length: 10 });
 
   return (
     <section ref={containerRef} className="tablet-showcase-section">
-      <motion.div
-        className="mba-outer"
-        style={{ y, opacity, scale }}
-      >
-        {/* ── MacBook Air lid (front-facing) ───────────────────── */}
-        <div className="mba-lid">
+      <motion.div className="mac-wrap" style={{ y, opacity, scale }}>
 
-          {/* Top camera notch */}
-          <div className="mba-notch" />
+        {/* ══════════ SCREEN LID ══════════ */}
+        <div className="mac-lid">
+          {/* outer aluminum frame */}
+          <div className="mac-lid-inner">
+            {/* camera notch */}
+            <div className="mac-camera-notch">
+              <div className="mac-camera-dot" />
+            </div>
 
-          {/* Screen area */}
-          <div className="mba-screen">
+            {/* display */}
+            <div className="mac-display">
+              {/* macOS-style menu bar */}
+              <div className="mac-menubar">
+                <div className="mac-menubar-left">
+                  <span className="mac-mb-apple">⌘</span>
+                  <span className="mac-mb-item">JAQYI</span>
+                  <span className="mac-mb-item">Services</span>
+                </div>
+                <div className="mac-menubar-right">
+                  <div className="mac-traffic">
+                    <span className="mac-t mac-t--r" />
+                    <span className="mac-t mac-t--y" />
+                    <span className="mac-t mac-t--g" />
+                  </div>
+                </div>
+              </div>
 
-            {/* Thin menu-bar strip */}
-            <div className="mba-menubar">
-              <span className="mba-apple">✦</span>
-              <span className="mba-title">JAQYI AI Assistant</span>
-              <div className="mba-dots">
-                <span className="mba-dot mba-dot--r" />
-                <span className="mba-dot mba-dot--y" />
-                <span className="mba-dot mba-dot--g" />
+              {/* chatbot */}
+              <div className="mac-display-content">
+                <ChatbotForm />
               </div>
             </div>
 
-            {/* Chatbot content */}
-            <div className="mba-content">
-              <ChatbotForm />
+            {/* bottom chin */}
+            <div className="mac-chin" />
+          </div>
+        </div>
+
+        {/* ══════════ HINGE ══════════ */}
+        <div className="mac-hinge">
+          <div className="mac-hinge-shine" />
+        </div>
+
+        {/* ══════════ KEYBOARD BODY ══════════ */}
+        <div className="mac-body">
+          <div className="mac-body-inner">
+
+            {/* Function row */}
+            <div className="mac-key-row mac-key-row--fn">
+              {fnKeys.map((_, i) => (
+                <div key={i} className="mac-key mac-key--fn" />
+              ))}
+            </div>
+
+            {/* Row 1: numbers */}
+            <div className="mac-key-row">
+              {row1.map((_, i) => (
+                <div key={i} className="mac-key" />
+              ))}
+            </div>
+
+            {/* Row 2: QWERTY */}
+            <div className="mac-key-row">
+              {row2.map((_, i) => (
+                <div key={i} className="mac-key" />
+              ))}
+              <div className="mac-key mac-key--wide" /> {/* backspace */}
+            </div>
+
+            {/* Row 3: ASDF */}
+            <div className="mac-key-row">
+              <div className="mac-key mac-key--caps" />
+              {row3.map((_, i) => (
+                <div key={i} className="mac-key" />
+              ))}
+              <div className="mac-key mac-key--return" /> {/* return */}
+            </div>
+
+            {/* Row 4: ZXCV */}
+            <div className="mac-key-row">
+              <div className="mac-key mac-key--shift-l" />
+              {row4.map((_, i) => (
+                <div key={i} className="mac-key" />
+              ))}
+              <div className="mac-key mac-key--shift-r" />
+            </div>
+
+            {/* Bottom row: modifiers + spacebar */}
+            <div className="mac-key-row mac-key-row--bottom">
+              <div className="mac-key mac-key--mod" /> {/* fn */}
+              <div className="mac-key mac-key--mod" /> {/* ctrl */}
+              <div className="mac-key mac-key--mod" /> {/* opt */}
+              <div className="mac-key mac-key--cmd" /> {/* cmd */}
+              <div className="mac-key mac-key--space" /> {/* space */}
+              <div className="mac-key mac-key--cmd" /> {/* cmd */}
+              <div className="mac-key mac-key--mod" /> {/* opt */}
+              <div className="mac-key mac-key--arrow" />
+              <div className="mac-key mac-key--arrow" />
+              <div className="mac-key mac-key--arrow" />
             </div>
           </div>
 
-          {/* Bottom chin */}
-          <div className="mba-chin" />
+          {/* Trackpad */}
+          <div className="mac-trackpad" />
         </div>
 
-        {/* ── Base strip (hinge / foot) ─────────────────────────── */}
-        <div className="mba-base-strip">
-          <div className="mba-base-line" />
-        </div>
       </motion.div>
     </section>
   );

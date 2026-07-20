@@ -343,199 +343,264 @@
 }
 
 /* =================================
-   MACBOOK AIR SHOWCASE (front-facing, screen-only style)
+   MACBOOK SHOWCASE — realistic lid + keyboard
    ================================= */
-.home-page {
-  background-color: #ffffff;
-}
+.home-page { background-color: #ffffff; }
 
 .tablet-showcase-section {
   position: relative;
   background: #ffffff;
-  padding: 0 24px 40px;
+  padding: 0 24px 60px;
   display: flex;
   justify-content: center;
   overflow: visible;
   z-index: 3;
 }
 
-/* ── Outer wrapper ── */
-.mba-outer {
+/* Outer wrapper */
+.mac-wrap {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  margin-top: -80px;
+  max-width: 880px;
+  margin-top: -60px;
   z-index: 10;
-  filter: drop-shadow(0 28px 60px rgba(0,0,0,0.18))
-          drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 40px 80px rgba(0,0,0,0.22))
+          drop-shadow(0 6px 16px rgba(0,0,0,0.12));
 }
 
-/* ── Lid (the screen panel) ── */
-.mba-lid {
-  /* Silver / starlight aluminum */
-  background: linear-gradient(
-    180deg,
-    #ebebeb 0%,
-    #e0e0e0 40%,
-    #d4d4d4 100%
-  );
-  border-radius: 16px 16px 6px 6px;
-  padding: 10px 10px 0;
+/* ───────── LID ───────── */
+.mac-lid {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d6d6d6 60%, #cccccc 100%);
+  border-radius: 14px 14px 4px 4px;
+  padding: 2px;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.95),
-    inset 0 0 0 1px rgba(0,0,0,0.09);
-  position: relative;
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 0 0 1px rgba(0,0,0,0.11);
 }
 
-/* Camera notch — centered at top */
-.mba-notch {
-  position: absolute;
-  top: 3px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 56px;
-  height: 8px;
-  background: #d0d0d0;
-  border-radius: 0 0 6px 6px;
-  z-index: 5;
+.mac-lid-inner {
+  background: #1a1a1c;
+  border-radius: 12px 12px 3px 3px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
-  /* FaceTime camera dot */
+/* Camera notch */
+.mac-camera-notch {
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.mba-notch::after {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #444, #111);
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
-}
-
-/* Screen (near-black bezel, matches real MBA) */
-.mba-screen {
-  background: #111114;
-  border-radius: 8px 8px 2px 2px;
-  overflow: hidden;
-  aspect-ratio: 16 / 10;
-  display: flex;
-  flex-direction: column;
-  box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,0.5),
-    inset 0 0 40px rgba(0,0,0,0.3);
-}
-
-/* Menu bar strip */
-.mba-menubar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 12px;
-  background: rgba(18,18,20,0.98);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  background: #1a1a1c;
   flex-shrink: 0;
 }
 
-.mba-apple {
-  font-size: 10px;
-  color: rgba(255,255,255,0.25);
+.mac-camera-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #2a2a2a, #0a0a0a);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.04),
+    inset 0 0 3px rgba(255,255,255,0.1);
 }
 
-.mba-title {
+/* Display area */
+.mac-display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0a0b0f;
+  margin: 0 14px;
+  border-radius: 3px;
+}
+
+/* macOS menu bar */
+.mac-menubar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+  background: rgba(24,24,26,0.98);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+}
+
+.mac-menubar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mac-mb-apple {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+
+.mac-mb-item {
   font-size: 11px;
   color: rgba(255,255,255,0.4);
-  letter-spacing: 0.02em;
 }
 
-.mba-dots {
+.mac-menubar-right { display: flex; align-items: center; }
+
+.mac-traffic {
   display: flex;
-  gap: 4px;
-  margin-left: auto;
+  gap: 5px;
+  align-items: center;
 }
 
-.mba-dot {
-  width: 9px;
-  height: 9px;
+.mac-t {
+  width: 10px; height: 10px;
   border-radius: 50%;
+  display: inline-block;
 }
 
-.mba-dot--r { background: #ff5f57; }
-.mba-dot--y { background: #febc2e; }
-.mba-dot--g { background: #28c840; }
+.mac-t--r { background: #ff5f57; }
+.mac-t--y { background: #febc2e; }
+.mac-t--g { background: #28c840; }
 
-/* Chatbot fills the screen */
-.mba-content {
+.mac-display-content {
   flex: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #06090e;
 }
 
-/* Bottom chin (slightly thicker silver strip, just like real MBA) */
-.mba-chin {
-  height: 22px;
-  background: transparent;
+/* Bottom chin on lid */
+.mac-chin {
+  height: 20px;
+  background: #1a1a1c;
+  flex-shrink: 0;
 }
 
-/* ── Base strip (hinge / foot, barely visible like real MBA) ── */
-.mba-base-strip {
-  height: 7px;
-  background: linear-gradient(
-    180deg,
-    #c4c4c4 0%,
-    #b8b8b8 50%,
-    #aeaeae 100%
-  );
-  border-radius: 0 0 3px 3px;
+/* ───────── HINGE ───────── */
+.mac-hinge {
   position: relative;
+  height: 5px;
+  background: linear-gradient(180deg, #b8b8b8 0%, #a8a8a8 60%, #9e9e9e 100%);
   overflow: hidden;
 }
 
-/* Subtle highlight across the hinge */
-.mba-base-line {
-  position: absolute;
-  inset: 0;
+.mac-hinge-shine {
+  position: absolute; inset: 0;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255,255,255,0.5) 30%,
-    rgba(255,255,255,0.75) 50%,
-    rgba(255,255,255,0.5) 70%,
+    rgba(255,255,255,0.55) 35%,
+    rgba(255,255,255,0.85) 50%,
+    rgba(255,255,255,0.55) 65%,
     transparent 100%
   );
 }
 
+/* ───────── KEYBOARD BODY ───────── */
+.mac-body {
+  background: linear-gradient(
+    180deg,
+    #dedede 0%,
+    #d2d2d2 50%,
+    #c8c8c8 100%
+  );
+  border-radius: 0 0 12px 12px;
+  padding: 12px 14px 16px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.55),
+    inset 0 -1px 0 rgba(0,0,0,0.07),
+    0 6px 24px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.mac-body-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Key rows */
+.mac-key-row {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+/* Base key */
+.mac-key {
+  flex: 1;
+  max-width: 40px;
+  height: 20px;
+  background: linear-gradient(160deg, #f0f0f0 0%, #e2e2e2 100%);
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.13);
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* Function row — smaller height */
+.mac-key-row--fn .mac-key--fn {
+  max-width: 40px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* Wide modifier keys */
+.mac-key--wide    { max-width: 68px; flex: 1.7; }
+.mac-key--caps    { max-width: 58px; flex: 1.45; }
+.mac-key--return  { max-width: 80px; flex: 2; }
+.mac-key--shift-l { max-width: 80px; flex: 2; }
+.mac-key--shift-r { max-width: 96px; flex: 2.4; }
+.mac-key--mod     { max-width: 42px; flex: 1.05; }
+.mac-key--cmd     { max-width: 58px; flex: 1.45; }
+.mac-key--space   { max-width: 240px; flex: 6; }
+.mac-key--arrow   { max-width: 28px; flex: 0.7; height: 10px; border-radius: 3px; }
+
+.mac-key-row--bottom {
+  margin-top: 1px;
+  align-items: center;
+}
+
+/* Trackpad */
+.mac-trackpad {
+  width: 220px;
+  height: 52px;
+  background: linear-gradient(160deg, #d8d8d8 0%, #cccccc 100%);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.65),
+    0 1px 3px rgba(0,0,0,0.1);
+}
+
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .mba-outer  { max-width: 700px; margin-top: -60px; }
+  .mac-wrap { max-width: 700px; margin-top: -40px; }
 }
 
 @media (max-width: 768px) {
-  .tablet-showcase-section { padding: 0 16px 30px; }
-  .mba-outer  { max-width: 100%; margin-top: -40px; }
-  .mba-notch  { width: 44px; }
-  .mba-lid    { padding: 8px 8px 0; }
-  .mba-chin   { height: 16px; }
+  .tablet-showcase-section { padding: 0 16px 40px; }
+  .mac-wrap { max-width: 100%; margin-top: -30px; }
+  .mac-key  { height: 16px; }
+  .mac-trackpad { width: 160px; height: 38px; }
 }
 
 @media (max-width: 480px) {
-  .tablet-showcase-section { padding: 0 10px 20px; }
-  .mba-lid    { padding: 6px 6px 0; border-radius: 12px 12px 4px 4px; }
-  .mba-chin   { height: 12px; }
-  .mba-screen { border-radius: 5px 5px 1px 1px; }
+  .tablet-showcase-section { padding: 0 10px 30px; }
+  .mac-key  { height: 12px; border-radius: 3px; }
+  .mac-key--fn { height: 10px; }
+  .mac-trackpad { width: 120px; height: 28px; }
 }
 
-/* Legacy compat */
+/* Legacy */
 .ipad-screen--chatbot {
   aspect-ratio: 4 / 3;
   display: flex;
   flex-direction: column;
 }
-
-
 
 
 /* =================================
