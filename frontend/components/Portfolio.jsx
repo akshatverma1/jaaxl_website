@@ -45,21 +45,15 @@ const VideoProjectCard = ({ project, index }) => {
       </div>
 
       <div className="project-image-wrapper">
-        {/* Video element */}
+        {/* Video — always visible, plays on hover */}
         <video
           ref={videoRef}
           src={project.videoUrl}
-          className={`project-video ${isHovered ? 'project-video--visible' : ''}`}
+          className="project-video project-video--always"
           muted
           loop
           playsInline
           preload="metadata"
-        />
-        {/* Fallback image */}
-        <img
-          src={project.image}
-          alt={project.name}
-          className={`project-image project-image--video-fallback ${isHovered ? 'project-image--hidden' : ''}`}
         />
 
         {/* Overlay */}
