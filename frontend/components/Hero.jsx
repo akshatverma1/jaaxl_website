@@ -4,12 +4,10 @@ import { motion } from 'framer-motion';
 import { heroData } from '@/data/mock';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import GlimmeringMap from '@/components/GlimmeringMap';
 
 const Hero = () => {
   return (
     <section id="home" className="hero-section">
-      <GlimmeringMap dotSpacing={5.5} glimmerRate={6} dimOpacity={0.24} glowBlur={30} />
       <div className="hero-container">
 
 
