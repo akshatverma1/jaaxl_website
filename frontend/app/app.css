@@ -186,13 +186,77 @@
   height: 14px;
 }
 
+/* ── Animated JAQYI title ─────────────────────────────────────────────── */
 .hero-title {
   font-size: 96px;
   font-weight: 300;
   letter-spacing: -0.02em;
-  color: #ffffff;
   margin: 0 0 24px 0;
   line-height: 1;
+  position: relative;
+  display: inline-block;
+  perspective: 800px;
+}
+
+/* Layer 1: white letters that animate in */
+.hero-title-inner {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  color: #ffffff;
+}
+
+.hero-letter {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+  /* Subtle glow on each letter after they land */
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.06);
+  transition: text-shadow 0.3s ease;
+}
+
+/* Layer 2: gradient shimmer — sits on top via mix-blend-mode */
+.hero-title-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Paint a 300% wide gradient so it can sweep */
+  background: linear-gradient(
+    100deg,
+    transparent       0%,
+    transparent      28%,
+    rgba(160,130,255,0.75) 38%,
+    rgba(100,220,255,0.85) 48%,
+    rgba(255,255,255,0.95) 53%,
+    rgba(100,220,255,0.85) 58%,
+    rgba(160,130,255,0.75) 68%,
+    transparent      78%,
+    transparent     100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Continuous sweep */
+  animation: shimmer-sweep 3.2s ease-in-out infinite;
+  animation-delay: 1.2s; /* start after letters land */
+  pointer-events: none;
+  user-select: none;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+/* Hover on the section amplifies the glow */
+.hero-section:hover .hero-letter {
+  text-shadow: 0 0 80px rgba(160, 130, 255, 0.18);
+}
+
+@keyframes shimmer-sweep {
+  0%   { background-position: 130% 50%; }
+  50%  { background-position: -30% 50%; }
+  100% { background-position: 130% 50%; }
 }
 
 .hero-tagline {

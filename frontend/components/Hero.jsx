@@ -5,11 +5,43 @@ import { heroData } from '@/data/mock';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+// Stagger container — each letter staggers in from below with blur
+const titleContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const letterVariant = {
+  hidden: {
+    opacity: 0,
+    y: 56,
+    filter: 'blur(14px)',
+    rotateX: -30,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    rotateX: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 120,
+      damping: 14,
+    },
+  },
+};
+
+const TITLE = 'JAQYI';
+
 const Hero = () => {
   return (
     <section id="home" className="hero-section">
       <div className="hero-container">
-
 
         {/* Content */}
         <motion.div
@@ -28,20 +60,39 @@ const Hero = () => {
             <span>Software Excellence</span>
           </motion.div>
 
+          {/* ── Animated JAQYI heading ── */}
           <motion.h1
             className="hero-title"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            variants={titleContainer}
+            initial="hidden"
+            animate="show"
+            aria-label={TITLE}
           >
-            {heroData.company}
+            {/* Letter-by-letter with overflow clip */}
+            <span className="hero-title-inner" aria-hidden>
+              {TITLE.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  className="hero-letter"
+                  variants={letterVariant}
+                  style={{ display: 'inline-block' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+
+            {/* Gradient shimmer overlay — clipped to text */}
+            <span className="hero-title-shimmer" aria-hidden>
+              {TITLE}
+            </span>
           </motion.h1>
 
           <motion.p
             className="hero-tagline"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.85 }}
           >
             {heroData.tagline}
           </motion.p>
@@ -50,7 +101,7 @@ const Hero = () => {
             className="hero-description"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
           >
             {heroData.description}
           </motion.p>
@@ -59,7 +110,7 @@ const Hero = () => {
             className="hero-cta"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
           >
             <Button asChild className="cta-primary">
               <a href="#portfolio">
@@ -81,7 +132,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{
-            opacity: { delay: 1.2, duration: 0.6 },
+            opacity: { delay: 1.4, duration: 0.6 },
             y: { duration: 2, repeat: Infinity, ease: "easeInOut" }
           }}
         >
