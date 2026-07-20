@@ -343,7 +343,7 @@
 }
 
 /* =================================
-   MACBOOK SHOWCASE (MacBook Pro Mockup)
+   MACBOOK AIR SHOWCASE (front-facing, screen-only style)
    ================================= */
 .home-page {
   background-color: #ffffff;
@@ -352,107 +352,121 @@
 .tablet-showcase-section {
   position: relative;
   background: #ffffff;
-  padding: 0 24px 60px;
+  padding: 0 24px 40px;
   display: flex;
   justify-content: center;
   overflow: visible;
   z-index: 3;
 }
 
-/* ── Outer frame ── */
-.macbook-frame {
+/* ── Outer wrapper ── */
+.mba-outer {
   position: relative;
   width: 100%;
-  max-width: 860px;
-  margin-top: -100px;
+  max-width: 900px;
+  margin-top: -80px;
   z-index: 10;
+  filter: drop-shadow(0 28px 60px rgba(0,0,0,0.18))
+          drop-shadow(0 4px 12px rgba(0,0,0,0.1));
 }
 
-/* ══════════════════════════════════
-   LID (screen half) — Silver
-══════════════════════════════════ */
-.macbook-lid {
-  position: relative;
-  /* Silver aluminum gradient — bright top edge, slight shadow at bottom */
+/* ── Lid (the screen panel) ── */
+.mba-lid {
+  /* Silver / starlight aluminum */
   background: linear-gradient(
-    160deg,
-    #f0f0f0 0%,
-    #e2e2e2 35%,
-    #d0d0d0 70%,
-    #c8c8c8 100%
+    180deg,
+    #ebebeb 0%,
+    #e0e0e0 40%,
+    #d4d4d4 100%
   );
-  border-radius: 14px 14px 0 0;
-  padding: 6px 6px 0;
+  border-radius: 16px 16px 6px 6px;
+  padding: 10px 10px 0;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.9),
-    inset 0 0 0 1px rgba(0,0,0,0.1),
-    0 -2px 8px rgba(0,0,0,0.15);
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 0 0 1px rgba(0,0,0,0.09);
+  position: relative;
 }
 
-/* Notch */
-.macbook-notch {
+/* Camera notch — centered at top */
+.mba-notch {
   position: absolute;
-  top: 0;
+  top: 3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 64px;
-  height: 10px;
-  background: #d8d8d8;
-  border-radius: 0 0 8px 8px;
+  width: 56px;
+  height: 8px;
+  background: #d0d0d0;
+  border-radius: 0 0 6px 6px;
   z-index: 5;
+
+  /* FaceTime camera dot */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Screen bezel — stays near-black so content pops */
-.macbook-screen-bezel {
-  background: #111112;
-  border-radius: 8px;
+.mba-notch::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #444, #111);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
+}
+
+/* Screen (near-black bezel, matches real MBA) */
+.mba-screen {
+  background: #111114;
+  border-radius: 8px 8px 2px 2px;
   overflow: hidden;
   aspect-ratio: 16 / 10;
   display: flex;
   flex-direction: column;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.5),
+    inset 0 0 40px rgba(0,0,0,0.3);
 }
 
-/* Menu bar chrome */
-.macbook-menubar {
+/* Menu bar strip */
+.mba-menubar {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 14px;
-  background: rgba(22, 22, 24, 0.97);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 5px 12px;
+  background: rgba(18,18,20,0.98);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
   flex-shrink: 0;
 }
 
-.macbook-menubar-dots {
+.mba-apple {
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+}
+
+.mba-title {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.02em;
+}
+
+.mba-dots {
   display: flex;
-  gap: 5px;
+  gap: 4px;
   margin-left: auto;
 }
 
-.mac-dot {
-  width: 10px;
-  height: 10px;
+.mba-dot {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
 }
 
-.mac-dot--red    { background: #ff5f57; }
-.mac-dot--yellow { background: #febc2e; }
-.mac-dot--green  { background: #28c840; }
+.mba-dot--r { background: #ff5f57; }
+.mba-dot--y { background: #febc2e; }
+.mba-dot--g { background: #28c840; }
 
-.macbook-menubar-logo {
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
-}
-
-.macbook-menubar-title {
-  font-size: 11px;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.03em;
-}
-
-/* Screen content — chatbot fills this */
-.macbook-screen-content {
+/* Chatbot fills the screen */
+.mba-content {
   flex: 1;
   overflow: hidden;
   display: flex;
@@ -460,110 +474,68 @@
   background: #06090e;
 }
 
-/* ══════════════════════════════════
-   HINGE — silver
-══════════════════════════════════ */
-.macbook-hinge {
-  height: 4px;
-  background: linear-gradient(180deg, #c0c0c0 0%, #b0b0b0 50%, #a8a8a8 100%);
-  border-left:  2px solid #d4d4d4;
-  border-right: 2px solid #d4d4d4;
+/* Bottom chin (slightly thicker silver strip, just like real MBA) */
+.mba-chin {
+  height: 22px;
+  background: transparent;
 }
 
-.macbook-hinge-inner {
-  height: 100%;
+/* ── Base strip (hinge / foot, barely visible like real MBA) ── */
+.mba-base-strip {
+  height: 7px;
+  background: linear-gradient(
+    180deg,
+    #c4c4c4 0%,
+    #b8b8b8 50%,
+    #aeaeae 100%
+  );
+  border-radius: 0 0 3px 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle highlight across the hinge */
+.mba-base-line {
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
     90deg,
     transparent 0%,
     rgba(255,255,255,0.5) 30%,
-    rgba(255,255,255,0.8) 50%,
+    rgba(255,255,255,0.75) 50%,
     rgba(255,255,255,0.5) 70%,
     transparent 100%
   );
 }
 
-/* ══════════════════════════════════
-   BASE (keyboard half) — silver
-══════════════════════════════════ */
-.macbook-base {
-  background: linear-gradient(
-    180deg,
-    #e0e0e0 0%,
-    #d4d4d4 40%,
-    #cacaca 100%
-  );
-  border-radius: 0 0 12px 12px;
-  padding: 18px 20px 14px;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.6),
-    inset 0 -1px 0 rgba(0,0,0,0.08),
-    0 10px 40px rgba(0,0,0,0.22),
-    0 2px 6px rgba(0,0,0,0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Keyboard decoration */
-.macbook-keyboard-area {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 80%;
-}
-
-.macbook-keyboard-row {
-  display: flex;
-  gap: 3px;
-  justify-content: center;
-}
-
-.macbook-key {
-  flex: 1;
-  height: 16px;
-  max-width: 36px;
-  background: rgba(255,255,255,0.55);
-  border-radius: 3px;
-  border: 1px solid rgba(0,0,0,0.12);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.08);
-}
-
-/* Trackpad */
-.macbook-trackpad {
-  width: 160px;
-  height: 44px;
-  background: rgba(255,255,255,0.4);
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7);
-}
-
-/* ── Responsive ─────────────────── */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .macbook-frame { max-width: 680px; margin-top: -80px; }
+  .mba-outer  { max-width: 700px; margin-top: -60px; }
 }
 
 @media (max-width: 768px) {
-  .tablet-showcase-section { padding: 0 16px 40px; }
-  .macbook-frame { max-width: 100%; margin-top: -50px; }
-  .macbook-notch { width: 48px; height: 8px; }
-  .macbook-key   { height: 12px; }
-  .macbook-trackpad { width: 120px; height: 32px; }
+  .tablet-showcase-section { padding: 0 16px 30px; }
+  .mba-outer  { max-width: 100%; margin-top: -40px; }
+  .mba-notch  { width: 44px; }
+  .mba-lid    { padding: 8px 8px 0; }
+  .mba-chin   { height: 16px; }
 }
 
 @media (max-width: 480px) {
-  .tablet-showcase-section { padding: 0 10px 30px; }
-  .macbook-key { height: 10px; max-width: 28px; }
-  .macbook-trackpad { width: 90px; height: 26px; }
+  .tablet-showcase-section { padding: 0 10px 20px; }
+  .mba-lid    { padding: 6px 6px 0; border-radius: 12px 12px 4px 4px; }
+  .mba-chin   { height: 12px; }
+  .mba-screen { border-radius: 5px 5px 1px 1px; }
 }
 
-/* iPad screen chatbot variant (keep for backwards compat) */
+/* Legacy compat */
 .ipad-screen--chatbot {
   aspect-ratio: 4 / 3;
   display: flex;
   flex-direction: column;
 }
+
+
 
 
 /* =================================

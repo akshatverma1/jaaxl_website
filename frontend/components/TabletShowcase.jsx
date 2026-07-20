@@ -4,8 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import ChatbotForm from "@/components/ChatbotForm";
 
 /**
- * MacbookShowcase — a realistic MacBook Pro mockup housing an interactive chatbot
- * that rises from below the hero as the user scrolls.
+ * MacbookShowcase — front-facing MacBook Air style mockup (screen only),
+ * matching the Apple product-page style screenshot provided.
  */
 const MacbookShowcase = () => {
   const containerRef = useRef(null);
@@ -22,61 +22,42 @@ const MacbookShowcase = () => {
   return (
     <section ref={containerRef} className="tablet-showcase-section">
       <motion.div
-        className="macbook-frame"
+        className="mba-outer"
         style={{ y, opacity, scale }}
       >
-        {/* ── Lid (screen) ─────────────────────────────────────── */}
-        <div className="macbook-lid">
-          {/* Notch */}
-          <div className="macbook-notch" />
+        {/* ── MacBook Air lid (front-facing) ───────────────────── */}
+        <div className="mba-lid">
 
-          {/* Screen bezel */}
-          <div className="macbook-screen-bezel">
-            {/* Menu-bar chrome strip */}
-            <div className="macbook-menubar">
-              <span className="macbook-menubar-logo">✦</span>
-              <span className="macbook-menubar-title">JAQYI AI Assistant</span>
-              <div className="macbook-menubar-dots">
-                <span className="mac-dot mac-dot--red"   />
-                <span className="mac-dot mac-dot--yellow"/>
-                <span className="mac-dot mac-dot--green" />
+          {/* Top camera notch */}
+          <div className="mba-notch" />
+
+          {/* Screen area */}
+          <div className="mba-screen">
+
+            {/* Thin menu-bar strip */}
+            <div className="mba-menubar">
+              <span className="mba-apple">✦</span>
+              <span className="mba-title">JAQYI AI Assistant</span>
+              <div className="mba-dots">
+                <span className="mba-dot mba-dot--r" />
+                <span className="mba-dot mba-dot--y" />
+                <span className="mba-dot mba-dot--g" />
               </div>
             </div>
 
-            {/* Live chatbot */}
-            <div className="macbook-screen-content">
+            {/* Chatbot content */}
+            <div className="mba-content">
               <ChatbotForm />
             </div>
           </div>
+
+          {/* Bottom chin */}
+          <div className="mba-chin" />
         </div>
 
-        {/* ── Hinge ─────────────────────────────────────────────── */}
-        <div className="macbook-hinge">
-          <div className="macbook-hinge-inner" />
-        </div>
-
-        {/* ── Base (keyboard) ───────────────────────────────────── */}
-        <div className="macbook-base">
-          {/* Keyboard area (decorative) */}
-          <div className="macbook-keyboard-area">
-            <div className="macbook-keyboard-row">
-              {Array.from({ length: 14 }).map((_, i) => (
-                <div key={i} className="macbook-key" />
-              ))}
-            </div>
-            <div className="macbook-keyboard-row">
-              {Array.from({ length: 13 }).map((_, i) => (
-                <div key={i} className="macbook-key" />
-              ))}
-            </div>
-            <div className="macbook-keyboard-row">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="macbook-key" />
-              ))}
-            </div>
-          </div>
-          {/* Trackpad */}
-          <div className="macbook-trackpad" />
+        {/* ── Base strip (hinge / foot) ─────────────────────────── */}
+        <div className="mba-base-strip">
+          <div className="mba-base-line" />
         </div>
       </motion.div>
     </section>
