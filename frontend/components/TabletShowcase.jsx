@@ -4,10 +4,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import ChatbotForm from "@/components/ChatbotForm";
 
 /**
- * TabletShowcase — an iPad mockup housing an interactive chatbot
+ * MacbookShowcase — a realistic MacBook Pro mockup housing an interactive chatbot
  * that rises from below the hero as the user scrolls.
  */
-const TabletShowcase = () => {
+const MacbookShowcase = () => {
   const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -15,32 +15,72 @@ const TabletShowcase = () => {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 0.5], [120, 0]);
+  const y       = useTransform(scrollYProgress, [0, 0.5], [120, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
+  const scale   = useTransform(scrollYProgress, [0, 0.5], [0.93, 1]);
 
   return (
     <section ref={containerRef} className="tablet-showcase-section">
       <motion.div
-        className="tablet-frame"
+        className="macbook-frame"
         style={{ y, opacity, scale }}
       >
-        {/* iPad bezel */}
-        <div className="ipad-bezel">
-          {/* Camera notch (top center) */}
-          <div className="ipad-camera" />
+        {/* ── Lid (screen) ─────────────────────────────────────── */}
+        <div className="macbook-lid">
+          {/* Notch */}
+          <div className="macbook-notch" />
 
-          {/* Screen area — interactive chatbot */}
-          <div className="ipad-screen ipad-screen--chatbot">
-            <ChatbotForm />
+          {/* Screen bezel */}
+          <div className="macbook-screen-bezel">
+            {/* Menu-bar chrome strip */}
+            <div className="macbook-menubar">
+              <span className="macbook-menubar-logo">✦</span>
+              <span className="macbook-menubar-title">JAQYI AI Assistant</span>
+              <div className="macbook-menubar-dots">
+                <span className="mac-dot mac-dot--red"   />
+                <span className="mac-dot mac-dot--yellow"/>
+                <span className="mac-dot mac-dot--green" />
+              </div>
+            </div>
+
+            {/* Live chatbot */}
+            <div className="macbook-screen-content">
+              <ChatbotForm />
+            </div>
           </div>
         </div>
 
-        {/* Subtle reflection */}
-        <div className="ipad-reflection" />
+        {/* ── Hinge ─────────────────────────────────────────────── */}
+        <div className="macbook-hinge">
+          <div className="macbook-hinge-inner" />
+        </div>
+
+        {/* ── Base (keyboard) ───────────────────────────────────── */}
+        <div className="macbook-base">
+          {/* Keyboard area (decorative) */}
+          <div className="macbook-keyboard-area">
+            <div className="macbook-keyboard-row">
+              {Array.from({ length: 14 }).map((_, i) => (
+                <div key={i} className="macbook-key" />
+              ))}
+            </div>
+            <div className="macbook-keyboard-row">
+              {Array.from({ length: 13 }).map((_, i) => (
+                <div key={i} className="macbook-key" />
+              ))}
+            </div>
+            <div className="macbook-keyboard-row">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="macbook-key" />
+              ))}
+            </div>
+          </div>
+          {/* Trackpad */}
+          <div className="macbook-trackpad" />
+        </div>
       </motion.div>
     </section>
   );
 };
 
-export default TabletShowcase;
+export default MacbookShowcase;

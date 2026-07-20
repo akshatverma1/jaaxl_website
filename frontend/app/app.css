@@ -343,7 +343,7 @@
 }
 
 /* =================================
-   TABLET SHOWCASE (iPad Mockup)
+   MACBOOK SHOWCASE (MacBook Pro Mockup)
    ================================= */
 .home-page {
   background-color: #ffffff;
@@ -352,149 +352,202 @@
 .tablet-showcase-section {
   position: relative;
   background: #ffffff;
-  padding: 0 24px 80px;
+  padding: 0 24px 60px;
   display: flex;
   justify-content: center;
   overflow: visible;
   z-index: 3;
 }
 
-.tablet-frame {
+/* ── Outer frame ── */
+.macbook-frame {
   position: relative;
-  max-width: 720px;
   width: 100%;
-  margin-top: -120px;
+  max-width: 860px;
+  margin-top: -100px;
   z-index: 10;
 }
 
-.ipad-bezel {
+/* ══════════════════════════════════
+   LID (screen half)
+══════════════════════════════════ */
+.macbook-lid {
   position: relative;
-  background: #050505;
-  border-radius: 28px;
-  padding: 18px;
+  background: linear-gradient(160deg, #3a3a3c 0%, #1c1c1e 60%, #111113 100%);
+  border-radius: 14px 14px 0 0;
+  padding: 6px 6px 0;
   box-shadow:
-    inset 0 0 0 1px #111,
-    0 0 0 1px #333,
-    0 0 0 3px #5e5e60,
-    0 0 0 7px #8e8e93,
-    0 0 0 8px #c7c7cc,
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(0, 180, 255, 0.05);
-  border: none;
+    inset 0 0 0 1px rgba(255,255,255,0.08),
+    0 -2px 10px rgba(0,0,0,0.5);
 }
 
-.ipad-camera {
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #222;
-}
-
-.ipad-screen {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #06090e;
-  aspect-ratio: 4 / 3;
-}
-
-.ipad-screen-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.ipad-reflection {
+/* Notch */
+.macbook-notch {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 40%;
-  border-radius: 24px 24px 0 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 10px;
+  background: #0a0a0b;
+  border-radius: 0 0 8px 8px;
+  z-index: 5;
+}
+
+/* Screen bezel */
+.macbook-screen-bezel {
+  background: #0a0a0c;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu bar chrome */
+.macbook-menubar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(30, 30, 32, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+}
+
+.macbook-menubar-dots {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.mac-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.mac-dot--red    { background: #ff5f57; }
+.mac-dot--yellow { background: #febc2e; }
+.mac-dot--green  { background: #28c840; }
+
+.macbook-menubar-logo {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+
+.macbook-menubar-title {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.03em;
+}
+
+/* Screen content — chatbot fills this */
+.macbook-screen-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #06090e;
+}
+
+/* ══════════════════════════════════
+   HINGE
+══════════════════════════════════ */
+.macbook-hinge {
+  height: 5px;
+  background: linear-gradient(180deg, #4a4a4c 0%, #2c2c2e 50%, #1c1c1e 100%);
+  border-left:  2px solid rgba(255,255,255,0.06);
+  border-right: 2px solid rgba(255,255,255,0.06);
+}
+
+.macbook-hinge-inner {
+  height: 100%;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.03) 0%,
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.08) 30%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.08) 70%,
     transparent 100%
   );
-  pointer-events: none;
 }
 
-/* Tablet breakpoint */
+/* ══════════════════════════════════
+   BASE (keyboard half)
+══════════════════════════════════ */
+.macbook-base {
+  background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+  border-radius: 0 0 12px 12px;
+  padding: 18px 20px 14px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.07),
+    0 8px 32px rgba(0,0,0,0.55),
+    0 2px 4px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Keyboard decoration */
+.macbook-keyboard-area {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 80%;
+}
+
+.macbook-keyboard-row {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.macbook-key {
+  flex: 1;
+  height: 16px;
+  max-width: 36px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Trackpad */
+.macbook-trackpad {
+  width: 160px;
+  height: 44px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+}
+
+/* ── Responsive ─────────────────── */
 @media (max-width: 1024px) {
-  .tablet-frame {
-    max-width: 600px;
-    margin-top: -100px;
-  }
-  .ipad-bezel {
-    border-radius: 24px;
-    padding: 16px;
-  }
-  .ipad-screen {
-    border-radius: 7px;
-  }
-  .ipad-reflection {
-    border-radius: 20px 20px 0 0;
-  }
+  .macbook-frame { max-width: 680px; margin-top: -80px; }
 }
 
-/* Mobile breakpoint */
 @media (max-width: 768px) {
-  .tablet-showcase-section {
-    padding: 0 16px 50px;
-  }
-  .tablet-frame {
-    max-width: 100%;
-    margin-top: -60px;
-  }
-  .ipad-bezel {
-    border-radius: 18px;
-    padding: 10px;
-    box-shadow:
-      inset 0 0 0 1px #111,
-      0 0 0 1px #333,
-      0 0 0 2px #5e5e60,
-      0 0 0 4px #8e8e93,
-      0 0 0 5px #c7c7cc,
-      0 10px 30px rgba(0, 0, 0, 0.4);
-  }
-  .ipad-screen {
-    border-radius: 6px;
-  }
-  .ipad-camera {
-    width: 4px;
-    height: 4px;
-    top: 3px;
-  }
-  .ipad-reflection {
-    border-radius: 14px 14px 0 0;
-  }
+  .tablet-showcase-section { padding: 0 16px 40px; }
+  .macbook-frame { max-width: 100%; margin-top: -50px; }
+  .macbook-notch { width: 48px; height: 8px; }
+  .macbook-key   { height: 12px; }
+  .macbook-trackpad { width: 120px; height: 32px; }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
-  .tablet-showcase-section {
-    padding: 0 10px 40px;
-  }
-  .ipad-bezel {
-    border-radius: 14px;
-    padding: 8px;
-  }
-  .ipad-screen {
-    border-radius: 5px;
-  }
+  .tablet-showcase-section { padding: 0 10px 30px; }
+  .macbook-key { height: 10px; max-width: 28px; }
+  .macbook-trackpad { width: 90px; height: 26px; }
 }
 
-/* iPad screen chatbot variant */
+/* iPad screen chatbot variant (keep for backwards compat) */
 .ipad-screen--chatbot {
   aspect-ratio: 4 / 3;
   display: flex;
   flex-direction: column;
 }
+
 
 /* =================================
    CHATBOT FORM STYLES
