@@ -269,8 +269,8 @@ const Portfolio = () => {
         {/* ── Mobile Slider ── */}
         <div className="show-on-mobile">
           <MobileSlider darkTheme>
-            {portfolioData.projects.map((project) => (
-              <ProjectCardMobile key={project.id} project={project} />
+            {allProjects.map((project) => (
+              <ProjectCardMobile key={project.slug} project={project} />
             ))}
           </MobileSlider>
         </div>
