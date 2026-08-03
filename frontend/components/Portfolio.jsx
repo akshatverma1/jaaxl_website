@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { projects as allProjects } from '@/data/projects';
-import { portfolioData } from '@/data/mock';
 import { ArrowUpRight, Play, ExternalLink, Video } from 'lucide-react';
 import MobileSlider from '@/components/ui/MobileSlider';
 import GlimmeringMap from '@/components/GlimmeringMap';
@@ -283,15 +282,10 @@ const Portfolio = () => {
           animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          <a
-            href={portfolioData.portfolioUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="portfolio-cta__btn"
-          >
+          <Link href="/portfolio" className="portfolio-cta__btn">
             View Full Portfolio
             <ArrowUpRight size={18} />
-          </a>
+          </Link>
           <p className="portfolio-cta__sub">35+ projects · AI agents · SaaS · scrapers · mobile apps</p>
         </motion.div>
 
