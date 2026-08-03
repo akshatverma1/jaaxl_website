@@ -292,7 +292,7 @@ const Portfolio = () => {
             View Full Portfolio
             <ArrowUpRight size={18} />
           </a>
-          <p className="portfolio-cta__sub">12 projects · AI agents · scrapers · mobile apps</p>
+          <p className="portfolio-cta__sub">35+ projects · AI agents · SaaS · scrapers · mobile apps</p>
         </motion.div>
 
       </div>
