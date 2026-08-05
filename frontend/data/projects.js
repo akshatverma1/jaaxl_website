@@ -14,7 +14,7 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1557597774-9d475d5a31c7?w=800&q=80',
     hasVideo: true,
     videoUrl: 'https://jaqyi-portfolio.vercel.app/New_Projects/suraksha.mp4',
-    liveUrl: 'https://suraksha.site',
+    liveUrl: 'https://safety-web-application.vercel.app',
     stack: ['Web App', 'Real-time Data', 'Location Intelligence'],
     tags: ['Web App', 'Real-time Data', 'Location Intelligence', 'Modern UI', 'Public Safety'],
     features: [
@@ -24,7 +24,7 @@ export const projects = [
       'Modern, intuitive web tech stack for fast load performance',
     ],
     specs: [
-      { label: 'Live URL', value: 'suraksha.site', href: 'https://suraksha.site' },
+      { label: 'Live URL', value: 'safety-web-application.vercel.app', href: 'https://safety-web-application.vercel.app' },
       { label: 'Type', value: 'Public Safety Web Platform' },
       { label: 'Status', value: 'Production Live' },
     ],
@@ -40,7 +40,7 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80',
     hasVideo: true,
     videoUrl: 'https://jaqyi-portfolio.vercel.app/New_Projects/ahri.mp4',
-    liveUrl: null,
+    liveUrl: 'https://hr-ai-lake.vercel.app',
     stack: ['AI Agent', 'SaaS', 'Resume Parsing', 'NLP'],
     tags: ['AI Agent', 'SaaS', 'HR Automation', 'Resume Parsing', 'NLP', 'Multi-tenant'],
     features: [
@@ -51,11 +51,11 @@ export const projects = [
       'AI-integrated workforce management module',
     ],
     specs: [
-      { label: 'Model', value: 'AI SaaS Product' },
+      { label: 'Live URL', value: 'hr-ai-lake.vercel.app', href: 'https://hr-ai-lake.vercel.app' },
       { label: 'Core Functions', value: 'Resume Screening, HR Q&A' },
       { label: 'Target', value: 'HR Teams & SMBs' },
       { label: 'Architecture', value: 'Multi-tenant SaaS' },
-      { label: 'Status', value: 'In Development' },
+      { label: 'Status', value: 'Live' },
     ],
   },
   {
@@ -69,7 +69,7 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80',
     hasVideo: true,
     videoUrl: 'https://jaqyi-portfolio.vercel.app/New_Projects/aitextify.mp4',
-    liveUrl: null,
+    liveUrl: 'https://image-reader-f.vercel.app',
     stack: ['Vision AI', 'Computer Vision', 'NLP'],
     tags: ['Vision AI', 'Image Analysis', 'Natural Language Q&A', 'AI/ML', 'Computer Vision'],
     features: [
@@ -79,10 +79,10 @@ export const projects = [
       'Conversational interface for multi-turn image Q&A sessions',
     ],
     specs: [
-      { label: 'Category', value: 'Vision AI / Image Q&A' },
+      { label: 'Live URL', value: 'image-reader-f.vercel.app', href: 'https://image-reader-f.vercel.app' },
       { label: 'Interface', value: 'Web Application' },
       { label: 'Core Tech', value: 'AI Vision Model + NLP' },
-      { label: 'Status', value: 'AI Product' },
+      { label: 'Status', value: 'Live' },
     ],
   },
   {
@@ -96,7 +96,7 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80',
     hasVideo: true,
     videoUrl: 'https://jaqyi-portfolio.vercel.app/New_Projects/medatitive_wing.mp4',
-    liveUrl: null,
+    liveUrl: 'https://meditative-wings-fe.vercel.app',
     stack: ['Blog Platform', 'Modern Web', 'Responsive Design'],
     tags: ['Blog Platform', 'Wellness', 'Mindfulness', 'Content Site', 'Responsive Design'],
     features: [
@@ -106,7 +106,7 @@ export const projects = [
       'Fully responsive blog layout for desktop and mobile readers',
     ],
     specs: [
-      { label: 'Category', value: 'Blog / Content Website' },
+      { label: 'Live URL', value: 'meditative-wings-fe.vercel.app', href: 'https://meditative-wings-fe.vercel.app' },
       { label: 'Niche', value: 'Meditation & Wellness' },
       { label: 'Format', value: 'Article / Blog Posts' },
       { label: 'Status', value: 'Blog Site Live' },
