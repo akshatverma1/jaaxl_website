@@ -144,13 +144,13 @@ const WebDevelopment = () => (
     {/* Services Grid */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
           <h2 className="section-title">Our Web Development Services</h2>
           <p className="section-subtitle">End-to-end web solutions — from simple landing pages to complex enterprise platforms</p>
         </motion.div>
         <div className="svc-page-grid">
           {services.map((s, i) => (
-            <motion.div key={s.name} className="svc-page-card" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }}>
+            <motion.div key={s.name} className="svc-page-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: Math.min(i * 0.04, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
               <div className="service-icon-wrapper"><s.icon className="service-icon" /></div>
               <h3 className="service-name">{s.name}</h3>
               <p className="service-description">{s.desc}</p>
@@ -164,7 +164,7 @@ const WebDevelopment = () => (
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container">
         <div className="svc-page-why">
-          <motion.div className="svc-page-why-content" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <motion.div className="svc-page-why-content" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4 }}>
             <h2 className="section-title" style={{ textAlign: 'left' }}>Why Choose JAQYI for Web Development?</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: 1.8 }}>
               We're not a body-shop or a template factory. Every website we build is a custom-engineered product 
@@ -185,7 +185,7 @@ const WebDevelopment = () => (
               </div>
             ))}
           </motion.div>
-          <motion.div className="svc-page-why-stats" initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <motion.div className="svc-page-why-stats" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4, delay: 0.05 }}>
             {[["50+", "Websites Delivered"], ["7+", "Years Experience"], ["20+", "Happy Clients"], ["100%", "On-Time Delivery"]].map(([v, l]) => (
               <div key={l} className="stat-card">
                 <h3 className="stat-value">{v}</h3>
@@ -200,13 +200,13 @@ const WebDevelopment = () => (
     {/* Technologies */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
           <h2 className="section-title">Technologies We Use</h2>
           <p className="section-subtitle">Modern, battle-tested technology stacks for every project</p>
         </motion.div>
         <div className="svc-page-tech-grid">
           {technologies.map((tech, i) => (
-            <motion.div key={tech} className="svc-page-tech-badge" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} viewport={{ once: true }}>
+            <motion.div key={tech} className="svc-page-tech-badge" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
               {tech}
             </motion.div>
           ))}
@@ -217,7 +217,7 @@ const WebDevelopment = () => (
     {/* Process */}
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
           <h2 className="section-title">Our Development Process</h2>
           <p className="section-subtitle">A proven process that delivers results, on time and on budget</p>
         </motion.div>
@@ -228,7 +228,7 @@ const WebDevelopment = () => (
             { n: "03", title: "Development & Testing", desc: "Agile sprints with bi-weekly demos. Automated testing, code reviews, and QA at every step." },
             { n: "04", title: "Launch & Growth", desc: "Deployment to production, SEO setup, analytics integration, and ongoing support to grow your digital presence." },
           ].map((step, i) => (
-            <motion.div key={step.n} className="svc-page-process-step" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }} viewport={{ once: true }}>
+            <motion.div key={step.n} className="svc-page-process-step" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: Math.min(i * 0.05, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
               <div className="svc-page-process-num">{step.n}</div>
               <h3 className="service-name">{step.title}</h3>
               <p className="service-description">{step.desc}</p>
@@ -241,7 +241,7 @@ const WebDevelopment = () => (
     {/* FAQ */}
     <section className="svc-page-section">
       <div className="svc-page-container svc-page-faq-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
           <h2 className="section-title">Frequently Asked Questions</h2>
           <p className="section-subtitle">Everything you need to know about our web development services</p>
         </motion.div>
@@ -254,7 +254,7 @@ const WebDevelopment = () => (
     {/* CTA */}
     <section className="svc-page-cta">
       <div className="svc-page-container">
-        <motion.div className="svc-page-cta-inner" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div className="svc-page-cta-inner" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
           <h2>Ready to Build Your Next Website?</h2>
           <p>Get a free consultation and quote within 24 hours. No commitment required.</p>
           <div className="svc-page-cta-btns">

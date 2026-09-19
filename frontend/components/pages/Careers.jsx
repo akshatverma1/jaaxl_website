@@ -56,8 +56,8 @@ const Careers = () => {
   const perksRef = React.useRef(null);
   const jobsRef = React.useRef(null);
 
-  const isPerksInView = useInView(perksRef, { once: true, margin: '-80px' });
-  const isJobsInView = useInView(jobsRef, { once: true, margin: '-80px' });
+  const isPerksInView = useInView(perksRef, { once: true, margin: '0px 0px 50px 0px' });
+  const isJobsInView = useInView(jobsRef, { once: true, margin: '0px 0px 50px 0px' });
 
   return (
     <div style={{ backgroundColor: '#000000', minHeight: '100vh', color: '#ffffff' }}>

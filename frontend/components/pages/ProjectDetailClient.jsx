@@ -149,8 +149,8 @@ export default function ProjectDetailClient({ project }) {
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+          transition={{ duration: 0.4 }}
         >
           {/* Features */}
           <div className="pd-card">

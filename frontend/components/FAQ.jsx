@@ -43,10 +43,10 @@ const faqs = [
 const FAQItem = ({ faq, index, isOpen, onToggle }) => (
   <motion.div
     className="faq-item"
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 15 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: index * 0.06 }}
+    viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+    transition={{ duration: 0.35, delay: Math.min(index * 0.03, 0.15) }}
   >
     <button
       className="faq-question"
@@ -66,7 +66,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => (
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.25, ease: 'easeInOut' }}
         >
           <p className="faq-answer">{faq.a}</p>
         </motion.div>
@@ -85,10 +85,10 @@ const FAQ = () => {
       <div className="faq-container">
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="section-title faq-title">Frequently Asked Questions</h2>
           <p className="section-subtitle faq-subtitle">
@@ -111,10 +111,10 @@ const FAQ = () => {
         {/* CTA below FAQ */}
         <motion.div
           className="faq-cta"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+          transition={{ duration: 0.35, delay: 0.08 }}
         >
           <p className="faq-cta-text">Still have questions?</p>
           <a href="#contact" className="faq-cta-link">

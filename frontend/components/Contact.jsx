@@ -27,8 +27,8 @@ const Contact = () => {
 
   const titleRef = React.useRef(null);
   const formRef = React.useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: "-100px" });
-  const isFormInView = useInView(formRef, { once: true, margin: "-100px" });
+  const isTitleInView = useInView(titleRef, { once: true, margin: "0px 0px 50px 0px" });
+  const isFormInView = useInView(formRef, { once: true, margin: "0px 0px 50px 0px" });
 
   const handleChange = (e) => {
     setFormData({
@@ -73,9 +73,9 @@ const Contact = () => {
         <motion.div
           ref={titleRef}
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="section-title">{contactData.title}</h2>
           <p className="section-subtitle">{contactData.subtitle}</p>
@@ -85,9 +85,9 @@ const Contact = () => {
           {/* Contact Info */}
           <motion.div
             className="contact-info"
-            initial={{ opacity: 0, x: -40 }}
-            animate={isFormInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isFormInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
           >
             <div className="contact-info-item">
               <Mail className="contact-icon" />
@@ -140,9 +140,9 @@ const Contact = () => {
             ref={formRef}
             className="contact-form"
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: 40 }}
-            animate={isFormInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isFormInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
           >
             <div className="form-group">
               <label htmlFor="name" className="form-label">Name</label>

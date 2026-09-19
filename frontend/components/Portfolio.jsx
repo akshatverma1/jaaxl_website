@@ -11,7 +11,7 @@ import GlimmeringMap from '@/components/GlimmeringMap';
 const VideoProjectCard = ({ project, index }) => {
   const ref = useRef(null);
   const videoRef = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '0px 0px 50px 0px' });
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -34,9 +34,9 @@ const VideoProjectCard = ({ project, index }) => {
       <motion.div
         ref={ref}
         className="project-card project-card--video"
-        initial={{ opacity: 0, y: 60 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-        transition={{ duration: 0.7, delay: index * 0.12 }}
+        initial={{ opacity: 0, y: 24 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.15) }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -116,16 +116,16 @@ const VideoProjectCard = ({ project, index }) => {
 /** ── Desktop Image Card ─────────────────────────────────────────────── */
 const ProjectCard = ({ project, index }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '0px 0px 50px 0px' });
 
   return (
     <Link href={`/projects/${project.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <motion.div
         ref={ref}
         className="project-card"
-        initial={{ opacity: 0, y: 60 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-        transition={{ duration: 0.7, delay: index * 0.12 }}
+        initial={{ opacity: 0, y: 24 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.15) }}
         whileHover={{ y: -8, transition: { duration: 0.3 } }}
       >
         <div className="project-image-wrapper">
@@ -207,8 +207,8 @@ const ProjectCardMobile = ({ project }) => (
 const Portfolio = () => {
   const titleRef = useRef(null);
   const ctaRef = useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: '-100px' });
-  const isCtaInView = useInView(ctaRef, { once: true, margin: '-60px' });
+  const isTitleInView = useInView(titleRef, { once: true, margin: '0px 0px 50px 0px' });
+  const isCtaInView = useInView(ctaRef, { once: true, margin: '0px 0px 50px 0px' });
 
   // Video projects come first
   const videoProjects = allProjects.filter((p) => p.hasVideo);
@@ -223,9 +223,9 @@ const Portfolio = () => {
         <motion.div
           ref={titleRef}
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="section-title">Our Work</h2>
           <p className="section-subtitle">From autonomous AI agents to live SaaS platforms — every project is built with precision and shipped with pride.</p>
@@ -278,9 +278,9 @@ const Portfolio = () => {
         <motion.div
           ref={ctaRef}
           className="portfolio-cta"
-          initial={{ opacity: 0, y: 24 }}
-          animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         >
           <Link href="/portfolio" className="portfolio-cta__btn">
             View Full Portfolio

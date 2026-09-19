@@ -15,9 +15,9 @@ const TabletShowcase = () => {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 0.5], [120, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.25], [40, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15], [0.4, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.25], [0.96, 1]);
 
   return (
     <section ref={containerRef} className="tablet-showcase-section">

@@ -10,8 +10,8 @@ const titleContainer = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.07,
-      delayChildren: 0.3,
+      staggerChildren: 0.04,
+      delayChildren: 0.1,
     },
   },
 };
@@ -19,9 +19,9 @@ const titleContainer = {
 const letterVariant = {
   hidden: {
     opacity: 0,
-    y: 56,
-    filter: 'blur(14px)',
-    rotateX: -30,
+    y: 30,
+    filter: 'blur(8px)',
+    rotateX: -20,
   },
   show: {
     opacity: 1,
@@ -30,8 +30,8 @@ const letterVariant = {
     rotateX: 0,
     transition: {
       type: 'spring',
-      stiffness: 120,
-      damping: 14,
+      stiffness: 160,
+      damping: 15,
     },
   },
 };
@@ -46,15 +46,15 @@ const Hero = () => {
         {/* Content */}
         <motion.div
           className="hero-content"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
         >
           <motion.div
             className="hero-badge"
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.35, delay: 0.15 }}
           >
             <Sparkles className="sparkle-icon" />
             <span>Software Excellence</span>
@@ -90,27 +90,27 @@ const Hero = () => {
 
           <motion.p
             className="hero-tagline"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.85 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
           >
             {heroData.tagline}
           </motion.p>
 
           <motion.p
             className="hero-description"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            transition={{ duration: 0.4, delay: 0.4 }}
           >
             {heroData.description}
           </motion.p>
 
           <motion.div
             className="hero-cta"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
+            transition={{ duration: 0.4, delay: 0.5 }}
           >
             <Button asChild className="cta-primary">
               <a href="#portfolio">

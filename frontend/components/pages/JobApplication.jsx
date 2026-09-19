@@ -327,10 +327,10 @@ const JobApplication = () => {
           {sections.map((section, sIdx) => (
             <motion.div
               key={section.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7, delay: 0.05 }}
+              viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+              transition={{ duration: 0.35 }}
               style={{ marginBottom: '80px' }}
             >
               {/* Section header */}
@@ -356,10 +356,10 @@ const JobApplication = () => {
                     {section.fields.map((field, fIdx) => (
                       <motion.div
                         key={field.name}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: fIdx * 0.07 }}
+                        viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+                        transition={{ duration: 0.3, delay: Math.min(fIdx * 0.03, 0.1) }}
                         style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
                       >
                         <label style={{ fontSize: '13px', fontWeight: 400, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.02em' }}>
@@ -373,10 +373,10 @@ const JobApplication = () => {
                   section.fields.map((field, fIdx) => (
                     <motion.div
                       key={field.name}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 15 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: fIdx * 0.06 }}
+                      viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+                      transition={{ duration: 0.3, delay: Math.min(fIdx * 0.03, 0.1) }}
                       style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
                     >
                       <label style={{ fontSize: '14px', fontWeight: 400, color: 'rgba(255,255,255,0.55)', lineHeight: 1.5 }}>
@@ -392,10 +392,10 @@ const JobApplication = () => {
 
           {/* ── Resume upload ── */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.7 }}
+            viewport={{ once: true, margin: '0px 0px 50px 0px' }}
+            transition={{ duration: 0.35 }}
             style={{ marginBottom: '80px' }}
           >
             <div style={{

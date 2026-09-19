@@ -46,7 +46,7 @@ const ChatbotForm = () => {
   const messagesRef = useRef(null);
   const rootRef = useRef(null);
   const inputRef = useRef(null);
-  const isInView = useInView(rootRef, { once: true, amount: 0.3 });
+  const isInView = useInView(rootRef, { once: true, amount: 0.1, margin: "0px 0px 50px 0px" });
   const userMsgCount = useRef(0); // track how many times user has messaged
 
   /* Auto-scroll within the chat container only */
@@ -77,7 +77,7 @@ const ChatbotForm = () => {
       setMessages([{ from: "bot", text: greeting }]);
       setChatHistory([{ role: "assistant", content: greeting }]);
       setIsStreaming(false);
-    }, 800);
+    }, 300);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView]);
 

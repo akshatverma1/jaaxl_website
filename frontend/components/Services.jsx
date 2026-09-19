@@ -39,17 +39,17 @@ const ServiceCardMobile = ({ service }) => {
 /** Desktop version — original animated card */
 const ServiceCard = ({ service, index }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '0px 0px 50px 0px' });
   const Icon = iconMap[service.icon];
 
   return (
     <motion.div
       ref={ref}
       className="service-card"
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.35, delay: Math.min(index * 0.04, 0.15) }}
+      whileHover={{ y: -8, transition: { duration: 0.2 } }}
     >
       <div className="service-icon-wrapper">
         <Icon className="service-icon" />
@@ -69,15 +69,15 @@ const ServiceCard = ({ service, index }) => {
 
 const ServiceCategory = ({ category, catIndex }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '0px 0px 50px 0px' });
 
   return (
     <motion.div
       ref={ref}
       className="service-category"
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ duration: 0.8, delay: catIndex * 0.2 }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: 0.4, delay: Math.min(catIndex * 0.05, 0.1) }}
     >
       {/* Category heading — padded on mobile */}
       <div className="category-header">
@@ -106,7 +106,7 @@ const ServiceCategory = ({ category, catIndex }) => {
 
 const Services = () => {
   const titleRef = useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: '-100px' });
+  const isTitleInView = useInView(titleRef, { once: true, margin: '0px 0px 50px 0px' });
 
   return (
     <section id="services" className="services-section">
@@ -114,9 +114,9 @@ const Services = () => {
         <motion.div
           ref={titleRef}
           className="section-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="section-title">{servicesData.title}</h2>
           <p className="section-subtitle">{servicesData.subtitle}</p>
