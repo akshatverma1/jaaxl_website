@@ -80,16 +80,16 @@ const faqs = [
   { q: "What is a RAG system?", a: "RAG (Retrieval-Augmented Generation) combines a language model with your knowledge base. Instead of hallucinating, the AI retrieves relevant documents and generates accurate, sourced responses. We build RAG chatbots for customer support, internal knowledge management, and document Q&A." },
 ];
 
-const FAQItem = ({ faq, index }) => {
+const FAQItem = ({ faq }) => {
   const [open, setOpen] = useState(false);
   return (
-    <motion.div className="svc-page-faq-item" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} viewport={{ once: true }}>
+    <div className="svc-page-faq-item">
       <button className="svc-page-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open}>
         <span>{faq.q}</span>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
       {open && <div className="svc-page-faq-answer">{faq.a}</div>}
-    </motion.div>
+    </div>
   );
 };
 
@@ -128,17 +128,17 @@ const AIAutomation = () => (
     {/* Services Grid */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Our AI & Automation Services</h2>
           <p className="section-subtitle">From intelligent chatbots to full enterprise AI platforms — we build it all</p>
-        </motion.div>
+        </div>
         <div className="svc-page-grid">
-          {services.map((s, i) => (
-            <motion.div key={s.name} className="svc-page-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: Math.min(i * 0.04, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          {services.map((s) => (
+            <div key={s.name} className="svc-page-card">
               <div className="service-icon-wrapper"><s.icon className="service-icon" /></div>
               <h3 className="service-name">{s.name}</h3>
               <p className="service-description">{s.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -148,7 +148,7 @@ const AIAutomation = () => (
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container">
         <div className="svc-page-why">
-          <motion.div className="svc-page-why-content" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4 }}>
+          <div className="svc-page-why-content">
             <h2 className="section-title" style={{ textAlign: 'left' }}>Why Choose JAQYI for AI Development?</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: 1.8 }}>
               We've shipped AI products in production — not just demos. From multi-agent lead generation 
@@ -168,15 +168,15 @@ const AIAutomation = () => (
                 <span>{item}</span>
               </div>
             ))}
-          </motion.div>
-          <motion.div className="svc-page-why-stats" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4, delay: 0.05 }}>
+          </div>
+          <div className="svc-page-why-stats">
             {[["15+", "AI Systems Built"], ["10K+", "Records/Day Processed"], ["40%", "Avg Cost Reduction"], ["24/7", "Autonomous Operation"]].map(([v, l]) => (
               <div key={l} className="stat-card">
                 <h3 className="stat-value">{v}</h3>
                 <p className="stat-label">{l}</p>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -184,15 +184,15 @@ const AIAutomation = () => (
     {/* Technologies */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">AI Technologies We Master</h2>
           <p className="section-subtitle">Cutting-edge AI tools and frameworks for production-grade systems</p>
-        </motion.div>
+        </div>
         <div className="svc-page-tech-grid">
-          {technologies.map((tech, i) => (
-            <motion.div key={tech} className="svc-page-tech-badge" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          {technologies.map((tech) => (
+            <div key={tech} className="svc-page-tech-badge">
               {tech}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -201,10 +201,10 @@ const AIAutomation = () => (
     {/* FAQ */}
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container svc-page-faq-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Frequently Asked Questions</h2>
           <p className="section-subtitle">Common questions about AI development and automation</p>
-        </motion.div>
+        </div>
         <div className="svc-page-faq">
           {faqs.map((faq, i) => <FAQItem key={i} faq={faq} index={i} />)}
         </div>
@@ -214,7 +214,7 @@ const AIAutomation = () => (
     {/* CTA */}
     <section className="svc-page-cta">
       <div className="svc-page-container">
-        <motion.div className="svc-page-cta-inner" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="svc-page-cta-inner">
           <h2>Ready to Automate Your Business with AI?</h2>
           <p>Tell us your use case and we'll design an AI solution that delivers real ROI within weeks.</p>
           <div className="svc-page-cta-btns">
@@ -224,7 +224,7 @@ const AIAutomation = () => (
             <a href="mailto:akshat@jaqyi.com" className="svc-page-contact-link"><Mail size={16} />akshat@jaqyi.com</a>
             <a href="tel:+919109621850" className="svc-page-contact-link"><Phone size={16} />+91 9109621850</a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
 

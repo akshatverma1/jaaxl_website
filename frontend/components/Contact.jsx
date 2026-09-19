@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { contactData } from '@/data/mock';
 import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Github, Instagram, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,11 +24,6 @@ const Contact = () => {
   });
   const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
   const [statusMessage, setStatusMessage] = useState('');
-
-  const titleRef = React.useRef(null);
-  const formRef = React.useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: "0px 0px 50px 0px" });
-  const isFormInView = useInView(formRef, { once: true, margin: "0px 0px 50px 0px" });
 
   const handleChange = (e) => {
     setFormData({
@@ -70,25 +65,14 @@ const Contact = () => {
     <section id="contact" className="contact-section">
       <GlimmeringMap dotSpacing={7} glimmerRate={4} />
       <div className="contact-container">
-        <motion.div
-          ref={titleRef}
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.4 }}
-        >
+        <div className="section-header">
           <h2 className="section-title">{contactData.title}</h2>
           <p className="section-subtitle">{contactData.subtitle}</p>
-        </motion.div>
+        </div>
 
         <div className="contact-grid">
           {/* Contact Info */}
-          <motion.div
-            className="contact-info"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isFormInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.4 }}
-          >
+          <div className="contact-info">
             <div className="contact-info-item">
               <Mail className="contact-icon" />
               <div>
@@ -133,16 +117,12 @@ const Contact = () => {
                 })}
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.form
-            ref={formRef}
+          <form
             className="contact-form"
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isFormInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.4, delay: 0.08 }}
           >
             <div className="form-group">
               <label htmlFor="name" className="form-label">Name</label>
@@ -251,7 +231,7 @@ const Contact = () => {
                 </>
               )}
             </Button>
-          </motion.form>
+          </form>
         </div>
       </div>
     </section>

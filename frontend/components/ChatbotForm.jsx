@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, User, CheckCircle, Loader2, Sparkles } from "lucide-react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -46,7 +46,6 @@ const ChatbotForm = () => {
   const messagesRef = useRef(null);
   const rootRef = useRef(null);
   const inputRef = useRef(null);
-  const isInView = useInView(rootRef, { once: true, amount: 0.1, margin: "0px 0px 50px 0px" });
   const userMsgCount = useRef(0); // track how many times user has messaged
 
   /* Auto-scroll within the chat container only */
@@ -63,23 +62,17 @@ const ChatbotForm = () => {
     scrollToBottom();
   }, [messages, isStreaming, showContactForm, scrollToBottom]);
 
-  /* ─── Start greeting when iPad scrolls into view ─── */
+  /* ─── Start greeting immediately on mount ─── */
   useEffect(() => {
-    if (!isInView || started) return;
+    if (started) return;
     setStarted(true);
 
     const greeting =
       "Hi there! 👋 I'm JAQYI's AI assistant. I can help you learn about our services, pricing, and how we can bring your idea to life. What can I help you with today?";
 
-    // Simulate a short typing delay for the greeting
-    setIsStreaming(true);
-    setTimeout(() => {
-      setMessages([{ from: "bot", text: greeting }]);
-      setChatHistory([{ role: "assistant", content: greeting }]);
-      setIsStreaming(false);
-    }, 300);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isInView]);
+    setMessages([{ from: "bot", text: greeting }]);
+    setChatHistory([{ role: "assistant", content: greeting }]);
+  }, [started]);
 
   /* ─── Stream AI response from /api/chat ─── */
   const streamAIResponse = async (updatedHistory) => {

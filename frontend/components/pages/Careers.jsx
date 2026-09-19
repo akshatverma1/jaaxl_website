@@ -1,6 +1,5 @@
-"use client";
 import React from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Clock, Briefcase, Sparkles, Users, Zap, Star, ChevronLeft } from 'lucide-react';
 
@@ -55,9 +54,6 @@ const Careers = () => {
   const heroRef = React.useRef(null);
   const perksRef = React.useRef(null);
   const jobsRef = React.useRef(null);
-
-  const isPerksInView = useInView(perksRef, { once: true, margin: '0px 0px 50px 0px' });
-  const isJobsInView = useInView(jobsRef, { once: true, margin: '0px 0px 50px 0px' });
 
   return (
     <div style={{ backgroundColor: '#000000', minHeight: '100vh', color: '#ffffff' }}>
@@ -191,30 +187,21 @@ const Careers = () => {
       {/* ─── PERKS ─────────────────────────────────────────────────────────── */}
       <section ref={perksRef} style={{ backgroundColor: '#ffffff', padding: '96px 0' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 48px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isPerksInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            style={{ textAlign: 'center', marginBottom: '80px' }}
-          >
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
             <h2 style={{ fontSize: '60px', fontWeight: 300, letterSpacing: '-0.02em', color: '#000000', margin: '0 0 16px 0' }}>
               Why join us?
             </h2>
             <p style={{ fontSize: '18px', fontWeight: 400, color: 'rgba(0,0,0,0.6)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.6 }}>
               The short answer: we do real work, with real outcomes, for real companies.
             </p>
-          </motion.div>
+          </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
-            {perks.map((perk, index) => {
+            {perks.map((perk) => {
               const Icon = perk.icon;
               return (
-                <motion.div
+                <div
                   key={perk.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isPerksInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  whileHover={{ y: -4 }}
                   style={{
                     backgroundColor: '#f5f5f5',
                     borderRadius: '16px',
@@ -237,7 +224,7 @@ const Careers = () => {
                   <p style={{ fontSize: '15px', fontWeight: 400, color: 'rgba(0,0,0,0.6)', lineHeight: 1.6, margin: 0 }}>
                     {perk.description}
                   </p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -247,28 +234,18 @@ const Careers = () => {
       {/* ─── OPEN ROLES ─────────────────────────────────────────────────────── */}
       <section id="open-roles" ref={jobsRef} style={{ backgroundColor: '#000000', padding: '96px 0' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 48px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isJobsInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            style={{ marginBottom: '72px' }}
-          >
+          <div style={{ marginBottom: '72px' }}>
             <h2 style={{ fontSize: '60px', fontWeight: 300, letterSpacing: '-0.02em', color: '#ffffff', margin: '0 0 16px 0' }}>
               Open Positions
             </h2>
             <p style={{ fontSize: '18px', fontWeight: 400, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}>
               Carefully crafted roles for exceptional people.
             </p>
-          </motion.div>
+          </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {openRoles.map((role, index) => (
-              <motion.div
-                key={role.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isJobsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-              >
+            {openRoles.map((role) => (
+              <div key={role.id}>
                 <Link
                   href={`/careers/${role.id}`}
                   style={{ textDecoration: 'none', display: 'block' }}
@@ -347,17 +324,12 @@ const Careers = () => {
                     </div>
                   </motion.div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
 
           {/* No-more roles hint */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isJobsInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            style={{ marginTop: '72px', paddingTop: '48px', borderTop: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}
-          >
+          <div style={{ marginTop: '72px', paddingTop: '48px', borderTop: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' }}>
             <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.35)', margin: '0 0 8px 0' }}>
               Don't see the right role?
             </p>
@@ -367,7 +339,7 @@ const Careers = () => {
             >
               Reach out directly — akshat@jaqyi.com
             </a>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

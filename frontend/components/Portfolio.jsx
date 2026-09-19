@@ -1,17 +1,15 @@
 "use client";
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { projects as allProjects } from '@/data/projects';
 import { ArrowUpRight, Play, ExternalLink, Video } from 'lucide-react';
 import MobileSlider from '@/components/ui/MobileSlider';
 import GlimmeringMap from '@/components/GlimmeringMap';
 
 /** ── Desktop Video Card ─────────────────────────────────────────────── */
-const VideoProjectCard = ({ project, index }) => {
-  const ref = useRef(null);
+const VideoProjectCard = ({ project }) => {
   const videoRef = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px 0px 50px 0px' });
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -31,12 +29,8 @@ const VideoProjectCard = ({ project, index }) => {
 
   return (
     <Link href={`/projects/${project.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
-      <motion.div
-        ref={ref}
+      <div
         className="project-card project-card--video"
-        initial={{ opacity: 0, y: 24 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.15) }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -47,15 +41,16 @@ const VideoProjectCard = ({ project, index }) => {
         </div>
 
         <div className="project-image-wrapper">
-          {/* Video — always visible, plays on hover */}
+          {/* Video — lazy loads on hover, uses image poster */}
           <video
             ref={videoRef}
             src={project.videoUrl}
+            poster={project.image}
             className="project-video project-video--always"
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
           />
 
           {/* Overlay */}
@@ -108,42 +103,30 @@ const VideoProjectCard = ({ project, index }) => {
           )}
           <span className="proj-view-details">View Details <ArrowUpRight size={13} /></span>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 };
 
 /** ── Desktop Image Card ─────────────────────────────────────────────── */
-const ProjectCard = ({ project, index }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px 0px 50px 0px' });
-
+const ProjectCard = ({ project }) => {
   return (
     <Link href={`/projects/${project.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <motion.div
-        ref={ref}
         className="project-card"
-        initial={{ opacity: 0, y: 24 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.15) }}
-        whileHover={{ y: -8, transition: { duration: 0.3 } }}
+        whileHover={{ y: -6, transition: { duration: 0.2 } }}
       >
         <div className="project-image-wrapper">
-          <motion.img
+          <img
             src={project.image}
             alt={project.name}
             className="project-image"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.4 }}
+            loading="lazy"
           />
           <div className="project-overlay">
-            <motion.div
-              className="project-overlay-icon"
-              whileHover={{ scale: 1.1, rotate: 45 }}
-              transition={{ duration: 0.3 }}
-            >
+            <div className="project-overlay-icon">
               <ArrowUpRight size={24} />
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -182,7 +165,7 @@ const ProjectCard = ({ project, index }) => {
 const ProjectCardMobile = ({ project }) => (
     <Link href={`/projects/${project.slug}`} className="proj-card-mobile" style={{ textDecoration: 'none' }}>
       <div className="proj-card-mobile__img-wrap">
-        <img src={project.image} alt={project.name} className="proj-card-mobile__img" />
+        <img src={project.image} alt={project.name} className="proj-card-mobile__img" loading="lazy" />
         <div className="proj-card-mobile__overlay">
           <div className="proj-card-mobile__overlay-icon">
             {project.hasVideo ? <Play size={18} fill="currentColor" /> : <ArrowUpRight size={20} />}
@@ -205,11 +188,6 @@ const ProjectCardMobile = ({ project }) => (
 
 /** ── Main Portfolio Section ─────────────────────────────────────────── */
 const Portfolio = () => {
-  const titleRef = useRef(null);
-  const ctaRef = useRef(null);
-  const isTitleInView = useInView(titleRef, { once: true, margin: '0px 0px 50px 0px' });
-  const isCtaInView = useInView(ctaRef, { once: true, margin: '0px 0px 50px 0px' });
-
   // Video projects come first
   const videoProjects = allProjects.filter((p) => p.hasVideo);
   const otherProjects = allProjects.filter((p) => !p.hasVideo);
@@ -220,16 +198,10 @@ const Portfolio = () => {
       <div className="portfolio-container">
 
         {/* ── Title ── */}
-        <motion.div
-          ref={titleRef}
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.4 }}
-        >
+        <div className="section-header">
           <h2 className="section-title">Our Work</h2>
           <p className="section-subtitle">From autonomous AI agents to live SaaS platforms — every project is built with precision and shipped with pride.</p>
-        </motion.div>
+        </div>
 
         {/* ── Desktop Grid ── */}
         <div className="hide-on-mobile">
@@ -244,8 +216,8 @@ const Portfolio = () => {
 
           {/* Video projects — wider 2-col grid */}
           <div className="projects-grid projects-grid--video">
-            {videoProjects.map((project, index) => (
-              <VideoProjectCard key={project.slug} project={project} index={index} />
+            {videoProjects.map((project) => (
+              <VideoProjectCard key={project.slug} project={project} />
             ))}
           </div>
 
@@ -259,8 +231,8 @@ const Portfolio = () => {
           )}
 
           <div className="projects-grid">
-            {otherProjects.map((project, index) => (
-              <ProjectCard key={project.slug} project={project} index={videoProjects.length + index} />
+            {otherProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
         </div>
@@ -275,19 +247,13 @@ const Portfolio = () => {
         </div>
 
         {/* ── View Full Portfolio CTA ── */}
-        <motion.div
-          ref={ctaRef}
-          className="portfolio-cta"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isCtaInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-        >
+        <div className="portfolio-cta">
           <Link href="/portfolio" className="portfolio-cta__btn">
             View Full Portfolio
             <ArrowUpRight size={18} />
           </Link>
           <p className="portfolio-cta__sub">35+ projects · AI agents · SaaS · scrapers · mobile apps</p>
-        </motion.div>
+        </div>
 
       </div>
     </section>

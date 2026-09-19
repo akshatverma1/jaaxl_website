@@ -90,22 +90,16 @@ const faqs = [
   { q: "Do you provide website maintenance after launch?", a: "Yes. We offer ongoing maintenance, security updates, performance optimization, and feature development through monthly retainer packages." },
 ];
 
-const FAQItem = ({ faq, index }) => {
+const FAQItem = ({ faq }) => {
   const [open, setOpen] = useState(false);
   return (
-    <motion.div
-      className="svc-page-faq-item"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      viewport={{ once: true }}
-    >
+    <div className="svc-page-faq-item">
       <button className="svc-page-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open}>
         <span>{faq.q}</span>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
       {open && <div className="svc-page-faq-answer">{faq.a}</div>}
-    </motion.div>
+    </div>
   );
 };
 
@@ -116,23 +110,23 @@ const WebDevelopment = () => (
     {/* Hero */}
     <section className="svc-page-hero">
       <div className="svc-page-hero-inner">
-        <motion.div className="svc-page-breadcrumb" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <div className="svc-page-breadcrumb">
           <Link href="/">Home</Link> <span>/</span> <Link href="/#services">Services</Link> <span>/</span> <span>Web Development</span>
-        </motion.div>
-        <motion.h1 className="svc-page-title" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+        </div>
+        <h1 className="svc-page-title">
           Web Development Company in India
-        </motion.h1>
-        <motion.p className="svc-page-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+        </h1>
+        <p className="svc-page-subtitle">
           We build high-performance websites, web applications, SaaS platforms, and ERP systems that drive real business growth. Serving clients across India, USA, and globally.
-        </motion.p>
-        <motion.div className="svc-page-hero-cta" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+        </p>
+        <div className="svc-page-hero-cta">
           <Button asChild className="cta-primary">
             <a href="/#contact">Get a Free Quote <ArrowRight size={18} /></a>
           </Button>
           <Button asChild variant="outline" className="cta-secondary hover:text-white">
             <a href="/#portfolio">View Our Work</a>
           </Button>
-        </motion.div>
+        </div>
         <div className="svc-page-trust">
           {["50+ Projects Delivered", "7+ Years Experience", "India & USA Clients"].map(t => (
             <div key={t} className="svc-page-trust-item"><CheckCircle2 size={16} /><span>{t}</span></div>
@@ -144,17 +138,17 @@ const WebDevelopment = () => (
     {/* Services Grid */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Our Web Development Services</h2>
           <p className="section-subtitle">End-to-end web solutions — from simple landing pages to complex enterprise platforms</p>
-        </motion.div>
+        </div>
         <div className="svc-page-grid">
-          {services.map((s, i) => (
-            <motion.div key={s.name} className="svc-page-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: Math.min(i * 0.04, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          {services.map((s) => (
+            <div key={s.name} className="svc-page-card">
               <div className="service-icon-wrapper"><s.icon className="service-icon" /></div>
               <h3 className="service-name">{s.name}</h3>
               <p className="service-description">{s.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -164,7 +158,7 @@ const WebDevelopment = () => (
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container">
         <div className="svc-page-why">
-          <motion.div className="svc-page-why-content" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4 }}>
+          <div className="svc-page-why-content">
             <h2 className="section-title" style={{ textAlign: 'left' }}>Why Choose JAQYI for Web Development?</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: 1.8 }}>
               We're not a body-shop or a template factory. Every website we build is a custom-engineered product 
@@ -184,15 +178,15 @@ const WebDevelopment = () => (
                 <span>{item}</span>
               </div>
             ))}
-          </motion.div>
-          <motion.div className="svc-page-why-stats" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4, delay: 0.05 }}>
+          </div>
+          <div className="svc-page-why-stats">
             {[["50+", "Websites Delivered"], ["7+", "Years Experience"], ["20+", "Happy Clients"], ["100%", "On-Time Delivery"]].map(([v, l]) => (
               <div key={l} className="stat-card">
                 <h3 className="stat-value">{v}</h3>
                 <p className="stat-label">{l}</p>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -200,15 +194,15 @@ const WebDevelopment = () => (
     {/* Technologies */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Technologies We Use</h2>
           <p className="section-subtitle">Modern, battle-tested technology stacks for every project</p>
-        </motion.div>
+        </div>
         <div className="svc-page-tech-grid">
-          {technologies.map((tech, i) => (
-            <motion.div key={tech} className="svc-page-tech-badge" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          {technologies.map((tech) => (
+            <div key={tech} className="svc-page-tech-badge">
               {tech}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -217,22 +211,22 @@ const WebDevelopment = () => (
     {/* Process */}
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Our Development Process</h2>
           <p className="section-subtitle">A proven process that delivers results, on time and on budget</p>
-        </motion.div>
+        </div>
         <div className="svc-page-process">
           {[
             { n: "01", title: "Discovery & Planning", desc: "We understand your business goals, target users, and technical requirements. We define the scope, timeline, and technology stack." },
             { n: "02", title: "Design & Prototyping", desc: "UI/UX wireframes and high-fidelity mockups. You approve the design before a single line of code is written." },
             { n: "03", title: "Development & Testing", desc: "Agile sprints with bi-weekly demos. Automated testing, code reviews, and QA at every step." },
             { n: "04", title: "Launch & Growth", desc: "Deployment to production, SEO setup, analytics integration, and ongoing support to grow your digital presence." },
-          ].map((step, i) => (
-            <motion.div key={step.n} className="svc-page-process-step" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: Math.min(i * 0.05, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          ].map((step) => (
+            <div key={step.n} className="svc-page-process-step">
               <div className="svc-page-process-num">{step.n}</div>
               <h3 className="service-name">{step.title}</h3>
               <p className="service-description">{step.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -241,12 +235,12 @@ const WebDevelopment = () => (
     {/* FAQ */}
     <section className="svc-page-section">
       <div className="svc-page-container svc-page-faq-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Frequently Asked Questions</h2>
           <p className="section-subtitle">Everything you need to know about our web development services</p>
-        </motion.div>
+        </div>
         <div className="svc-page-faq">
-          {faqs.map((faq, i) => <FAQItem key={i} faq={faq} index={i} />)}
+          {faqs.map((faq, i) => <FAQItem key={i} faq={faq} />)}
         </div>
       </div>
     </section>
@@ -254,7 +248,7 @@ const WebDevelopment = () => (
     {/* CTA */}
     <section className="svc-page-cta">
       <div className="svc-page-container">
-        <motion.div className="svc-page-cta-inner" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="svc-page-cta-inner">
           <h2>Ready to Build Your Next Website?</h2>
           <p>Get a free consultation and quote within 24 hours. No commitment required.</p>
           <div className="svc-page-cta-btns">
@@ -264,7 +258,7 @@ const WebDevelopment = () => (
             <a href="mailto:akshat@jaqyi.com" className="svc-page-contact-link"><Mail size={16} />akshat@jaqyi.com</a>
             <a href="tel:+919109621850" className="svc-page-contact-link"><Phone size={16} />+91 9109621850</a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
 

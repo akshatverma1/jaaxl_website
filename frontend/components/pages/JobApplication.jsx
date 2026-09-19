@@ -324,13 +324,9 @@ const JobApplication = () => {
       <form onSubmit={handleSubmit}>
         <div style={{ maxWidth: '960px', margin: '0 auto', padding: '0 48px 120px' }}>
 
-          {sections.map((section, sIdx) => (
-            <motion.div
+          {sections.map((section) => (
+            <div
               key={section.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-              transition={{ duration: 0.35 }}
               style={{ marginBottom: '80px' }}
             >
               {/* Section header */}
@@ -353,49 +349,37 @@ const JobApplication = () => {
                 {/* First section: 2-col grid */}
                 {section.id === 'basic' ? (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px 32px' }}>
-                    {section.fields.map((field, fIdx) => (
-                      <motion.div
+                    {section.fields.map((field) => (
+                      <div
                         key={field.name}
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-                        transition={{ duration: 0.3, delay: Math.min(fIdx * 0.03, 0.1) }}
                         style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
                       >
                         <label style={{ fontSize: '13px', fontWeight: 400, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.02em' }}>
                           {field.label}
                         </label>
                         <FieldInput field={field} value={formData[field.name]} onChange={handleChange} disabled={status === 'loading'} />
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 ) : (
-                  section.fields.map((field, fIdx) => (
-                    <motion.div
+                  section.fields.map((field) => (
+                    <div
                       key={field.name}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-                      transition={{ duration: 0.3, delay: Math.min(fIdx * 0.03, 0.1) }}
                       style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
                     >
                       <label style={{ fontSize: '14px', fontWeight: 400, color: 'rgba(255,255,255,0.55)', lineHeight: 1.5 }}>
                         {field.label}
                       </label>
                       <FieldInput field={field} value={formData[field.name]} onChange={handleChange} disabled={status === 'loading'} />
-                    </motion.div>
+                    </div>
                   ))
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
 
           {/* ── Resume upload ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-            transition={{ duration: 0.35 }}
+          <div
             style={{ marginBottom: '80px' }}
           >
             <div style={{
@@ -474,14 +458,10 @@ const JobApplication = () => {
                 </button>
               </motion.div>
             )}
-          </motion.div>
+          </div>
 
           {/* ── Submit ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+          <div
             style={{
               paddingTop: '48px',
               borderTop: '1px solid rgba(255,255,255,0.07)',
@@ -522,7 +502,7 @@ const JobApplication = () => {
                 </>
               )}
             </motion.button>
-          </motion.div>
+          </div>
 
         </div>
       </form>

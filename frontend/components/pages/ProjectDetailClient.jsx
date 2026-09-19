@@ -144,14 +144,7 @@ export default function ProjectDetailClient({ project }) {
         </section>
 
         {/* ── Details ── */}
-        <motion.section
-          className="pd-details"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-          transition={{ duration: 0.4 }}
-        >
+        <section className="pd-details">
           {/* Features */}
           <div className="pd-card">
             <h2 className="pd-section-title">
@@ -214,7 +207,7 @@ export default function ProjectDetailClient({ project }) {
               </Link>
             </div>
           </div>
-        </motion.section>
+        </section>
 
         {/* ── Back ── */}
         <div className="pd-footer-nav">

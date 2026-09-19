@@ -80,16 +80,16 @@ const faqs = [
   { q: "Can you build an app for both iOS and Android?", a: "Yes. Using Flutter or React Native, we build a single codebase that runs natively on both platforms, reducing cost and time-to-market significantly." },
 ];
 
-const FAQItem = ({ faq, index }) => {
+const FAQItem = ({ faq }) => {
   const [open, setOpen] = useState(false);
   return (
-    <motion.div className="svc-page-faq-item" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} viewport={{ once: true }}>
+    <div className="svc-page-faq-item">
       <button className="svc-page-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open}>
         <span>{faq.q}</span>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
       {open && <div className="svc-page-faq-answer">{faq.a}</div>}
-    </motion.div>
+    </div>
   );
 };
 
@@ -100,23 +100,23 @@ const AppDevelopment = () => (
     {/* Hero */}
     <section className="svc-page-hero">
       <div className="svc-page-hero-inner">
-        <motion.div className="svc-page-breadcrumb" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <div className="svc-page-breadcrumb">
           <Link href="/">Home</Link> <span>/</span> <Link href="/#services">Services</Link> <span>/</span> <span>App Development</span>
-        </motion.div>
-        <motion.h1 className="svc-page-title" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+        </div>
+        <h1 className="svc-page-title">
           Mobile App Development Company in India
-        </motion.h1>
-        <motion.p className="svc-page-subtitle" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+        </h1>
+        <p className="svc-page-subtitle">
           We build exceptional iOS, Android, Flutter, and React Native apps that users love. From startup MVPs to enterprise-scale mobile platforms — delivered on time, every time.
-        </motion.p>
-        <motion.div className="svc-page-hero-cta" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+        </p>
+        <div className="svc-page-hero-cta">
           <Button asChild className="cta-primary">
             <a href="/#contact">Get a Free Quote <ArrowRight size={18} /></a>
           </Button>
           <Button asChild variant="outline" className="cta-secondary hover:text-white">
             <a href="/#portfolio">View Our Apps</a>
           </Button>
-        </motion.div>
+        </div>
         <div className="svc-page-trust">
           {["iOS & Android Experts", "Flutter Certified", "App Store Ready"].map(t => (
             <div key={t} className="svc-page-trust-item"><CheckCircle2 size={16} /><span>{t}</span></div>
@@ -128,17 +128,17 @@ const AppDevelopment = () => (
     {/* Services Grid */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Our Mobile App Development Services</h2>
           <p className="section-subtitle">Full-stack mobile development from concept to App Store — for every platform</p>
-        </motion.div>
+        </div>
         <div className="svc-page-grid">
-          {services.map((s, i) => (
-            <motion.div key={s.name} className="svc-page-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: Math.min(i * 0.04, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          {services.map((s) => (
+            <div key={s.name} className="svc-page-card">
               <div className="service-icon-wrapper"><s.icon className="service-icon" /></div>
               <h3 className="service-name">{s.name}</h3>
               <p className="service-description">{s.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -148,7 +148,7 @@ const AppDevelopment = () => (
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container">
         <div className="svc-page-why">
-          <motion.div className="svc-page-why-content" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4 }}>
+          <div className="svc-page-why-content">
             <h2 className="section-title" style={{ textAlign: 'left' }}>Why Choose JAQYI for App Development?</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', lineHeight: 1.8 }}>
               We've built mobile apps from 0 to 100,000+ users. Our team doesn't just write code — we think about 
@@ -168,15 +168,15 @@ const AppDevelopment = () => (
                 <span>{item}</span>
               </div>
             ))}
-          </motion.div>
-          <motion.div className="svc-page-why-stats" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.4, delay: 0.05 }}>
+          </div>
+          <div className="svc-page-why-stats">
             {[["20+", "Apps Launched"], ["100K+", "End Users Reached"], ["4.8★", "Average App Rating"], ["5+", "App Categories"]].map(([v, l]) => (
               <div key={l} className="stat-card">
                 <h3 className="stat-value">{v}</h3>
                 <p className="stat-label">{l}</p>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -184,15 +184,15 @@ const AppDevelopment = () => (
     {/* Technologies */}
     <section className="svc-page-section">
       <div className="svc-page-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Technologies We Use</h2>
           <p className="section-subtitle">Industry-leading frameworks and tools for mobile development</p>
-        </motion.div>
+        </div>
         <div className="svc-page-tech-grid">
-          {technologies.map((tech, i) => (
-            <motion.div key={tech} className="svc-page-tech-badge" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: Math.min(i * 0.03, 0.15) }} viewport={{ once: true, margin: "0px 0px 50px 0px" }}>
+          {technologies.map((tech) => (
+            <div key={tech} className="svc-page-tech-badge">
               {tech}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -201,12 +201,12 @@ const AppDevelopment = () => (
     {/* FAQ */}
     <section className="svc-page-section svc-page-section--alt">
       <div className="svc-page-container svc-page-faq-container">
-        <motion.div className="section-header" initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="section-header">
           <h2 className="section-title">Frequently Asked Questions</h2>
           <p className="section-subtitle">Everything you need to know about mobile app development</p>
-        </motion.div>
+        </div>
         <div className="svc-page-faq">
-          {faqs.map((faq, i) => <FAQItem key={i} faq={faq} index={i} />)}
+          {faqs.map((faq, i) => <FAQItem key={i} faq={faq} />)}
         </div>
       </div>
     </section>
@@ -214,7 +214,7 @@ const AppDevelopment = () => (
     {/* CTA */}
     <section className="svc-page-cta">
       <div className="svc-page-container">
-        <motion.div className="svc-page-cta-inner" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "0px 0px 50px 0px" }} transition={{ duration: 0.35 }}>
+        <div className="svc-page-cta-inner">
           <h2>Ready to Build Your App?</h2>
           <p>Tell us your idea and we'll turn it into a polished, production-ready mobile app.</p>
           <div className="svc-page-cta-btns">
@@ -224,7 +224,7 @@ const AppDevelopment = () => (
             <a href="mailto:akshat@jaqyi.com" className="svc-page-contact-link"><Mail size={16} />akshat@jaqyi.com</a>
             <a href="tel:+919109621850" className="svc-page-contact-link"><Phone size={16} />+91 9109621850</a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
 

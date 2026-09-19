@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '@/data/projects';
 import {
   ArrowUpRight, Play, ExternalLink, Video, Search,
@@ -39,10 +39,8 @@ function matchCategory(project, catId) {
 }
 
 // ── Project card ─────────────────────────────────────────────────────────
-const PortfolioCard = ({ project, index }) => {
-  const ref = useRef(null);
+const PortfolioCard = ({ project }) => {
   const videoRef = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px 0px 80px 0px' });
   const [hovered, setHovered] = useState(false);
 
   const handleEnter = () => {
@@ -58,12 +56,7 @@ const PortfolioCard = ({ project, index }) => {
   };
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.35, delay: (index % 3) * 0.04 }}
-    >
+    <div className="pf-card-wrapper">
       <Link
         href={`/projects/${project.slug}`}
         className="pf-card"
@@ -76,14 +69,15 @@ const PortfolioCard = ({ project, index }) => {
             <video
               ref={videoRef}
               src={project.videoUrl}
+              poster={project.image}
               className="pf-card__video"
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
             />
           ) : (
-            <img src={project.image} alt={project.name} className="pf-card__img" />
+            <img src={project.image} alt={project.name} className="pf-card__img" loading="lazy" />
           )}
 
           {/* Hover overlay */}
@@ -139,7 +133,7 @@ const PortfolioCard = ({ project, index }) => {
           <span className="pf-card__view">View Details <ArrowUpRight size={12} /></span>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 };
 

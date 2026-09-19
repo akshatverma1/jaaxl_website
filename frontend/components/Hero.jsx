@@ -5,37 +5,6 @@ import { heroData } from '@/data/mock';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Stagger container — each letter staggers in from below with blur
-const titleContainer = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.04,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const letterVariant = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-    filter: 'blur(8px)',
-    rotateX: -20,
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    rotateX: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 160,
-      damping: 15,
-    },
-  },
-};
-
 const TITLE = 'JAQYI';
 
 const Hero = () => {
@@ -44,74 +13,37 @@ const Hero = () => {
       <div className="hero-container">
 
         {/* Content */}
-        <motion.div
-          className="hero-content"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.05 }}
-        >
-          <motion.div
-            className="hero-badge"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35, delay: 0.15 }}
-          >
+        <div className="hero-content">
+          <div className="hero-badge">
             <Sparkles className="sparkle-icon" />
             <span>Software Excellence</span>
-          </motion.div>
+          </div>
 
-          {/* ── Animated JAQYI heading ── */}
-          <motion.h1
-            className="hero-title"
-            variants={titleContainer}
-            initial="hidden"
-            animate="show"
-            aria-label={TITLE}
-          >
-            {/* Letter-by-letter with overflow clip */}
+          {/* ── JAQYI heading ── */}
+          <h1 className="hero-title" aria-label={TITLE}>
             <span className="hero-title-inner" aria-hidden>
               {TITLE.split('').map((char, i) => (
-                <motion.span
-                  key={i}
-                  className="hero-letter"
-                  variants={letterVariant}
-                  style={{ display: 'inline-block' }}
-                >
+                <span key={i} className="hero-letter" style={{ display: 'inline-block' }}>
                   {char}
-                </motion.span>
+                </span>
               ))}
             </span>
 
-            {/* Gradient shimmer overlay — clipped to text */}
+            {/* Gradient shimmer overlay */}
             <span className="hero-title-shimmer" aria-hidden>
               {TITLE}
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="hero-tagline"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
+          <p className="hero-tagline">
             {heroData.tagline}
-          </motion.p>
+          </p>
 
-          <motion.p
-            className="hero-description"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-          >
+          <p className="hero-description">
             {heroData.description}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="hero-cta"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
-          >
+          <div className="hero-cta">
             <Button asChild className="cta-primary">
               <a href="#portfolio">
                 {heroData.cta.primary}
@@ -123,8 +55,8 @@ const Hero = () => {
                 {heroData.cta.secondary}
               </a>
             </Button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Scroll Indicator */}
         <motion.div

@@ -40,14 +40,8 @@ const faqs = [
 ];
 
 
-const FAQItem = ({ faq, index, isOpen, onToggle }) => (
-  <motion.div
-    className="faq-item"
-    initial={{ opacity: 0, y: 15 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-    transition={{ duration: 0.35, delay: Math.min(index * 0.03, 0.15) }}
-  >
+const FAQItem = ({ faq, isOpen, onToggle }) => (
+  <div className="faq-item">
     <button
       className="faq-question"
       onClick={onToggle}
@@ -72,7 +66,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => (
         </motion.div>
       )}
     </AnimatePresence>
-  </motion.div>
+  </div>
 );
 
 const FAQ = () => {
@@ -83,25 +77,18 @@ const FAQ = () => {
   return (
     <section className="faq-section">
       <div className="faq-container">
-        <motion.div
-          className="section-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-          transition={{ duration: 0.4 }}
-        >
+        <div className="section-header">
           <h2 className="section-title faq-title">Frequently Asked Questions</h2>
           <p className="section-subtitle faq-subtitle">
             Everything you need to know before working with us
           </p>
-        </motion.div>
+        </div>
 
         <div className="faq-list">
           {faqs.map((faq, i) => (
             <FAQItem
               key={i}
               faq={faq}
-              index={i}
               isOpen={openIndex === i}
               onToggle={() => toggle(i)}
             />
@@ -109,18 +96,12 @@ const FAQ = () => {
         </div>
 
         {/* CTA below FAQ */}
-        <motion.div
-          className="faq-cta"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '0px 0px 50px 0px' }}
-          transition={{ duration: 0.35, delay: 0.08 }}
-        >
+        <div className="faq-cta">
           <p className="faq-cta-text">Still have questions?</p>
           <a href="#contact" className="faq-cta-link">
             Talk to us directly →
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

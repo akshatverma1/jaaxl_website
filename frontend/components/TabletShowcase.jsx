@@ -8,23 +8,9 @@ import ChatbotForm from "@/components/ChatbotForm";
  * that rises from below the hero as the user scrolls.
  */
 const TabletShowcase = () => {
-  const containerRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 0.25], [40, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15], [0.4, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.25], [0.96, 1]);
-
   return (
-    <section ref={containerRef} className="tablet-showcase-section">
-      <motion.div
-        className="tablet-frame"
-        style={{ y, opacity, scale }}
-      >
+    <section className="tablet-showcase-section">
+      <div className="tablet-frame">
         {/* iPad bezel */}
         <div className="ipad-bezel">
           {/* Camera notch (top center) */}
@@ -38,7 +24,7 @@ const TabletShowcase = () => {
 
         {/* Subtle reflection */}
         <div className="ipad-reflection" />
-      </motion.div>
+      </div>
     </section>
   );
 };
