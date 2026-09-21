@@ -1,13 +1,17 @@
 "use client";
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '@/data/projects';
 import {
   ArrowUpRight, Play, ExternalLink, Video, Search,
-  ArrowLeft, Github, Filter, X,
+  ArrowLeft, Github, Filter, X, ChevronDown,
 } from 'lucide-react';
 import GlimmeringMap from '@/components/GlimmeringMap';
+
+const INITIAL_ITEMS_COUNT = 12;
+const ITEMS_PER_PAGE = 8;
 
 // ── Category definitions ─────────────────────────────────────────────────
 const CATEGORIES = [
@@ -39,7 +43,7 @@ function matchCategory(project, catId) {
 }
 
 // ── Project card ─────────────────────────────────────────────────────────
-const PortfolioCard = ({ project }) => {
+const PortfolioCard = ({ project, priority = false }) => {
   const videoRef = useRef(null);
   const [hovered, setHovered] = useState(false);
 
@@ -77,7 +81,16 @@ const PortfolioCard = ({ project }) => {
               preload="none"
             />
           ) : (
-            <img src={project.image} alt={project.name} className="pf-card__img" loading="lazy" />
+            <Image
+              src={project.image}
+              alt={project.name}
+              width={600}
+              height={338}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="pf-card__img"
+              loading={priority ? 'eager' : 'lazy'}
+              priority={priority}
+            />
           )}
 
           {/* Hover overlay */}
@@ -142,6 +155,12 @@ export default function PortfolioPageClient() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_ITEMS_COUNT);
+
+  // Reset pagination when category or search query changes
+  useEffect(() => {
+    setVisibleCount(INITIAL_ITEMS_COUNT);
+  }, [activeCategory, searchQuery]);
 
   const filtered = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
@@ -162,9 +181,17 @@ export default function PortfolioPageClient() {
     return c;
   }, []);
 
+  const visibleProjects = useMemo(() => {
+    return filtered.slice(0, visibleCount);
+  }, [filtered, visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filtered.length));
+  };
+
   return (
     <div className="pf-page">
-      <GlimmeringMap dotSpacing={7} glimmerRate={4} />
+      <GlimmeringMap dotSpacing={10} glimmerRate={3} />
 
       {/* ── Header ── */}
       <header className="pf-header">
@@ -186,9 +213,9 @@ export default function PortfolioPageClient() {
         {/* ── Hero title ── */}
         <motion.div
           className="pf-hero"
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.5 }}
         >
           <p className="pf-hero__eyebrow">Project Portfolio</p>
           <h1 className="pf-hero__title">Production-Grade Work,<br />Across Every Domain</h1>
@@ -199,12 +226,7 @@ export default function PortfolioPageClient() {
         </motion.div>
 
         {/* ── Search + Filter bar ── */}
-        <motion.div
-          className="pf-controls"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-        >
+        <div className="pf-controls">
           {/* Search */}
           <div className="pf-search-wrap">
             <Search size={15} className="pf-search-icon" />
@@ -229,15 +251,10 @@ export default function PortfolioPageClient() {
           >
             <Filter size={14} /> Filter
           </button>
-        </motion.div>
+        </div>
 
         {/* ── Category tabs ── */}
-        <motion.div
-          className={`pf-tabs ${mobileFilterOpen ? 'pf-tabs--open' : ''}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
+        <div className={`pf-tabs ${mobileFilterOpen ? 'pf-tabs--open' : ''}`}>
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
@@ -248,12 +265,12 @@ export default function PortfolioPageClient() {
               <span className="pf-tab__count">{counts[cat.id]}</span>
             </button>
           ))}
-        </motion.div>
+        </div>
 
         {/* ── Results header ── */}
         <div className="pf-results-bar">
           <span className="pf-results-count">
-            {filtered.length} project{filtered.length !== 1 ? 's' : ''}
+            Showing {visibleProjects.length} of {filtered.length} project{filtered.length !== 1 ? 's' : ''}
             {activeCategory !== 'all' && ` in ${CATEGORIES.find(c => c.id === activeCategory)?.label}`}
             {searchQuery && ` matching "${searchQuery}"`}
           </span>
@@ -270,25 +287,47 @@ export default function PortfolioPageClient() {
         {/* ── Grid ── */}
         <AnimatePresence mode="wait">
           {filtered.length > 0 ? (
-            <motion.div
-              key={activeCategory + searchQuery}
-              className="pf-grid"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {filtered.map((project, index) => (
-                <PortfolioCard key={project.slug} project={project} index={index} />
-              ))}
-            </motion.div>
+            <div key={activeCategory + searchQuery}>
+              <div className="pf-grid">
+                {visibleProjects.map((project, index) => (
+                  <PortfolioCard
+                    key={project.slug}
+                    project={project}
+                    priority={index < 4}
+                  />
+                ))}
+              </div>
+
+              {/* Load more button */}
+              {visibleCount < filtered.length && (
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+                  <button
+                    onClick={handleLoadMore}
+                    className="pd-btn pd-btn--outline"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '12px 28px',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      borderRadius: '10px',
+                      border: '1px solid rgba(255,255,255,0.18)',
+                      background: 'rgba(255,255,255,0.04)',
+                      color: '#ffffff',
+                      backdropFilter: 'blur(8px)',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    Load More Projects ({filtered.length - visibleCount} remaining)
+                    <ChevronDown size={16} />
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
-            <motion.div
-              key="empty"
-              className="pf-empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
+            <div className="pf-empty">
               <Search size={40} style={{ opacity: 0.2, marginBottom: 16 }} />
               <p>No projects found for that search.</p>
               <button
@@ -297,7 +336,7 @@ export default function PortfolioPageClient() {
               >
                 Clear filters
               </button>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
 

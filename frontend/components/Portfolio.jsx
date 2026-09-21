@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { projects as allProjects } from '@/data/projects';
 import { ArrowUpRight, Play, ExternalLink, Video } from 'lucide-react';
@@ -117,9 +118,12 @@ const ProjectCard = ({ project }) => {
         whileHover={{ y: -6, transition: { duration: 0.2 } }}
       >
         <div className="project-image-wrapper">
-          <img
+          <Image
             src={project.image}
             alt={project.name}
+            width={600}
+            height={338}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="project-image"
             loading="lazy"
           />
@@ -163,38 +167,48 @@ const ProjectCard = ({ project }) => {
 
 /** ── Mobile Card ───────────────────────────────────────────────────── */
 const ProjectCardMobile = ({ project }) => (
-    <Link href={`/projects/${project.slug}`} className="proj-card-mobile" style={{ textDecoration: 'none' }}>
-      <div className="proj-card-mobile__img-wrap">
-        <img src={project.image} alt={project.name} className="proj-card-mobile__img" loading="lazy" />
-        <div className="proj-card-mobile__overlay">
-          <div className="proj-card-mobile__overlay-icon">
-            {project.hasVideo ? <Play size={18} fill="currentColor" /> : <ArrowUpRight size={20} />}
-          </div>
+  <Link href={`/projects/${project.slug}`} className="proj-card-mobile" style={{ textDecoration: 'none' }}>
+    <div className="proj-card-mobile__img-wrap">
+      <Image
+        src={project.image}
+        alt={project.name}
+        width={450}
+        height={260}
+        sizes="85vw"
+        className="proj-card-mobile__img"
+        loading="lazy"
+      />
+      <div className="proj-card-mobile__overlay">
+        <div className="proj-card-mobile__overlay-icon">
+          {project.hasVideo ? <Play size={18} fill="currentColor" /> : <ArrowUpRight size={20} />}
         </div>
-        {project.hasVideo && (
-          <div className="proj-mobile-video-tag"><Video size={10} /> Demo</div>
-        )}
       </div>
-      <div className="proj-card-mobile__info">
-        <div className="proj-meta-row">
-          <span className="proj-card-mobile__cat">{project.category}</span>
-          {project.liveUrl && <span className="proj-live-badge">● Live</span>}
-        </div>
-        <h3 className="proj-card-mobile__name">{project.name}</h3>
-        <p className="proj-card-mobile__desc">{project.description}</p>
+      {project.hasVideo && (
+        <div className="proj-mobile-video-tag"><Video size={10} /> Demo</div>
+      )}
+    </div>
+    <div className="proj-card-mobile__info">
+      <div className="proj-meta-row">
+        <span className="proj-card-mobile__cat">{project.category}</span>
+        {project.liveUrl && <span className="proj-live-badge">● Live</span>}
       </div>
-    </Link>
+      <h3 className="proj-card-mobile__name">{project.name}</h3>
+      <p className="proj-card-mobile__desc">{project.description}</p>
+    </div>
+  </Link>
 );
 
 /** ── Main Portfolio Section ─────────────────────────────────────────── */
 const Portfolio = () => {
-  // Video projects come first
+  // Video projects shown first
   const videoProjects = allProjects.filter((p) => p.hasVideo);
-  const otherProjects = allProjects.filter((p) => !p.hasVideo);
+  // Show top 4 non-video projects on the homepage
+  const featuredOtherProjects = allProjects.filter((p) => !p.hasVideo).slice(0, 4);
+  const homeFeaturedProjects = [...videoProjects, ...featuredOtherProjects];
 
   return (
     <section id="portfolio" className="portfolio-section">
-      <GlimmeringMap dotSpacing={7} glimmerRate={4} />
+      <GlimmeringMap dotSpacing={10} glimmerRate={3} />
       <div className="portfolio-container">
 
         {/* ── Title ── */}
@@ -222,16 +236,16 @@ const Portfolio = () => {
           </div>
 
           {/* Regular projects label */}
-          {otherProjects.length > 0 && (
+          {featuredOtherProjects.length > 0 && (
             <div className="proj-group-label proj-group-label--mt">
               <span className="proj-group-label__line" />
-              <span className="proj-group-label__text">More Projects</span>
+              <span className="proj-group-label__text">Featured Projects</span>
               <span className="proj-group-label__line" />
             </div>
           )}
 
           <div className="projects-grid">
-            {otherProjects.map((project) => (
+            {featuredOtherProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
@@ -240,7 +254,7 @@ const Portfolio = () => {
         {/* ── Mobile Slider ── */}
         <div className="show-on-mobile">
           <MobileSlider darkTheme>
-            {allProjects.map((project) => (
+            {homeFeaturedProjects.map((project) => (
               <ProjectCardMobile key={project.slug} project={project} />
             ))}
           </MobileSlider>

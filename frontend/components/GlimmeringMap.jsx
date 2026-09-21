@@ -5,6 +5,27 @@ const TOPO_URL = "/land-110m.json";
 
 const PINS = [];
 
+// Module-level cache so we never re-fetch or re-decode TopoJSON repeatedly
+let cachedTopology = null;
+let topologyPromise = null;
+
+function getTopology() {
+  if (cachedTopology) return Promise.resolve(cachedTopology);
+  if (!topologyPromise) {
+    topologyPromise = fetch(TOPO_URL)
+      .then((r) => r.json())
+      .then((data) => {
+        cachedTopology = data;
+        return data;
+      })
+      .catch((err) => {
+        topologyPromise = null;
+        throw err;
+      });
+  }
+  return topologyPromise;
+}
+
 /* ─── helpers ──────────────────────────────────────────────── */
 function lerp(a, b, t) {
   return a + (b - a) * t;
@@ -81,12 +102,7 @@ function drawGeometry(ctx, geom, arcs, w, h) {
 
 /* ─── component ─────────────────────────────────────────────── */
 /**
- * GlimmeringMap
- *
- * Props:
- *  dotSpacing  – pixel gap between dots (default 7)
- *  glimmerRate – dots triggered per frame batch (default 4)
- *  className   – extra CSS classes
+ * GlimmeringMap (Performance Optimized)
  */
 const GlimmeringMap = ({
   dotSpacing = 7,
@@ -103,11 +119,16 @@ const GlimmeringMap = ({
     if (!canvas) return;
 
     let running = true;
+    let isVisible = true;
     let dots = [];
     let W = 0;
     let H = 0;
+    let isMobile = window.innerWidth < 768;
+    const actualSpacing = isMobile ? Math.max(dotSpacing, 12) : dotSpacing;
+    const useShadow = !isMobile && glowBlur > 0;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
 
     const initMap = (topology) => {
       if (!running) return;
@@ -124,6 +145,7 @@ const GlimmeringMap = ({
       off.width = W;
       off.height = H;
       const oc = off.getContext("2d");
+      if (!oc) return;
       oc.fillStyle = "#000";
       oc.fillRect(0, 0, W, H);
       oc.fillStyle = "#fff";
@@ -138,21 +160,20 @@ const GlimmeringMap = ({
         return img[(yi * W + xi) * 4] > 128;
       };
 
-      for (let y = dotSpacing; y < H - dotSpacing * 0.5; y += dotSpacing) {
-        // Skip dots below -60 degrees latitude (Antarctica)
+      for (let y = actualSpacing; y < H - actualSpacing * 0.5; y += actualSpacing) {
         if (y > H * 0.88) continue;
         for (
-          let x = dotSpacing * 0.5;
-          x < W - dotSpacing * 0.5;
-          x += dotSpacing
+          let x = actualSpacing * 0.5;
+          x < W - actualSpacing * 0.5;
+          x += actualSpacing
         ) {
           if (isLand(x, y)) {
             dots.push({
               x: x + (Math.random() - 0.5) * 1.5,
               y: y + (Math.random() - 0.5) * 1.5,
-              baseR: 0.85 + Math.random() * 0.65,   // idle dot radius
-              glimmer: 0,                            // 0..1 brightness
-              phase: "idle",                         // idle | in | hold | out
+              baseR: 0.85 + Math.random() * 0.65,
+              glimmer: 0,
+              phase: "idle",
               holdCount: 0,
               holdMax: 6 + Math.floor(Math.random() * 28),
             });
@@ -161,13 +182,12 @@ const GlimmeringMap = ({
       }
     };
 
-    let topoData = null;
+    let currentTopology = null;
 
-    fetch(TOPO_URL)
-      .then((r) => r.json())
+    getTopology()
       .then((topology) => {
         if (!running) return;
-        topoData = topology;
+        currentTopology = topology;
         initMap(topology);
 
         /* ── Animation loop ── */
@@ -175,150 +195,135 @@ const GlimmeringMap = ({
 
         const animate = () => {
           if (!running) return;
-          frame++;
 
-          /* Clear */
-          ctx.fillStyle = "#000";
-          ctx.fillRect(0, 0, W, H);
+          if (isVisible) {
+            frame++;
 
-          /* Trigger new glimmers every other frame */
-          if (frame % 2 === 0 && dots.length) {
-            const n = 1 + Math.floor(Math.random() * glimmerRate);
-            for (let i = 0; i < n; i++) {
-              const d = dots[Math.floor(Math.random() * dots.length)];
-              if (d.phase === "idle") d.phase = "in";
-            }
-          }
+            /* Clear */
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, W, H);
 
-          /* Update each dot's state */
-          for (const d of dots) {
-            if (d.phase === "in") {
-              d.glimmer = Math.min(d.glimmer + 0.1, 1);
-              if (d.glimmer >= 1) {
-                d.phase = "hold";
-                d.holdCount = 0;
-              }
-            } else if (d.phase === "hold") {
-              if (++d.holdCount >= d.holdMax) d.phase = "out";
-            } else if (d.phase === "out") {
-              d.glimmer = Math.max(d.glimmer - 0.055, 0);
-              if (d.glimmer <= 0) {
-                d.glimmer = 0;
-                d.phase = "idle";
+            /* Trigger new glimmers every other frame */
+            if (frame % 2 === 0 && dots.length) {
+              const n = 1 + Math.floor(Math.random() * (isMobile ? 2 : glimmerRate));
+              for (let i = 0; i < n; i++) {
+                const d = dots[Math.floor(Math.random() * dots.length)];
+                if (d && d.phase === "idle") d.phase = "in";
               }
             }
-          }
 
-          /* ── PASS 1: batch-draw all idle dim dots ── */
-          ctx.beginPath();
-          for (const d of dots) {
-            if (d.glimmer === 0) {
-              ctx.moveTo(d.x + d.baseR, d.y);
-              ctx.arc(d.x, d.y, d.baseR, 0, Math.PI * 2);
+            /* Update each dot's state */
+            for (let i = 0; i < dots.length; i++) {
+              const d = dots[i];
+              if (d.phase === "in") {
+                d.glimmer = Math.min(d.glimmer + 0.1, 1);
+                if (d.glimmer >= 1) {
+                  d.phase = "hold";
+                  d.holdCount = 0;
+                }
+              } else if (d.phase === "hold") {
+                if (++d.holdCount >= d.holdMax) d.phase = "out";
+              } else if (d.phase === "out") {
+                d.glimmer = Math.max(d.glimmer - 0.055, 0);
+                if (d.glimmer <= 0) {
+                  d.glimmer = 0;
+                  d.phase = "idle";
+                }
+              }
             }
+
+            /* ── PASS 1: batch-draw all idle dim dots ── */
+            ctx.beginPath();
+            for (let i = 0; i < dots.length; i++) {
+              const d = dots[i];
+              if (d.glimmer === 0) {
+                ctx.moveTo(d.x + d.baseR, d.y);
+                ctx.arc(d.x, d.y, d.baseR, 0, Math.PI * 2);
+              }
+            }
+            ctx.fillStyle = `rgba(0, 150, 220, ${dimOpacity})`;
+            ctx.fill();
+
+            /* ── PASS 2: glimmering dots ── */
+            for (let i = 0; i < dots.length; i++) {
+              const d = dots[i];
+              if (d.glimmer <= 0) continue;
+              const g = d.glimmer;
+
+              const r = 0;
+              const gr = Math.round(lerp(150, 229, g));
+              const b = Math.round(lerp(220, 255, g));
+              const a = lerp(dimOpacity, 1.0, g);
+
+              if (useShadow) {
+                ctx.save();
+                ctx.shadowBlur = g * glowBlur;
+                ctx.shadowColor = `rgba(0, 210, 255, ${g * 0.95})`;
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.baseR + g * 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${r},${gr},${b},${a})`;
+                ctx.fill();
+                ctx.restore();
+              } else {
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.baseR + g * 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${r},${gr},${b},${a})`;
+                ctx.fill();
+              }
+            }
+
+            /* ── PASS 3: draw service location pins with labels ── */
+            PINS.forEach((pin) => {
+              const [px, py] = project(pin.lon, pin.lat, W, H);
+              const pulse = (frame % 60) / 60;
+              const rMax = 12;
+
+              ctx.beginPath();
+              ctx.arc(px, py, 4 + pulse * rMax, 0, Math.PI * 2);
+              ctx.strokeStyle = `rgba(0, 229, 255, ${1 - pulse})`;
+              ctx.lineWidth = 1.2;
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+              ctx.fillStyle = "#ffffff";
+              ctx.fill();
+
+              const startX = px + 50;
+              const startY = py - 35;
+              const endX = px + 5;
+              const endY = py - 5;
+
+              ctx.beginPath();
+              ctx.moveTo(startX, startY);
+              ctx.lineTo(endX, endY);
+              ctx.strokeStyle = "rgba(0, 229, 255, 0.8)";
+              ctx.lineWidth = 1.2;
+              ctx.stroke();
+
+              const angle = Math.atan2(endY - startY, endX - startX);
+              const arrowLength = 6;
+              ctx.beginPath();
+              ctx.moveTo(endX, endY);
+              ctx.lineTo(
+                endX - arrowLength * Math.cos(angle - Math.PI / 6),
+                endY - arrowLength * Math.sin(angle - Math.PI / 6)
+              );
+              ctx.lineTo(
+                endX - arrowLength * Math.cos(angle + Math.PI / 6),
+                endY - arrowLength * Math.sin(angle + Math.PI / 6)
+              );
+              ctx.closePath();
+              ctx.fillStyle = "rgba(0, 229, 255, 0.9)";
+              ctx.fill();
+
+              ctx.font = "600 10px sans-serif";
+              ctx.textAlign = "left";
+              ctx.textBaseline = "middle";
+              ctx.fillStyle = "#ffffff";
+              ctx.fillText(pin.name, startX + 5, startY);
+            });
           }
-          /* Soft digital cyan-blue for inactive dots */
-          ctx.fillStyle = `rgba(0, 150, 220, ${dimOpacity})`;
-          ctx.fill();
-
-          /* ── PASS 2: glimmering dots with glow ── */
-          for (const d of dots) {
-            if (d.glimmer <= 0) continue;
-            const g = d.glimmer;
-
-            /*
-             * Colour ramp:  dim cyan-blue  →  bright neon cyan
-             *   dim:  rgba(0, 150, 220, dimOpacity)
-             *   peak: rgba(0, 229, 255, 1.0)
-             */
-            const r  = 0;
-            const gr = Math.round(lerp(150, 229, g));
-            const b  = Math.round(lerp(220, 255, g));
-            const a  = lerp(dimOpacity, 1.0, g);
-
-            ctx.save();
-            ctx.shadowBlur  = g * glowBlur;
-            ctx.shadowColor = `rgba(0, 210, 255, ${g * 0.95})`;
-            ctx.beginPath();
-            ctx.arc(d.x, d.y, d.baseR + g * 2.2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${r},${gr},${b},${a})`;
-            ctx.fill();
-            ctx.restore();
-          }
-
-          /* ── PASS 3: draw service location pins with labels ── */
-          PINS.forEach((pin) => {
-            const [px, py] = project(pin.lon, pin.lat, W, H);
-            
-            // Pulse ripple effect
-            const pulse = (frame % 60) / 60;
-            const rMax = 12;
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(px, py, 4 + pulse * rMax, 0, Math.PI * 2);
-            ctx.strokeStyle = `rgba(0, 229, 255, ${1 - pulse})`;
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-            ctx.restore();
-
-            // Pinned city core
-            ctx.save();
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = "rgba(0, 229, 255, 1.0)";
-            ctx.beginPath();
-            ctx.arc(px, py, 3.5, 0, Math.PI * 2);
-            ctx.fillStyle = "#ffffff";
-            ctx.fill();
-            ctx.restore();
-
-            // Arrow pointing line to avoid text overlap (px + 50, py - 35) to (px + 5, py - 5)
-            const startX = px + 50;
-            const startY = py - 35;
-            const endX = px + 5;
-            const endY = py - 5;
-
-            ctx.save();
-            ctx.shadowBlur = 4;
-            ctx.shadowColor = "rgba(0, 229, 255, 0.5)";
-            
-            // Draw connector line
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.strokeStyle = "rgba(0, 229, 255, 0.8)";
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-
-            // Arrow head pointing at (endX, endY)
-            const angle = Math.atan2(endY - startY, endX - startX);
-            const arrowLength = 6;
-            ctx.beginPath();
-            ctx.moveTo(endX, endY);
-            ctx.lineTo(
-              endX - arrowLength * Math.cos(angle - Math.PI / 6),
-              endY - arrowLength * Math.sin(angle - Math.PI / 6)
-            );
-            ctx.lineTo(
-              endX - arrowLength * Math.cos(angle + Math.PI / 6),
-              endY - arrowLength * Math.sin(angle + Math.PI / 6)
-            );
-            ctx.closePath();
-            ctx.fillStyle = "rgba(0, 229, 255, 0.9)";
-            ctx.fill();
-            ctx.restore();
-
-            // Label text at the start of the arrow (startX + 5, startY)
-            ctx.save();
-            ctx.font = "600 10px sans-serif";
-            ctx.textAlign = "left";
-            ctx.textBaseline = "middle";
-            ctx.strokeStyle = "rgba(0, 0, 0, 0.85)";
-            ctx.lineWidth = 3;
-            ctx.strokeText(pin.name, startX + 5, startY);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillText(pin.name, startX + 5, startY);
-            ctx.restore();
-          });
 
           animRef.current = requestAnimationFrame(animate);
         };
@@ -327,17 +332,33 @@ const GlimmeringMap = ({
       })
       .catch((e) => console.warn("GlimmeringMap: could not load world data", e));
 
+    /* ── IntersectionObserver to stop loop when offscreen ── */
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
+
+    let resizeTimer = null;
     const handleResize = () => {
-      if (topoData) {
-        initMap(topoData);
-      }
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        isMobile = window.innerWidth < 768;
+        if (currentTopology) {
+          initMap(currentTopology);
+        }
+      }, 200);
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       running = false;
+      observer.disconnect();
+      clearTimeout(resizeTimer);
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animRef.current);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
     };
   }, [dotSpacing, glimmerRate, dimOpacity, glowBlur]);
 
