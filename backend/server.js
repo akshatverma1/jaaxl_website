@@ -5,16 +5,86 @@ const multer = require('multer');
 require('dotenv').config();
 
 // Configure multer for memory storage
-const upload = multer({ 
+const ALLOWED_RESUME_TYPES = new Set([
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]);
+
+const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+  limits: { fileSize: 5 * 1024 * 1024, files: 1, fields: 60 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    if (ALLOWED_RESUME_TYPES.has(file.mimetype)) return cb(null, true);
+    const err = new Error('Resume must be a PDF or Word document.');
+    err.code = 'INVALID_FILE_TYPE';
+    cb(err);
+  },
 });
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+// Vercel / proxies set X-Forwarded-For — needed for per-IP rate limiting
+app.set('trust proxy', true);
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Escape user-supplied text before interpolating it into email HTML. */
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/** Strip CR/LF so values can't break out of email headers (subject lines). */
+function oneLine(value, max = 200) {
+  return String(value ?? '').replace(/[\r\n]+/g, ' ').trim().slice(0, max);
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * Simple fixed-window rate limiter keyed by IP.
+ * Note: on serverless each warm instance keeps its own counters, so this is a
+ * best-effort brake against bursts, not a hard global quota.
+ */
+function rateLimit({ windowMs, max, message }) {
+  const hits = new Map();
+  return (req, res, next) => {
+    const now = Date.now();
+    const key = req.ip || 'unknown';
+    const entry = hits.get(key);
+    if (!entry || now > entry.reset) {
+      hits.set(key, { count: 1, reset: now + windowMs });
+    } else if (++entry.count > max) {
+      res.set('Retry-After', String(Math.ceil((entry.reset - now) / 1000)));
+      return res.status(429).json({ success: false, message });
+    }
+    if (hits.size > 5000) {
+      for (const [k, v] of hits) if (now > v.reset) hits.delete(k);
+    }
+    next();
+  };
+}
+
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: 'Too many messages sent. Please try again in a few minutes.',
+});
+
+const applyLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 3,
+  message: 'Too many applications submitted. Please try again later.',
+});
+
 // ─── Middleware ───────────────────────────────────────────────────────────────
-app.use(express.json());
+app.use(express.json({ limit: '50kb' }));
 app.use(
   cors({
     origin: process.env.CORS_ORIGINS
@@ -47,31 +117,57 @@ app.get('/api/health', (req, res) => {
 });
 
 // Contact form submission
-app.post('/api/contact', async (req, res) => {
-  const { name, email, subject, message } = req.body;
+app.post('/api/contact', contactLimiter, async (req, res) => {
+  const body = req.body || {};
 
-  // Basic validation
-  if (!name || !email || !subject || !message) {
+  // Honeypot: real users never see or fill this field
+  if (body.company_website) {
+    return res.status(200).json({ success: true, message: 'Your message has been sent successfully!' });
+  }
+
+  const rawName = oneLine(body.name, 120);
+  const rawEmail = oneLine(body.email, 254);
+  const rawPhone = oneLine(body.phone, 40);
+  const rawSubject = oneLine(body.subject, 200);
+  const rawMessage = String(body.message ?? '').trim();
+
+  // Email is required unless a phone number is given (chatbot leads may be phone-only)
+  if (!rawName || !rawSubject || !rawMessage || (!rawEmail && !rawPhone)) {
     return res.status(400).json({
       success: false,
       message: 'All fields are required.',
     });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  if (rawEmail && !EMAIL_RE.test(rawEmail)) {
     return res.status(400).json({
       success: false,
       message: 'Invalid email address.',
     });
   }
 
+  if (rawMessage.length > 10000) {
+    return res.status(400).json({
+      success: false,
+      message: 'Message is too long.',
+    });
+  }
+
+  const name = escapeHtml(rawName);
+  const email = escapeHtml(rawEmail);
+  const phone = escapeHtml(rawPhone);
+  const subject = escapeHtml(rawSubject);
+  const message = escapeHtml(rawMessage);
+  const mailtoSubject = escapeHtml(encodeURIComponent(`Re: ${rawSubject}`));
+  const mailtoEmail = escapeHtml(encodeURIComponent(rawEmail));
+
   try {
     // Email to YOU (notification)
     const notificationMail = {
       from: `"JAQYI Website" <${process.env.EMAIL_USER}>`,
       to: process.env.NOTIFY_EMAIL || process.env.EMAIL_USER,
-      subject: `[JAQYI Contact] ${subject}`,
+      subject: `[JAQYI Contact] ${rawSubject}`,
+      replyTo: rawEmail || undefined,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
           <div style="background: #111111; padding: 32px 40px; border-bottom: 1px solid #222;">
@@ -88,8 +184,12 @@ app.post('/api/contact', async (req, res) => {
               </tr>
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Email</td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: #ffffff; font-size: 16px;"><a href="mailto:${email}" style="color: #ffffff;">${email}</a></td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: #ffffff; font-size: 16px;">${rawEmail ? `<a href="mailto:${mailtoEmail}" style="color: #ffffff;">${email}</a>` : '—'}</td>
               </tr>
+              ${phone ? `<tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Phone</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: #ffffff; font-size: 16px;">${phone}</td>
+              </tr>` : ''}
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;">Subject</td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #1e1e1e; color: #ffffff; font-size: 16px;">${subject}</td>
@@ -99,9 +199,9 @@ app.post('/api/contact', async (req, res) => {
               <p style="color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 12px 0;">Message</p>
               <div style="background: #111111; border: 1px solid #222; border-radius: 8px; padding: 20px; color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.7; white-space: pre-wrap;">${message}</div>
             </div>
-            <div style="margin-top: 32px; text-align: center;">
-              <a href="mailto:${email}?subject=Re: ${subject}" style="display: inline-block; background: #ffffff; color: #000000; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500;">Reply to ${name}</a>
-            </div>
+            ${rawEmail ? `<div style="margin-top: 32px; text-align: center;">
+              <a href="mailto:${mailtoEmail}?subject=${mailtoSubject}" style="display: inline-block; background: #ffffff; color: #000000; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500;">Reply to ${name}</a>
+            </div>` : ''}
           </div>
           <div style="padding: 24px 40px; background: #111111; border-top: 1px solid #222; text-align: center;">
             <p style="margin: 0; color: rgba(255,255,255,0.3); font-size: 12px;">JAQYI — Creative Software Studio</p>
@@ -113,7 +213,7 @@ app.post('/api/contact', async (req, res) => {
     // Auto-reply to the user
     const autoReplyMail = {
       from: `"JAQYI Studio" <${process.env.EMAIL_USER}>`,
-      to: email,
+      to: rawEmail,
       subject: `We received your message — JAQYI`,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
@@ -143,9 +243,10 @@ app.post('/api/contact', async (req, res) => {
     };
 
     await transporter.sendMail(notificationMail);
-    await transporter.sendMail(autoReplyMail);
+    // Only auto-reply when the visitor actually gave us an email address
+    if (rawEmail) await transporter.sendMail(autoReplyMail);
 
-    console.log(`[Contact] Email sent from ${name} <${email}>`);
+    console.log(`[Contact] Email sent from ${rawName} <${rawEmail || rawPhone}>`);
 
     return res.status(200).json({
       success: true,
@@ -161,8 +262,24 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // Job Application submission
-app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
+function handleResumeUpload(req, res, next) {
+  upload.single('resume')(req, res, (err) => {
+    if (!err) return next();
+    const message =
+      err.code === 'LIMIT_FILE_SIZE' ? 'Resume must be 5MB or smaller.'
+      : err.code === 'INVALID_FILE_TYPE' ? err.message
+      : 'Invalid upload.';
+    return res.status(400).json({ success: false, message });
+  });
+}
+
+app.post('/api/careers/apply', applyLimiter, handleResumeUpload, async (req, res) => {
   try {
+    // Honeypot: real users never see or fill this field
+    if (req.body.company_website) {
+      return res.status(200).json({ success: true, message: 'Your application has been submitted successfully!' });
+    }
+
     const rawAnswers = req.body.answers;
     if (!rawAnswers) {
       return res.status(400).json({ success: false, message: 'Answers are required.' });
@@ -175,16 +292,31 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid answers format.' });
     }
 
-    const { fullName, email } = answers;
+    if (!answers || typeof answers !== 'object' || Array.isArray(answers)) {
+      return res.status(400).json({ success: false, message: 'Invalid answers format.' });
+    }
+
+    const rawFullName = oneLine(answers.fullName, 120);
+    const rawEmail = oneLine(answers.email, 254);
     const resumeFile = req.file; // From multer
 
-    if (!fullName || !email) {
+    if (!rawFullName || !rawEmail) {
       return res.status(400).json({ success: false, message: 'Name and email are required.' });
     }
+    if (!EMAIL_RE.test(rawEmail)) {
+      return res.status(400).json({ success: false, message: 'Invalid email address.' });
+    }
+
+    const fullName = escapeHtml(rawFullName);
+    const mailtoEmail = escapeHtml(encodeURIComponent(rawEmail));
 
     // Build the formatted HTML for the answers
     let answersHtml = '<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">';
-    for (const [key, value] of Object.entries(answers)) {
+    for (const [rawKey, rawValue] of Object.entries(answers).slice(0, 60)) {
+      const key = escapeHtml(String(rawKey).slice(0, 100));
+      const value = escapeHtml(
+        typeof rawValue === 'string' ? rawValue.slice(0, 5000) : JSON.stringify(rawValue ?? '').slice(0, 5000)
+      );
       answersHtml += `
         <tr>
           <td style="padding: 12px; border-bottom: 1px solid #222; color: rgba(255,255,255,0.6); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; width: 30%; vertical-align: top;">
@@ -202,7 +334,8 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
     const notificationMail = {
       from: `"JAQYI Website" <${process.env.EMAIL_USER}>`,
       to: process.env.NOTIFY_EMAIL || process.env.EMAIL_USER,
-      subject: `[JAQYI Careers] New Sales Person Application: ${fullName}`,
+      subject: `[JAQYI Careers] New Sales Person Application: ${rawFullName}`,
+      replyTo: rawEmail,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 800px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
           <div style="background: #111111; padding: 32px 40px; border-bottom: 1px solid #222;">
@@ -218,14 +351,14 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
             </div>
             ${resumeFile ? '<p style="margin-top: 24px; color: #4ade80;">Resume attached to this email.</p>' : '<p style="margin-top: 24px; color: #f87171;">No resume attached.</p>'}
             <div style="margin-top: 32px; text-align: center;">
-              <a href="mailto:${email}?subject=Regarding your application for Sales Person at JAQYI" style="display: inline-block; background: #ffffff; color: #000000; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500;">Email ${fullName}</a>
+              <a href="mailto:${mailtoEmail}?subject=Regarding%20your%20application%20for%20Sales%20Person%20at%20JAQYI" style="display: inline-block; background: #ffffff; color: #000000; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500;">Email ${fullName}</a>
             </div>
           </div>
         </div>
       `,
       attachments: resumeFile ? [
         {
-          filename: resumeFile.originalname,
+          filename: oneLine(resumeFile.originalname, 150).replace(/[\\/]/g, '_'),
           content: resumeFile.buffer
         }
       ] : []
@@ -234,7 +367,7 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
     // Auto-reply to candidate
     const autoReplyMail = {
       from: `"JAQYI Studio" <${process.env.EMAIL_USER}>`,
-      to: email,
+      to: rawEmail,
       subject: `Application Received - JAQYI Careers`,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; border-radius: 12px; overflow: hidden;">
@@ -258,7 +391,7 @@ app.post('/api/careers/apply', upload.single('resume'), async (req, res) => {
     await transporter.sendMail(notificationMail);
     await transporter.sendMail(autoReplyMail);
 
-    console.log(`[Careers] Application submitted by ${fullName} <${email}>`);
+    console.log(`[Careers] Application submitted by ${rawFullName} <${rawEmail}>`);
 
     return res.status(200).json({
       success: true,

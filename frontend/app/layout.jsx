@@ -1,35 +1,46 @@
 import './globals.css';
 import './app.css';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import { company, organizationSchema, jsonLd } from '@/data/site';
+import { products } from '@/data/products';
 
 export const metadata = {
   metadataBase: new URL('https://jaqyi.com'),
   title: {
-    default: 'JAQYI | Web Development, App Development & AI Automation Agency',
+    default: 'JAQYI | Software Studio & Product Company — Web, App, AI & Doott',
     template: '%s | JAQYI',
   },
   description:
-    'JAQYI is a leading software agency in India offering custom web development, mobile app development, AI & automation solutions. Trusted by businesses across India and USA. Based in Indore, MP.',
+    'JAQYI builds software two ways: JAQYI Studio delivers custom web development, mobile apps, SaaS and AI automation for businesses in India and the USA, and JAQYI Products builds our own software — starting with Doott, a 43.9M+ B2B contact database.',
+  applicationName: 'JAQYI',
+  authors: [{ name: company.founder }],
+  creator: 'JAQYI',
+  publisher: 'JAQYI',
   keywords: [
     'JAQYI',
-    'web development',
-    'app development',
-    'AI automation',
-    'digital marketing',
-    'software agency india',
-    'web development company',
-    'mobile app development',
-    'software studio',
-    'IT company indore',
+    'software company india',
+    'software product company india',
+    'web development company india',
+    'app development company',
+    'AI automation agency',
+    'SaaS development',
+    'Doott',
+    'B2B contact database',
+    'software studio indore',
   ],
   openGraph: {
     type: 'website',
     siteName: 'JAQYI',
-    images: [{ url: '/og-image.png' }],
+    locale: 'en_IN',
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og-image.png'],
+    site: '@jaqyi_com',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
   icons: {
     icon: [
@@ -45,6 +56,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="App">
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema(products))} />
         <AnalyticsTracker />
         {children}
       </body>

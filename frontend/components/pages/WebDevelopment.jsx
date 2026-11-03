@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Monitor, Code, Cloud, Database, Globe, Box, CheckCircle2, ArrowRight, ChevronDown, ChevronUp, Phone, Mail, Star } from 'lucide-react';
 import Header from '@/components/Header';
+import { jsonLd } from '@/data/site';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 
@@ -64,7 +65,7 @@ const schema = {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jaqyi.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://jaqyi.com/#services" },
+        { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://jaqyi.com/services" },
         { "@type": "ListItem", "position": 3, "name": "Web Development", "item": "https://jaqyi.com/services/web-development" }
       ]
     }
@@ -105,13 +106,14 @@ const FAQItem = ({ faq }) => {
 
 const WebDevelopment = () => (
   <div className="svc-page">
+    <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
     <Header />
 
     {/* Hero */}
     <section className="svc-page-hero">
       <div className="svc-page-hero-inner">
         <div className="svc-page-breadcrumb">
-          <Link href="/">Home</Link> <span>/</span> <Link href="/#services">Services</Link> <span>/</span> <span>Web Development</span>
+          <Link href="/">Home</Link> <span>/</span> <Link href="/services">Services</Link> <span>/</span> <span>Web Development</span>
         </div>
         <h1 className="svc-page-title">
           Web Development Company in India

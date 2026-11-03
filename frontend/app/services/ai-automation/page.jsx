@@ -1,7 +1,7 @@
 import AIAutomationPage from '@/components/pages/AIAutomation';
 
 export const metadata = {
-  title: 'AI & Automation Services in India | Machine Learning & AI Development — JAQYI',
+  title: 'AI & Automation Services in India | Machine Learning & AI Development',
   description: 'JAQYI offers custom AI development, machine learning, NLP, chatbots, and business automation services for enterprises and startups in India and USA.',
   alternates: { canonical: 'https://jaqyi.com/services/ai-automation' },
   keywords: [

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Cpu, Brain, MessageSquare, BarChart, Zap, Shield, CheckCircle2, ArrowRight, ChevronDown, ChevronUp, Phone, Mail } from 'lucide-react';
 import Header from '@/components/Header';
+import { jsonLd } from '@/data/site';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 
@@ -54,7 +55,7 @@ const schema = {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jaqyi.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://jaqyi.com/#services" },
+        { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://jaqyi.com/services" },
         { "@type": "ListItem", "position": 3, "name": "AI & Automation", "item": "https://jaqyi.com/services/ai-automation" }
       ]
     }
@@ -95,13 +96,14 @@ const FAQItem = ({ faq }) => {
 
 const AIAutomation = () => (
   <div className="svc-page">
+    <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
     <Header />
 
     {/* Hero */}
     <section className="svc-page-hero">
       <div className="svc-page-hero-inner">
         <motion.div className="svc-page-breadcrumb" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <Link href="/">Home</Link> <span>/</span> <Link href="/#services">Services</Link> <span>/</span> <span>AI & Automation</span>
+          <Link href="/">Home</Link> <span>/</span> <Link href="/services">Services</Link> <span>/</span> <span>AI & Automation</span>
         </motion.div>
         <motion.h1 className="svc-page-title" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           AI & Automation Services in India

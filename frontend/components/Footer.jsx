@@ -1,111 +1,109 @@
-'use client';
-
-import React from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Linkedin, Twitter, Mail, Phone } from 'lucide-react';
+import { Linkedin, Twitter, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { company } from '@/data/site';
+import { products } from '@/data/products';
+
+const studioLinks = [
+  { name: 'All Services', href: '/services' },
+  { name: 'Web Development', href: '/services/web-development' },
+  { name: 'App Development', href: '/services/app-development' },
+  { name: 'AI & Automation', href: '/services/ai-automation' },
+  { name: 'Our Work', href: '/portfolio' },
+];
+
+const companyLinks = [
+  { name: 'About', href: '/#about' },
+  { name: 'Careers', href: '/careers' },
+  { name: 'FAQ', href: '/#faq' },
+  { name: 'Contact', href: '/#contact' },
+];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const quickLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
-    { name: 'Careers', href: '/careers', isRoute: true }
-  ];
-
-  const services = [
-    { name: 'Web Development', href: '/services/web-development' },
-    { name: 'App Development', href: '/services/app-development' },
-    { name: 'AI & Automation', href: '/services/ai-automation' },
-    { name: 'SaaS Development', href: '/services/web-development' },
-  ];
-
   return (
     <footer className="footer">
       <div className="footer-container">
-        <div className="footer-grid">
+        <div className="footer-grid footer-grid--5">
           {/* Company Info */}
           <div className="footer-column">
-            <h3 className="footer-brand">JAQYI</h3>
+            <Link href="/" className="footer-brand">JAQYI</Link>
             <p className="footer-tagline">
-              A creative software studio for ambitious businesses
+              Software studio &amp; product company. We build software for businesses — and for the world.
             </p>
             <div className="footer-socials">
-              <motion.a
-                href="https://www.linkedin.com/company/jaqyi/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.2 }}
-                aria-label="LinkedIn"
-              >
+              <a href={company.socials.linkedin} target="_blank" rel="noopener noreferrer" className="footer-social-link" aria-label="JAQYI on LinkedIn">
                 <Linkedin size={20} />
-              </motion.a>
-              <motion.a
-                href="https://x.com/jaqyi_com?s=21"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.2 }}
-                aria-label="Twitter"
-              >
+              </a>
+              <a href={company.socials.x} target="_blank" rel="noopener noreferrer" className="footer-social-link" aria-label="JAQYI on X (Twitter)">
                 <Twitter size={20} />
-              </motion.a>
+              </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="footer-column">
-            <h4 className="footer-heading">Quick Links</h4>
+          {/* Studio */}
+          <nav className="footer-column" aria-label="JAQYI Studio">
+            <h4 className="footer-heading">JAQYI Studio</h4>
             <ul className="footer-links">
-              {quickLinks.map((link) => (
+              {studioLinks.map((link) => (
                 <li key={link.name}>
-                  <motion.a
-                    href={link.href}
-                    className="footer-link"
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {link.name}
-                  </motion.a>
+                  <Link href={link.href} className="footer-link">{link.name}</Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Services */}
-          <div className="footer-column">
-            <h4 className="footer-heading">Services</h4>
+          {/* Products */}
+          <nav className="footer-column" aria-label="JAQYI Products">
+            <h4 className="footer-heading">JAQYI Products</h4>
             <ul className="footer-links">
-              {services.map((service) => (
-                <li key={service.name}>
-                  <Link href={service.href} className="footer-link">
-                    {service.name}
+              <li><Link href="/products" className="footer-link">All Products</Link></li>
+              {products.map((p) => (
+                <li key={p.slug}>
+                  <Link href={`/products/${p.slug}`} className="footer-link">
+                    {p.name} — {p.category}
                   </Link>
                 </li>
               ))}
+              {products.map((p) => (
+                <li key={`${p.slug}-app`}>
+                  <a href={p.appUrl} className="footer-link" target="_blank" rel="noopener">
+                    Open {p.name} <ArrowUpRight size={12} style={{ display: 'inline', verticalAlign: 'middle' }} />
+                  </a>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
+
+          {/* Company */}
+          <nav className="footer-column" aria-label="Company">
+            <h4 className="footer-heading">Company</h4>
+            <ul className="footer-links">
+              {companyLinks.map((link) => (
+                <li key={link.name}>
+                  <Link href={link.href} className="footer-link">{link.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           {/* Contact */}
           <div className="footer-column">
             <h4 className="footer-heading">Get in Touch</h4>
-            <div className="footer-contact">
-              <div className="footer-contact-item">
+            <address className="footer-contact">
+              <a href={`mailto:${company.email}`} className="footer-contact-item">
                 <Mail size={16} />
-                <span>akshat@jaqyi.com</span>
-              </div>
-              <div className="footer-contact-item">
+                <span>{company.email}</span>
+              </a>
+              <a href={`tel:${company.phone.replace(/\s/g, '')}`} className="footer-contact-item">
                 <Phone size={16} />
-                <span>+91 9109621850</span>
+                <span>{company.phone}</span>
+              </a>
+              <div className="footer-contact-item">
+                <MapPin size={16} />
+                <span>{company.address.addressLocality}, {company.address.addressRegion}, India</span>
               </div>
-            </div>
+            </address>
           </div>
         </div>
 

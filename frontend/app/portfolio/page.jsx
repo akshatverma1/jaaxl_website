@@ -1,7 +1,7 @@
 import PortfolioPageClient from '@/components/pages/PortfolioPageClient';
 
 export const metadata = {
-  title: 'Portfolio | JAQYI — Production-Grade Projects in AI, SaaS & More',
+  title: 'Portfolio — Production-Grade Projects in AI, SaaS & More',
   description: 'A curated showcase of production-grade projects by JAQYI across AI agents, automation, SaaS, cloud, FinTech, and more. 35+ live projects with full tech stacks.',
   alternates: { canonical: 'https://jaqyi.com/portfolio' },
   keywords: [

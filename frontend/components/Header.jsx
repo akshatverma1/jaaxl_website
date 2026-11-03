@@ -1,91 +1,74 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
+
+// Real URLs (not bare #hashes) so every link works from every page and is crawlable.
+const navItems = [
+  { name: 'Services', href: '/services', match: '/services' },
+  { name: 'Products', href: '/products', match: '/products' },
+  { name: 'Work', href: '/portfolio', match: '/portfolio' },
+  { name: 'About', href: '/#about' },
+  { name: 'Careers', href: '/careers', match: '/careers' },
+];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '/portfolio', isRoute: true },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
-    { name: 'Careers', href: '/careers', isRoute: true }
-  ];
+  // Close the mobile menu after navigating
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
-  const scrollToSection = (href, isRoute) => {
-    if (isRoute) {
-      router.push(href);
-      setIsMobileMenuOpen(false);
-      return;
-    }
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setIsMobileMenuOpen(false);
-    }
-  };
+  const isActive = (item) => item.match && pathname?.startsWith(item.match);
 
   return (
     <motion.header
-      className={`header ${isScrolled ? 'header-scrolled' : ''}`}
+      className={`header ${isScrolled || isMobileMenuOpen ? 'header-scrolled' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
       <div className="header-container">
-        <motion.a
-          href="#home"
-          className="header-logo"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('#home');
-          }}
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2 }}
-        >
+        <Link href="/" className="header-logo" aria-label="JAQYI home">
           JAQYI
-        </motion.a>
+        </Link>
 
         {/* Desktop Navigation */}
-        <nav className="header-nav">
+        <nav className="header-nav" aria-label="Main">
           {navItems.map((item) => (
-            <motion.a
+            <Link
               key={item.name}
               href={item.href}
-              className="nav-link"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(item.href, item.isRoute);
-              }}
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.2 }}
+              className={`nav-link ${isActive(item) ? 'nav-link--active' : ''}`}
+              aria-current={isActive(item) ? 'page' : undefined}
             >
               {item.name}
-            </motion.a>
+            </Link>
           ))}
+          <Link href="/#contact" className="nav-cta">
+            Start a project <ArrowUpRight size={14} />
+          </Link>
         </nav>
 
         <div className="header-actions">
-          {/* Mobile Menu Button */}
           <button
             className="mobile-menu-button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -102,22 +85,16 @@ const Header = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <nav className="mobile-nav">
-              {navItems.map((item, index) => (
-                <motion.a
+            <nav className="mobile-nav" aria-label="Mobile">
+              {[...navItems, { name: 'Contact', href: '/#contact' }].map((item) => (
+                <Link
                   key={item.name}
                   href={item.href}
                   className="mobile-nav-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(item.href, item.isRoute);
-                  }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
-                </motion.a>
+                </Link>
               ))}
             </nav>
           </motion.div>

@@ -1,0 +1,24 @@
+# JAQYI
+
+> JAQYI is a software company based in Indore, India, with two segments: JAQYI Studio, a software development studio that builds custom websites, mobile apps, SaaS platforms and AI automation for businesses in India, the USA and worldwide; and JAQYI Products, which builds and runs JAQYI's own software products. The first product is Doott (doott.jaqyi.com), a B2B contact database with 43.9M+ contacts sold for a one-time ₹179 lifetime price.
+
+Founder: Akshat Verma. Contact: akshat@jaqyi.com, +91 9109621850. 7+ years of software experience, 50+ projects delivered.
+
+## JAQYI Studio (services)
+
+- [All services](https://jaqyi.com/services): overview of JAQYI Studio's software development services and process
+- [Web development](https://jaqyi.com/services/web-development): websites, web apps, SaaS, ERP/CRM, e-commerce (React, Next.js, Node.js)
+- [App development](https://jaqyi.com/services/app-development): iOS, Android, Flutter, React Native
+- [AI & automation](https://jaqyi.com/services/ai-automation): AI agents, chatbots, workflow automation, lead scraping, ML
+- [Portfolio](https://jaqyi.com/portfolio): case studies of client and in-house projects
+
+## JAQYI Products
+
+- [All products](https://jaqyi.com/products): JAQYI's own software products
+- [Doott](https://jaqyi.com/products/doott): B2B contact database and lead generation platform — search 43.9M+ people by job title, city and company, filter to verified emails/phones, unlimited CSV export, ₹179 one-time lifetime access. App: https://doott.jaqyi.com
+
+## Company
+
+- [About & FAQ](https://jaqyi.com/#about)
+- [Careers](https://jaqyi.com/careers)
+- [Contact](https://jaqyi.com/#contact)

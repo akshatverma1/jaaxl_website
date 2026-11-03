@@ -1,7 +1,7 @@
 {
-  "name": "JAQYI - Web Development & AI Automation Agency",
+  "name": "JAQYI — Software Studio & Product Company",
   "short_name": "JAQYI",
-  "description": "JAQYI is a creative software studio offering web development, mobile app development, AI automation, and digital marketing services in India and USA.",
+  "description": "JAQYI builds software two ways: JAQYI Studio delivers custom web, mobile, SaaS and AI automation for businesses, and JAQYI Products builds our own software, starting with Doott.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0f",
@@ -24,6 +24,10 @@
       "type": "image/png"
     }
   ],
-  "categories": ["business", "technology", "productivity"],
+  "categories": [
+    "business",
+    "technology",
+    "productivity"
+  ],
   "scope": "/"
 }

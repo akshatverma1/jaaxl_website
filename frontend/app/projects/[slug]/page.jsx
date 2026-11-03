@@ -12,9 +12,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) return { title: 'Project Not Found | JAQYI' };
+  if (!project) return { title: 'Project Not Found' };
   return {
-    title: `${project.name} | JAQYI`,
+    title: `${project.name} — Case Study`,
     description: project.description,
     alternates: { canonical: `https://jaqyi.com/projects/${slug}` },
     openGraph: {

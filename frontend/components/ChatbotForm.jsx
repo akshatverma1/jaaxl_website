@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, User, CheckCircle, Loader2, Sparkles } from "lucide-react";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { API_BASE_URL } from "@/lib/config";
 
 /* ─── Typing indicator ─── */
 const TypingDots = () => (
@@ -68,7 +68,7 @@ const ChatbotForm = () => {
     setStarted(true);
 
     const greeting =
-      "Hi there! 👋 I'm JAQYI's AI assistant. I can help you learn about our services, pricing, and how we can bring your idea to life. What can I help you with today?";
+      "Hi there! 👋 I'm JAQYI's AI assistant. Ask me about building software with JAQYI Studio, or about our product Doott (43.9M+ B2B contacts). What can I help you with today?";
 
     setMessages([{ from: "bot", text: greeting }]);
     setChatHistory([{ role: "assistant", content: greeting }]);
@@ -208,10 +208,13 @@ const ChatbotForm = () => {
       .map((m) => `${m.role === "user" ? "Visitor" : "JAQYI AI"}: ${m.content.replace(/\[COLLECT_CONTACT\]/g, "").replace(/\[CONTACT_SUBMITTED\]/g, "")}`)
       .join("\n");
 
+    let delivered = false;
     try {
       const payload = {
         name: contactData.name || "AI Chatbot Lead",
-        email: contactData.email || "no-email@placeholder.com",
+        // Leave email empty for phone-only leads; the backend then skips the auto-reply
+        email: contactData.email || "",
+        phone: contactData.phone || "",
         subject: `[AI Chatbot Lead] New inquiry from ${contactData.name || "Website Visitor"}`,
         message:
           `── AI Chatbot Conversation ──\n${conversationSummary}\n\n` +
@@ -221,13 +224,27 @@ const ChatbotForm = () => {
           `Phone: ${contactData.phone || "N/A"}`,
       };
 
-      await fetch(`${API_BASE_URL}/api/contact`, {
+      const res = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+      delivered = res.ok;
     } catch {
-      /* silent — thank-you message still shows */
+      delivered = false;
+    }
+
+    if (!delivered) {
+      // Don't pretend the lead was captured — keep the form open so they can retry
+      setMessages((prev) => [
+        ...prev,
+        {
+          from: "bot",
+          text: "Sorry — I couldn't send your details just now. Please try again in a moment, or reach us directly at akshat@jaqyi.com / +91 9109621850.",
+        },
+      ]);
+      setSubmitting(false);
+      return;
     }
 
     // Tell the AI that contact was submitted
@@ -347,7 +364,7 @@ const ChatbotForm = () => {
                 className="cb-text-input"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask about our services…"
+                placeholder="Ask about our services or Doott…"
                 disabled={isStreaming}
               />
               <button

@@ -1,7 +1,7 @@
 import AppDevelopmentPage from '@/components/pages/AppDevelopment';
 
 export const metadata = {
-  title: 'Mobile App Development Company in India | iOS & Android App Development — JAQYI',
+  title: 'Mobile App Development Company in India | iOS & Android App Development',
   description: 'JAQYI is a top mobile app development company in India offering custom iOS, Android, Flutter, and React Native app development for startups and enterprises. Serving clients in India and USA.',
   alternates: { canonical: 'https://jaqyi.com/services/app-development' },
   keywords: [

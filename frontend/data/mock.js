@@ -2,11 +2,12 @@
 
 export const heroData = {
   company: "JAQYI",
-  tagline: "A creative software studio for ambitious businesses",
-  description: "We develop exceptional software solutions - from CRMs to AI SaaS platforms. Only the kind of work we're proud to sign. No shortcuts. No soulless, throwaway fluff.",
+  badge: "Software Studio + Product Company",
+  tagline: "We build software for businesses — and for the world",
+  description: "JAQYI Studio designs and engineers custom websites, apps, SaaS and AI automation for ambitious companies. JAQYI Products builds our own software that solves real problems — starting with Doott, a 43.9M+ B2B contact database.",
   cta: {
-    primary: "View Our Work",
-    secondary: "Get in Touch"
+    primary: { label: "Build with JAQYI Studio", href: "/services" },
+    secondary: { label: "Explore Doott", href: "/products/doott" }
   }
 };
 
@@ -292,7 +293,7 @@ export const portfolioData = {
 
 export const aboutData = {
   title: "Make it the best version of what it can be",
-  mission: "We're not just another agency. We're your path to exceptional web projects. JAQYI combines technical excellence with creative innovation to deliver software solutions that stand out.",
+  mission: "JAQYI is a software company with two arms. JAQYI Studio is the high-craft engineering partner ambitious businesses hire to build their websites, apps, SaaS and AI systems. JAQYI Products takes the same craft and points it at problems we see everywhere, shipping our own software like Doott. Client work keeps us sharp; our products keep us honest.",
   values: [
     {
       title: "Quality First",

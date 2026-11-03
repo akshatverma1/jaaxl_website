@@ -13,7 +13,7 @@ const iconMap = {
   Linkedin, Twitter, Github, Instagram
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+import { API_BASE_URL } from '@/lib/config';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -42,7 +42,10 @@ const Contact = () => {
       const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          company_website: e.target.elements.company_website?.value || '',
+        }),
       });
 
       const data = await response.json();
@@ -124,6 +127,16 @@ const Contact = () => {
             className="contact-form"
             onSubmit={handleSubmit}
           >
+            {/* Honeypot — hidden from people, bots fill it and get silently dropped */}
+            <input
+              type="text"
+              name="company_website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              defaultValue=""
+              style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
+            />
             <div className="form-group">
               <label htmlFor="name" className="form-label">Name</label>
               <Input

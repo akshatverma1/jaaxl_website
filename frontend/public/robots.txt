@@ -1,27 +1,10 @@
 # robots.txt for jaqyi.com
-# Updated: 2026-05-04
+# Note: a crawler obeys only the most specific User-agent group that matches it,
+# so the rules live in a single group that applies to every bot.
 
 User-agent: *
 Allow: /
-
-# Disallow any potential admin or private paths
 Disallow: /api/
+Disallow: /analytics
 
-# Allow important bots explicitly
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: facebot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-# Sitemap location
 Sitemap: https://jaqyi.com/sitemap.xml

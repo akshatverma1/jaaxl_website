@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { heroData } from '@/data/mock';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 const TITLE = 'JAQYI';
@@ -16,11 +17,12 @@ const Hero = () => {
         <div className="hero-content">
           <div className="hero-badge">
             <Sparkles className="sparkle-icon" />
-            <span>Software Excellence</span>
+            <span>{heroData.badge}</span>
           </div>
 
           {/* ── JAQYI heading ── */}
-          <h1 className="hero-title" aria-label={TITLE}>
+          {/* Visual wordmark — the descriptive tagline below is the page's h1 */}
+          <p className="hero-title" aria-label={TITLE}>
             <span className="hero-title-inner" aria-hidden>
               {TITLE.split('').map((char, i) => (
                 <span key={i} className="hero-letter" style={{ display: 'inline-block' }}>
@@ -33,11 +35,11 @@ const Hero = () => {
             <span className="hero-title-shimmer" aria-hidden>
               {TITLE}
             </span>
-          </h1>
-
-          <p className="hero-tagline">
-            {heroData.tagline}
           </p>
+
+          <h1 className="hero-tagline">
+            {heroData.tagline}
+          </h1>
 
           <p className="hero-description">
             {heroData.description}
@@ -45,15 +47,15 @@ const Hero = () => {
 
           <div className="hero-cta">
             <Button asChild className="cta-primary">
-              <a href="#portfolio">
-                {heroData.cta.primary}
+              <Link href={heroData.cta.primary.href}>
+                {heroData.cta.primary.label}
                 <ArrowRight className="cta-icon" />
-              </a>
+              </Link>
             </Button>
             <Button asChild variant="outline" className="cta-secondary hover:text-white">
-              <a href="#contact">
-                {heroData.cta.secondary}
-              </a>
+              <Link href={heroData.cta.secondary.href}>
+                {heroData.cta.secondary.label}
+              </Link>
             </Button>
           </div>
         </div>

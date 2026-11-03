@@ -1,118 +1,63 @@
 /**
- * In-memory analytics store.
- * Persists within a serverless function's warm lifecycle.
- * For durable storage, replace `events` with a DB call (MongoDB, Supabase, etc.)
+ * POST /api/analytics — public page-view tracker (called by AnalyticsTracker).
+ *
+ * Aggregated stats are served from /analytics/data, which sits behind the
+ * dashboard's Basic Auth (see proxy.js). This route intentionally has no GET.
  */
-
-const MAX_EVENTS = 2000;
-const events = []; // { ts, path, ref, ua, ip, country }
+import { createHash } from 'node:crypto';
+import { addEvent } from '@/lib/analyticsStore';
 
 function parseUA(ua = '') {
   const ua_lower = ua.toLowerCase();
-  if (/mobile|android|iphone|ipad/.test(ua_lower)) return 'Mobile';
-  if (/tablet/.test(ua_lower)) return 'Tablet';
+  if (/ipad|tablet/.test(ua_lower)) return 'Tablet';
+  if (/mobile|android|iphone/.test(ua_lower)) return 'Mobile';
   return 'Desktop';
 }
 
-// ---------- POST /api/analytics — track a page view ----------
+const BOT_RE = /bot|crawler|spider|crawling|headless|lighthouse|preview/i;
+
+/** Pseudonymous visitor id — raw IPs are never stored. */
+function visitorId(ip, ua) {
+  const salt = process.env.ANALYTICS_SALT || 'jaqyi-analytics';
+  return createHash('sha256').update(`${salt}:${ip}:${ua}`).digest('hex').slice(0, 16);
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
+    const ua = request.headers.get('user-agent') || '';
+    if (BOT_RE.test(ua)) return Response.json({ ok: true });
+
+    const path = typeof body?.path === 'string' ? body.path.slice(0, 300) : '/';
+    if (!path.startsWith('/')) {
+      return Response.json({ ok: false }, { status: 400 });
+    }
+
     const ip =
       request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
       request.headers.get('x-real-ip') ||
       'unknown';
-    const country = request.headers.get('x-vercel-ip-country') || '—';
-    const city = request.headers.get('x-vercel-ip-city') || '—';
-    const ua = request.headers.get('user-agent') || '';
-
-    const event = {
-      ts: Date.now(),
-      path: body.path || '/',
-      ref: body.referrer || '',
-      ua,
-      device: parseUA(ua),
-      ip,
-      country,
-      city,
+    const decode = (v) => {
+      try {
+        return v ? decodeURIComponent(v) : '—';
+      } catch {
+        return v;
+      }
     };
 
-    events.unshift(event);          // newest first
-    if (events.length > MAX_EVENTS) events.length = MAX_EVENTS;
+    await addEvent({
+      ts: Date.now(),
+      path,
+      ref: typeof body?.referrer === 'string' ? body.referrer.slice(0, 500) : '',
+      device: parseUA(ua),
+      vid: visitorId(ip, ua),
+      country: request.headers.get('x-vercel-ip-country') || '—',
+      city: decode(request.headers.get('x-vercel-ip-city')),
+    });
 
     return Response.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error('[analytics] track error:', err?.message);
     return Response.json({ ok: false }, { status: 400 });
   }
-}
-
-// ---------- GET /api/analytics — return aggregated data ----------
-export async function GET() {
-  const now = Date.now();
-  const DAY = 86_400_000;
-  const WEEK = 7 * DAY;
-
-  // Bucketed stats
-  const today = events.filter((e) => now - e.ts < DAY);
-  const week  = events.filter((e) => now - e.ts < WEEK);
-
-  // Top pages
-  const pageCount = {};
-  events.forEach((e) => {
-    pageCount[e.path] = (pageCount[e.path] || 0) + 1;
-  });
-  const topPages = Object.entries(pageCount)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8)
-    .map(([path, views]) => ({ path, views }));
-
-  // Unique visitors (by IP, last 7 days)
-  const uniqueIPs = new Set(week.map((e) => e.ip));
-
-  // Hourly breakdown (last 24 h)
-  const hourly = Array.from({ length: 24 }, (_, i) => {
-    const bucketStart = now - (23 - i) * 3_600_000;
-    const bucketEnd   = bucketStart + 3_600_000;
-    return {
-      hour: new Date(bucketStart).getHours(),
-      views: events.filter((e) => e.ts >= bucketStart && e.ts < bucketEnd).length,
-    };
-  });
-
-  // Device breakdown
-  const devices = {};
-  events.forEach((e) => { devices[e.device] = (devices[e.device] || 0) + 1; });
-
-  // Country breakdown (top 5)
-  const countries = {};
-  events.forEach((e) => { countries[e.country] = (countries[e.country] || 0) + 1; });
-  const topCountries = Object.entries(countries)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([country, views]) => ({ country, views }));
-
-  // Recent 20 events
-  const recent = events.slice(0, 20).map((e) => ({
-    ts: e.ts,
-    path: e.path,
-    device: e.device,
-    country: e.country,
-    city: e.city,
-    ref: e.ref,
-  }));
-
-  return Response.json({
-    totals: {
-      allTime: events.length,
-      today: today.length,
-      week: week.length,
-      uniqueVisitors: uniqueIPs.size,
-    },
-    topPages,
-    hourly,
-    devices,
-    topCountries,
-    recent,
-    updatedAt: now,
-  });
 }

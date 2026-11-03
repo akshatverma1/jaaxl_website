@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ChevronLeft, Send, CheckCircle, AlertCircle, Loader2, UploadCloud, X } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+import { API_BASE_URL } from '@/lib/config';
 
 // ─── Data ─────────────────────────────────────────────────────────────────
 const sections = [
@@ -163,6 +163,7 @@ const JobApplication = () => {
       const fd = new FormData();
       fd.append('answers', JSON.stringify(formData));
       fd.append('resume', resume);
+      fd.append('company_website', e.target.elements.company_website?.value || '');
 
       const res  = await fetch(`${API_BASE_URL}/api/careers/apply`, { method: 'POST', body: fd });
       const data = await res.json();
@@ -322,6 +323,16 @@ const JobApplication = () => {
 
       {/* ── Form ── */}
       <form onSubmit={handleSubmit}>
+        {/* Honeypot — hidden from people, bots fill it and get silently dropped */}
+        <input
+          type="text"
+          name="company_website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          defaultValue=""
+          style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
+        />
         <div style={{ maxWidth: '960px', margin: '0 auto', padding: '0 48px 120px' }}>
 
           {sections.map((section) => (

@@ -1,7 +1,7 @@
 import WebDevelopmentPage from '@/components/pages/WebDevelopment';
 
 export const metadata = {
-  title: 'Web Development Company in India | Custom Web Development Services — JAQYI',
+  title: 'Web Development Company in India | Custom Web Development Services',
   description: 'JAQYI is a leading web development company in India offering custom website design, React/Next.js development, WordPress, SaaS, and ERP solutions for businesses in India and USA. Get a free quote today.',
   alternates: { canonical: 'https://jaqyi.com/services/web-development' },
   keywords: [

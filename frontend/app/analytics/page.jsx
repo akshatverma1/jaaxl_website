@@ -184,7 +184,7 @@ export default function AnalyticsDashboard() {
 
   const fetchData = useCallback(async () => {
     try {
-      const res = await fetch('/api/analytics', { credentials: 'include' });
+      const res = await fetch('/analytics/data', { credentials: 'include', cache: 'no-store' });
       if (!res.ok) throw new Error('Failed');
       const json = await res.json();
       setData(json);
@@ -213,6 +213,11 @@ export default function AnalyticsDashboard() {
               Analytics Dashboard
             </h1>
             <p className="dash-subtitle">jaqyi.com — Website traffic & user activity</p>
+            {data && data.persistent === false && (
+              <p className="dash-subtitle" style={{ color: '#f59e0b' }}>
+                In-memory mode: data resets on cold starts. Set UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN (or Vercel KV) to persist.
+              </p>
+            )}
           </div>
           <div className="dash-header-right">
             {lastRefresh && (
