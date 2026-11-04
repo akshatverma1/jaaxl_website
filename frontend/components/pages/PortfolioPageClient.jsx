@@ -6,9 +6,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { projects, projectHref } from '@/data/projects';
 import {
   ArrowUpRight, Play, ExternalLink, Video, Search,
-  ArrowLeft, Github, Filter, X, ChevronDown,
+  Github, Filter, X, ChevronDown,
 } from 'lucide-react';
 import GlimmeringMap from '@/components/GlimmeringMap';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const INITIAL_ITEMS_COUNT = 12;
 const ITEMS_PER_PAGE = 8;
@@ -193,22 +195,14 @@ export default function PortfolioPageClient() {
     <div className="pf-page">
       <GlimmeringMap dotSpacing={10} glimmerRate={3} />
 
-      {/* ── Header ── */}
-      <header className="pf-header">
-        <div className="pf-header-inner">
-          <Link href="/" className="pd-logo">JAQYI</Link>
-          <nav className="pd-breadcrumb">
-            <Link href="/" className="pd-bread-link">Home</Link>
-            <span className="pd-bread-sep" style={{ margin: '0 6px', opacity: 0.3 }}>›</span>
-            <span className="pd-bread-current">Portfolio</span>
-          </nav>
-          <Link href="/" className="pd-back-btn">
-            <ArrowLeft size={16} /> Back to Home
-          </Link>
-        </div>
-      </header>
+      <Header />
 
-      <main className="pf-main">
+      <main className="pf-main pf-main--site-nav">
+        <nav className="pd-breadcrumb page-breadcrumb" aria-label="Breadcrumb">
+          <Link href="/" className="pd-bread-link">Home</Link>
+          <span className="pd-bread-sep" style={{ margin: '0 6px', opacity: 0.3 }}>›</span>
+          <span className="pd-bread-current">Portfolio</span>
+        </nav>
 
         {/* ── Hero title ── */}
         <motion.div
@@ -351,9 +345,7 @@ export default function PortfolioPageClient() {
 
       </main>
 
-      <footer className="pd-footer">
-        <p>© 2026 JAQYI Agency · <a href="mailto:info@jaqyi.com">info@jaqyi.com</a></p>
-      </footer>
+      <Footer />
     </div>
   );
 }

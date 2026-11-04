@@ -1,8 +1,8 @@
 import PrivacyPolicyPage from '@/components/pages/PrivacyPolicy';
 
 export const metadata = {
-  title: 'Privacy Policy | JAQYI — Web Development & AI Agency',
-  description: "Read JAQYI's Privacy Policy to understand how we collect, use, and safeguard your personal data. We are committed to transparency and data protection.",
+  title: "Privacy Policy",
+  description: "How JAQYI collects, uses and protects personal data on jaqyi.com — including our contact forms, AI chat assistant, WhatsApp and cookie-free analytics.",
   alternates: { canonical: 'https://jaqyi.com/privacy-policy' },
   keywords: ['JAQYI privacy policy', 'data protection', 'personal data', 'privacy'],
 };

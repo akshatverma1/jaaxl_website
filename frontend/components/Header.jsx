@@ -10,7 +10,7 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 const navItems = [
   { name: 'Services', href: '/services', match: '/services' },
   { name: 'Products', href: '/products', match: '/products' },
-  { name: 'Work', href: '/portfolio', match: '/portfolio' },
+  { name: 'Work', href: '/portfolio', match: ['/portfolio', '/projects'] },
   { name: 'About', href: '/about', match: '/about' },
   { name: 'Blog', href: '/blog', match: '/blog' },
   { name: 'Careers', href: '/careers', match: '/careers' },
@@ -33,7 +33,8 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  const isActive = (item) => item.match && pathname?.startsWith(item.match);
+  const isActive = (item) =>
+    item.match && [].concat(item.match).some((m) => pathname?.startsWith(m));
 
   return (
     <motion.header

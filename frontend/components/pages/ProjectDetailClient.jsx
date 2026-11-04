@@ -1,7 +1,9 @@
 "use client";
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { company } from '@/data/site';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft, ExternalLink, Play, CheckCircle2,
@@ -31,25 +33,16 @@ export default function ProjectDetailClient({ project }) {
       <div className="pd-glow pd-glow-1" />
       <div className="pd-glow pd-glow-2" />
 
-      {/* ── Header ── */}
-      <header className="pd-header">
-        <div className="pd-header-inner">
-          <Link href="/" className="pd-logo">JAQYI</Link>
-          <nav className="pd-breadcrumb">
-            <Link href="/" className="pd-bread-link">Home</Link>
-            <ChevronRight size={14} className="pd-bread-sep" />
-            <Link href="/#portfolio" className="pd-bread-link">Portfolio</Link>
-            <ChevronRight size={14} className="pd-bread-sep" />
-            <span className="pd-bread-current">{project.name}</span>
-          </nav>
-          <Link href="/#portfolio" className="pd-back-btn">
-            <ArrowLeft size={16} />
-            Back to Portfolio
-          </Link>
-        </div>
-      </header>
+      <Header />
 
-      <main className="pd-main">
+      <main className="pd-main pd-main--site-nav">
+        <nav className="pd-breadcrumb page-breadcrumb" aria-label="Breadcrumb">
+          <Link href="/" className="pd-bread-link">Home</Link>
+          <ChevronRight size={14} className="pd-bread-sep" />
+          <Link href="/portfolio" className="pd-bread-link">Portfolio</Link>
+          <ChevronRight size={14} className="pd-bread-sep" />
+          <span className="pd-bread-current">{project.name}</span>
+        </nav>
 
         {/* ── Hero ── */}
         <section className="pd-hero">
@@ -130,6 +123,19 @@ export default function ProjectDetailClient({ project }) {
                     <span className="pd-play-label">Play Demo</span>
                   </div>
                 )}
+              </div>
+            ) : project.image?.startsWith('/') ? (
+              // Real screenshot of the project (stock photos are not shown here)
+              <div className="pd-shot">
+                <Image
+                  src={project.image}
+                  alt={`${project.name} screenshot`}
+                  width={1200}
+                  height={750}
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  className="pd-shot-img"
+                  priority
+                />
               </div>
             ) : (
               <div className="pd-no-media">
@@ -259,9 +265,7 @@ export default function ProjectDetailClient({ project }) {
 
       </main>
 
-      <footer className="pd-footer">
-        <p>© {new Date().getFullYear()} JAQYI · <a href={`mailto:${company.email}`}>{company.email}</a></p>
-      </footer>
+      <Footer />
     </div>
   );
 }
