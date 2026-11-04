@@ -7,13 +7,17 @@ import { getEvents, isPersistent } from '@/lib/analyticsStore';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  let events;
+  let all;
   try {
-    events = await getEvents();
+    all = await getEvents();
   } catch (err) {
     console.error('[analytics] read error:', err?.message);
     return Response.json({ error: 'Storage unavailable' }, { status: 503 });
   }
+
+  // Page views vs. conversion events (older records have no `type` → page views)
+  const events = all.filter((e) => e.type !== 'event');
+  const conversions = all.filter((e) => e.type === 'event');
 
   const now = Date.now();
   const DAY = 86_400_000;
@@ -79,6 +83,17 @@ export async function GET() {
       devices,
       topCountries,
       recent,
+      conversions: Object.entries(
+        conversions.reduce((acc, e) => {
+          const c = acc[e.name] || (acc[e.name] = { total: 0, week: 0 });
+          c.total += 1;
+          if (now - e.ts < WEEK) c.week += 1;
+          return acc;
+        }, {})
+      )
+        .map(([name, c]) => ({ name, ...c }))
+        .sort((a, b) => b.total - a.total),
+      recentConversions: conversions.slice(0, 10).map((e) => ({ ts: e.ts, name: e.name, path: e.path })),
       persistent: isPersistent,
       updatedAt: now,
     },

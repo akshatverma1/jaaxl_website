@@ -11,7 +11,8 @@ const navItems = [
   { name: 'Services', href: '/services', match: '/services' },
   { name: 'Products', href: '/products', match: '/products' },
   { name: 'Work', href: '/portfolio', match: '/portfolio' },
-  { name: 'About', href: '/#about' },
+  { name: 'About', href: '/about', match: '/about' },
+  { name: 'Blog', href: '/blog', match: '/blog' },
   { name: 'Careers', href: '/careers', match: '/careers' },
 ];
 

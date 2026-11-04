@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
+import { company } from '@/data/site';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft, ExternalLink, Play, CheckCircle2,
@@ -143,6 +144,43 @@ export default function ProjectDetailClient({ project }) {
           </motion.div>
         </section>
 
+        {/* ── Case study (rendered only when real data is provided in data/projects.js) ──
+            caseStudy: { client?, challenge, solution, results: [{ value, label }], quote?: { text, author, role } } */}
+        {project.caseStudy && (
+          <section className="pd-case">
+            {project.caseStudy.client && <p className="pd-case-client">Client: {project.caseStudy.client}</p>}
+            <div className="pd-case-grid">
+              <div className="pd-card">
+                <h2 className="pd-section-title">The challenge</h2>
+                <p className="pd-case-text">{project.caseStudy.challenge}</p>
+              </div>
+              <div className="pd-card">
+                <h2 className="pd-section-title">What we built</h2>
+                <p className="pd-case-text">{project.caseStudy.solution}</p>
+              </div>
+            </div>
+            {project.caseStudy.results?.length > 0 && (
+              <div className="pd-case-results">
+                {project.caseStudy.results.map((r) => (
+                  <div key={r.label} className="pd-case-result">
+                    <span className="pd-case-result-value">{r.value}</span>
+                    <span className="pd-case-result-label">{r.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {project.caseStudy.quote && (
+              <figure className="pd-case-quote">
+                <blockquote>“{project.caseStudy.quote.text}”</blockquote>
+                <figcaption>
+                  {project.caseStudy.quote.author}
+                  {project.caseStudy.quote.role ? `, ${project.caseStudy.quote.role}` : ''}
+                </figcaption>
+              </figure>
+            )}
+          </section>
+        )}
+
         {/* ── Details ── */}
         <section className="pd-details">
           {/* Features */}
@@ -211,7 +249,7 @@ export default function ProjectDetailClient({ project }) {
 
         {/* ── Back ── */}
         <div className="pd-footer-nav">
-          <Link href="/#portfolio" className="pd-btn pd-btn--ghost">
+          <Link href="/portfolio" className="pd-btn pd-btn--ghost">
             <ArrowLeft size={16} /> Back to Portfolio
           </Link>
           <Link href="/" className="pd-btn pd-btn--ghost">
@@ -222,7 +260,7 @@ export default function ProjectDetailClient({ project }) {
       </main>
 
       <footer className="pd-footer">
-        <p>© 2026 JAQYI Agency · <a href="mailto:info@jaqyi.com">info@jaqyi.com</a></p>
+        <p>© {new Date().getFullYear()} JAQYI · <a href={`mailto:${company.email}`}>{company.email}</a></p>
       </footer>
     </div>
   );

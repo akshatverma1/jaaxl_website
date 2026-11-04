@@ -3,7 +3,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { projects } from '@/data/projects';
+import { projects, projectHref } from '@/data/projects';
 import {
   ArrowUpRight, Play, ExternalLink, Video, Search,
   ArrowLeft, Github, Filter, X, ChevronDown,
@@ -61,12 +61,13 @@ const PortfolioCard = ({ project, priority = false }) => {
 
   return (
     <div className="pf-card-wrapper">
-      <Link
-        href={`/projects/${project.slug}`}
-        className="pf-card"
+      <div
+        className="pf-card proj-card-shell"
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
+        {/* Stretched link covers the card; Live/GitHub links sit above it (no nested <a>) */}
+        <Link href={projectHref(project)} className="proj-card-stretch" aria-label={`View ${project.name}`} />
         {/* ── Image / Video ── */}
         <div className="pf-card__media">
           {project.hasVideo ? (
@@ -88,6 +89,7 @@ const PortfolioCard = ({ project, priority = false }) => {
               height={338}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="pf-card__img"
+              style={project.imageFit ? { objectFit: project.imageFit, background: '#000' } : undefined}
               loading={priority ? 'eager' : 'lazy'}
               priority={priority}
             />
@@ -104,8 +106,7 @@ const PortfolioCard = ({ project, priority = false }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="pf-card__ext-link"
-                  onClick={(e) => e.stopPropagation()}
+                  className="pf-card__ext-link proj-card-above"
                 >
                   <ExternalLink size={12} /> Live
                 </a>
@@ -115,8 +116,7 @@ const PortfolioCard = ({ project, priority = false }) => {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="pf-card__ext-link"
-                  onClick={(e) => e.stopPropagation()}
+                  className="pf-card__ext-link proj-card-above"
                 >
                   <Github size={12} /> GitHub
                 </a>
@@ -136,7 +136,7 @@ const PortfolioCard = ({ project, priority = false }) => {
         {/* ── Info ── */}
         <div className="pf-card__info">
           <span className="pf-card__cat">{project.category}</span>
-          <h3 className="pf-card__name">{project.name}</h3>
+          <h2 className="pf-card__name">{project.name}</h2>
           <p className="pf-card__desc">{project.description}</p>
           <div className="pf-card__stack">
             {project.stack.slice(0, 4).map((t) => (
@@ -145,7 +145,7 @@ const PortfolioCard = ({ project, priority = false }) => {
           </div>
           <span className="pf-card__view">View Details <ArrowUpRight size={12} /></span>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

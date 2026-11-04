@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { getProject, getAllSlugs } from '@/data/projects';
 import ProjectDetailClient from '@/components/pages/ProjectDetailClient';
@@ -28,6 +28,8 @@ export async function generateMetadata({ params }) {
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
   const project = getProject(slug);
+  // Projects with their own page (e.g. Doott → /products/doott) shouldn't have a duplicate here
+  if (project?.href) permanentRedirect(project.href);
   if (!project) notFound();
 
   return <ProjectDetailClient project={project} />;

@@ -25,6 +25,7 @@ const services = [
     icon: Code,
     name: 'Web Development',
     href: '/services/web-development',
+    from: '₹25,000',
     desc: 'High-performance websites, web apps, SaaS platforms, ERP and CRM systems built with React, Next.js and Node.js.',
     items: ['Business websites', 'Web applications', 'SaaS & ERP platforms', 'E-commerce'],
   },
@@ -32,6 +33,7 @@ const services = [
     icon: Smartphone,
     name: 'App Development',
     href: '/services/app-development',
+    from: '₹1,00,000',
     desc: 'Native iOS and Android, Flutter and React Native apps — from MVP to App Store and Play Store launch.',
     items: ['iOS (Swift)', 'Android (Kotlin)', 'Flutter & React Native', 'PWAs'],
   },
@@ -39,6 +41,7 @@ const services = [
     icon: Brain,
     name: 'AI & Automation',
     href: '/services/ai-automation',
+    from: '₹50,000',
     desc: 'AI agents, chatbots, workflow automation, lead-scraping and data pipelines that save hours every week.',
     items: ['AI chatbots & agents', 'Workflow automation', 'Lead & data scraping', 'ML & analytics'],
   },
@@ -46,6 +49,7 @@ const services = [
     icon: Layers,
     name: 'SaaS Co-Build Studio',
     href: '/#services',
+    from: '₹5,00,000',
     desc: 'For non-technical founders: we own 100% of the tech — architecture, build, AI and deployment — so you can run the business.',
     items: ['Product strategy', 'Full-stack build', 'Billing & multi-tenancy', 'Post-launch retainer'],
   },
@@ -72,6 +76,15 @@ const schema = {
             description: s.desc,
             url: s.href.startsWith('/#') ? `${SITE_URL}/services` : `${SITE_URL}${s.href}`,
             provider: { '@id': `${SITE_URL}/#organization` },
+            offers: {
+              '@type': 'Offer',
+              priceCurrency: 'INR',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                minPrice: Number(s.from.replace(/[^0-9]/g, '')),
+                priceCurrency: 'INR',
+              },
+            },
             areaServed: ['India', 'United States', 'Worldwide'],
           },
         })),
@@ -122,7 +135,7 @@ export default function ServicesPage() {
         <div className="svc-page-container">
           <div className="section-header">
             <h2 className="section-title">What we build for you</h2>
-            <p className="section-subtitle">Pick a service to see how we work, what it costs and how long it takes.</p>
+            <p className="section-subtitle">Transparent starting prices. Every project gets a fixed, milestone-based quote after a free consultation.</p>
           </div>
           <div className="svc-hub-grid">
             {services.map((s) => (
@@ -133,7 +146,10 @@ export default function ServicesPage() {
                 <ul className="svc-hub-card__items">
                   {s.items.map((it) => <li key={it}>{it}</li>)}
                 </ul>
-                <span className="svc-hub-card__cta">Learn more <ArrowRight size={16} /></span>
+                <div className="svc-hub-card__foot">
+                  <span className="svc-hub-card__price">From <strong>{s.from}</strong></span>
+                  <span className="svc-hub-card__cta">Learn more <ArrowRight size={16} /></span>
+                </div>
               </Link>
             ))}
           </div>
@@ -189,6 +205,11 @@ export default function ServicesPage() {
               <Link href="/#contact" className="spotlight-btn spotlight-btn--primary">
                 Start your project <ArrowRight size={18} />
               </Link>
+              {company.bookingUrl && (
+                <a href={company.bookingUrl} className="spotlight-btn spotlight-btn--ghost" target="_blank" rel="noopener noreferrer">
+                  Book a call
+                </a>
+              )}
               <a href={`mailto:${company.email}`} className="svc-page-contact-link"><Mail size={16} />{company.email}</a>
               <a href={`tel:${company.phone.replace(/\s/g, '')}`} className="svc-page-contact-link"><Phone size={16} />{company.phone}</a>
             </div>

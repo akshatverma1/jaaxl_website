@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { projects as allProjects } from '@/data/projects';
+import { projects as allProjects, projectHref } from '@/data/projects';
 import { ArrowUpRight, Play, ExternalLink, Video } from 'lucide-react';
 import MobileSlider from '@/components/ui/MobileSlider';
 import GlimmeringMap from '@/components/GlimmeringMap';
@@ -29,12 +29,14 @@ const VideoProjectCard = ({ project }) => {
   };
 
   return (
-    <Link href={`/projects/${project.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+    <div className="proj-card-shell">
       <div
         className="project-card project-card--video"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
+        {/* Stretched link covers the card; inner links sit above it (no nested <a>) */}
+        <Link href={projectHref(project)} className="proj-card-stretch" aria-label={`View ${project.name}`} />
         {/* Video badge */}
         <div className="proj-video-badge">
           <Video size={11} />
@@ -65,8 +67,7 @@ const VideoProjectCard = ({ project }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="proj-overlay-link"
-                  onClick={(e) => e.stopPropagation()}
+                  className="proj-overlay-link proj-card-above"
                 >
                   <ExternalLink size={14} />
                   <span>Live Site</span>
@@ -76,8 +77,7 @@ const VideoProjectCard = ({ project }) => {
                 href={project.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="proj-overlay-link"
-                onClick={(e) => e.stopPropagation()}
+                className="proj-overlay-link proj-card-above"
               >
                 <Play size={14} />
                 <span>Watch Demo</span>
@@ -105,18 +105,19 @@ const VideoProjectCard = ({ project }) => {
           <span className="proj-view-details">View Details <ArrowUpRight size={13} /></span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
 /** ── Desktop Image Card ─────────────────────────────────────────────── */
 const ProjectCard = ({ project }) => {
   return (
-    <Link href={`/projects/${project.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+    <div className="proj-card-shell">
       <motion.div
         className="project-card"
         whileHover={{ y: -6, transition: { duration: 0.2 } }}
       >
+        <Link href={projectHref(project)} className="proj-card-stretch" aria-label={`View ${project.name}`} />
         <div className="project-image-wrapper">
           <Image
             src={project.image}
@@ -125,6 +126,7 @@ const ProjectCard = ({ project }) => {
             height={338}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="project-image"
+            style={project.imageFit ? { objectFit: project.imageFit, background: '#000' } : undefined}
             loading="lazy"
           />
           <div className="project-overlay">
@@ -142,8 +144,7 @@ const ProjectCard = ({ project }) => {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="proj-live-badge proj-live-badge--link"
-                onClick={(e) => e.stopPropagation()}
+                className="proj-live-badge proj-live-badge--link proj-card-above"
               >
                 <ExternalLink size={10} /> Live
               </a>
@@ -161,13 +162,13 @@ const ProjectCard = ({ project }) => {
           <span className="proj-view-details">View Details <ArrowUpRight size={13} /></span>
         </div>
       </motion.div>
-    </Link>
+    </div>
   );
 };
 
 /** ── Mobile Card ───────────────────────────────────────────────────── */
 const ProjectCardMobile = ({ project }) => (
-  <Link href={`/projects/${project.slug}`} className="proj-card-mobile" style={{ textDecoration: 'none' }}>
+  <Link href={projectHref(project)} className="proj-card-mobile" style={{ textDecoration: 'none' }}>
     <div className="proj-card-mobile__img-wrap">
       <Image
         src={project.image}
@@ -176,6 +177,7 @@ const ProjectCardMobile = ({ project }) => (
         height={260}
         sizes="85vw"
         className="proj-card-mobile__img"
+        style={project.imageFit ? { objectFit: project.imageFit, background: '#000' } : undefined}
         loading="lazy"
       />
       <div className="proj-card-mobile__overlay">

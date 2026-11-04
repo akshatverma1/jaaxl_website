@@ -22,7 +22,8 @@ const Hero = () => {
 
           {/* ── JAQYI heading ── */}
           {/* Visual wordmark — the descriptive tagline below is the page's h1 */}
-          <p className="hero-title" aria-label={TITLE}>
+          <p className="hero-title">
+            <span className="visually-hidden">{TITLE}</span>
             <span className="hero-title-inner" aria-hidden>
               {TITLE.split('').map((char, i) => (
                 <span key={i} className="hero-letter" style={{ display: 'inline-block' }}>

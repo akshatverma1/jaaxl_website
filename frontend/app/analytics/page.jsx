@@ -82,6 +82,40 @@ function TopPages({ pages }) {
   );
 }
 
+const CONVERSION_LABELS = {
+  contact_submit: 'Contact form sent',
+  chatbot_lead: 'Chatbot lead captured',
+  job_application: 'Job application sent',
+  whatsapp_click: 'WhatsApp clicks',
+  doott_click: 'Clicks to Doott',
+  phone_click: 'Phone clicks',
+  email_click: 'Email clicks',
+  booking_click: 'Book-a-call clicks',
+};
+
+function Conversions({ items = [] }) {
+  const max = items[0]?.total || 1;
+  return (
+    <div className="dash-card">
+      <h3 className="dash-card-title">Conversions</h3>
+      <div className="dash-top-pages">
+        {items.length === 0 && <p className="dash-empty">No conversions yet</p>}
+        {items.map((c) => (
+          <div key={c.name} className="dash-page-row">
+            <div className="dash-page-meta">
+              <span className="dash-page-path">{CONVERSION_LABELS[c.name] || c.name}</span>
+            </div>
+            <div className="dash-page-bar-wrap">
+              <div className="dash-page-bar" style={{ width: `${pct(c.total, max)}%` }} />
+            </div>
+            <span className="dash-page-views" title="Last 7 days / all time">{c.week} / {c.total}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function DeviceChart({ devices }) {
   const total = Object.values(devices).reduce((a, b) => a + b, 0);
   const icons = { Desktop: Monitor, Mobile: Smartphone, Tablet };
@@ -283,6 +317,25 @@ export default function AnalyticsDashboard() {
             <div className="dash-grid-2">
               <DeviceChart devices={data.devices} />
               <CountryList countries={data.topCountries} />
+            </div>
+
+            {/* Conversions */}
+            <div className="dash-grid-2">
+              <Conversions items={data.conversions} />
+              <div className="dash-card">
+                <h3 className="dash-card-title">Recent Conversions</h3>
+                <div className="dash-top-pages">
+                  {(data.recentConversions || []).length === 0 && <p className="dash-empty">No conversions yet</p>}
+                  {(data.recentConversions || []).map((c, i) => (
+                    <div key={i} className="dash-page-row">
+                      <div className="dash-page-meta">
+                        <span className="dash-page-path">{CONVERSION_LABELS[c.name] || c.name}</span>
+                      </div>
+                      <span className="dash-page-views">{c.path} · {timeAgo(c.ts)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Recent visits */}

@@ -119,7 +119,11 @@ const GlimmeringMap = ({
     if (!canvas) return;
 
     let running = true;
-    let isVisible = true;
+    let isVisible = false; // set by the IntersectionObserver
+    let booted = false;    // topology is fetched + decoded only when the map nears the viewport
+    let stillDrawn = false; // reduced-motion: the single frame has been painted
+    let startLoop = () => {};
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     let dots = [];
     let W = 0;
     let H = 0;
@@ -184,17 +188,23 @@ const GlimmeringMap = ({
 
     let currentTopology = null;
 
-    getTopology()
+    const boot = () => getTopology()
       .then((topology) => {
         if (!running) return;
         currentTopology = topology;
         initMap(topology);
 
-        /* ── Animation loop ── */
+        /* ── Animation loop ──
+           Pauses entirely while offscreen, and draws a single still frame
+           for visitors who prefer reduced motion. */
         let frame = 0;
 
         const animate = () => {
           if (!running) return;
+          if (!isVisible) {
+            animRef.current = null; // paused; the IntersectionObserver restarts it
+            return;
+          }
 
           if (isVisible) {
             frame++;
@@ -325,19 +335,36 @@ const GlimmeringMap = ({
             });
           }
 
+          if (reduceMotion && frame >= 1) {
+            stillDrawn = true;
+            animRef.current = null;
+            return;
+          }
           animRef.current = requestAnimationFrame(animate);
         };
 
+        startLoop = () => {
+          if (running && !animRef.current) animRef.current = requestAnimationFrame(animate);
+        };
         animate();
       })
       .catch((e) => console.warn("GlimmeringMap: could not load world data", e));
 
-    /* ── IntersectionObserver to stop loop when offscreen ── */
+    /* ── IntersectionObserver: lazy-boot near the viewport, pause when offscreen ── */
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
+        if (!isVisible) return;
+        if (!booted) {
+          booted = true;
+          // Defer decoding/drawing until the browser is idle so first paint isn't blocked
+          if ('requestIdleCallback' in window) window.requestIdleCallback(() => boot(), { timeout: 1500 });
+          else setTimeout(boot, 300);
+          return;
+        }
+        if (!(reduceMotion && stillDrawn)) startLoop();
       },
-      { threshold: 0.05 }
+      { threshold: 0.01, rootMargin: '300px 0px' }
     );
     observer.observe(canvas);
 
@@ -348,6 +375,8 @@ const GlimmeringMap = ({
         isMobile = window.innerWidth < 768;
         if (currentTopology) {
           initMap(currentTopology);
+          stillDrawn = false; // repaint the still frame at the new size
+          startLoop();
         }
       }, 200);
     };

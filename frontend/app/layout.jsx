@@ -1,6 +1,8 @@
 import './globals.css';
 import './app.css';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import WhatsAppButton from '@/components/WhatsAppButton';
+import MotionProvider from '@/components/MotionProvider';
 import { company, organizationSchema, jsonLd } from '@/data/site';
 import { products } from '@/data/products';
 
@@ -50,6 +52,10 @@ export const metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
+  // Set GOOGLE_SITE_VERIFICATION in Vercel to verify jaqyi.com in Google Search Console
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export default function RootLayout({ children }) {
@@ -58,7 +64,8 @@ export default function RootLayout({ children }) {
       <body className="App">
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema(products))} />
         <AnalyticsTracker />
-        {children}
+        <MotionProvider>{children}</MotionProvider>
+        <WhatsAppButton />
       </body>
     </html>
   );

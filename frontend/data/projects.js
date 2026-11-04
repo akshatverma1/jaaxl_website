@@ -2,6 +2,38 @@
 // Used by Portfolio grid (cards) and /projects/[slug] detail pages.
 
 export const projects = [
+  // ── Flagship: JAQYI's own product (links to its product page) ─────────
+  {
+    slug: 'doott',
+    href: '/products/doott',
+    name: 'Doott — B2B Contact Database',
+    category: 'JAQYI Product · Live SaaS',
+    badge: 'Our Product',
+    badgeType: 'active',
+    description:
+      'Our own product: a live B2B contact database and lead generation platform with 43.9M+ people records. Users search by job title, city, industry and company, filter to contacts with verified emails or phone numbers, and export unlimited CSVs — sold for a one-time ₹179 instead of a per-seat subscription.',
+    image: 'https://doott.jaqyi.com/doott-og.jpg',
+    imageFit: 'contain', // wide OG artwork — show it whole instead of cropping
+    hasVideo: false,
+    videoUrl: null,
+    liveUrl: 'https://doott.jaqyi.com',
+    stack: ['React', 'Node.js', 'PostgreSQL', 'Google Cloud SQL', 'Redis', 'Razorpay'],
+    tags: ['SaaS', 'B2B Data', 'Lead Generation', 'PostgreSQL', 'Redis', 'Payments'],
+    features: [
+      '43.9M+ people records with company intelligence, searchable in milliseconds',
+      'Email-only and phone-only views to keep just reachable contacts',
+      'Unlimited one-click CSV export of any filtered result',
+      'Category & city explorer across 4,000+ subcategories',
+      'Live Cloud SQL (PostgreSQL) with Redis caching',
+      'Razorpay checkout with instant lifetime activation',
+    ],
+    specs: [
+      { label: 'Live URL', value: 'doott.jaqyi.com', href: 'https://doott.jaqyi.com' },
+      { label: 'Type', value: 'B2B Data SaaS (JAQYI Products)' },
+      { label: 'Pricing', value: '₹179 one-time, lifetime' },
+      { label: 'Status', value: 'Live' },
+    ],
+  },
   // ── Video / Live Projects (shown first in grid) ──────────────────────
   {
     slug: 'suraksha',
@@ -10,8 +42,8 @@ export const projects = [
     badge: 'Live Site',
     badgeType: 'active',
     description:
-      'A web platform providing real-time safety insights to help users make informed decisions in unfamiliar locations. Built with a modern web stack, Suraksha enhances public safety through accessible, location-based intelligence — live at suraksha.site.',
-    image: 'https://images.unsplash.com/photo-1557597774-9d475d5a31c7?w=800&q=80',
+      'A web platform providing real-time safety insights to help users make informed decisions in unfamiliar locations. Built with a modern web stack, Suraksha enhances public safety through accessible, location-based intelligence.',
+    image: '/images/projects/suraksha.jpg',
     hasVideo: true,
     videoUrl: '/videos/projects/suraksha.mp4',
     liveUrl: 'https://safety-web-application.vercel.app',
@@ -37,10 +69,9 @@ export const projects = [
     badgeType: 'proposal',
     description:
       'An AI-powered HR SaaS agent designed with speed & simplicity in mind. Ahri streamlines core HR functions by automating resume shortlisting and answering common HR queries — acting as a virtual extension of any HR team. Built for SMBs that need enterprise-grade HR intelligence without the enterprise price tag.',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80',
+    image: '/images/projects/ahri.jpg',
     hasVideo: true,
     videoUrl: '/videos/projects/ahri.mp4',
-    liveUrl: 'https://hr-ai-lake.vercel.app',
     stack: ['AI Agent', 'SaaS', 'Resume Parsing', 'NLP'],
     tags: ['AI Agent', 'SaaS', 'HR Automation', 'Resume Parsing', 'NLP', 'Multi-tenant'],
     features: [
@@ -51,7 +82,6 @@ export const projects = [
       'AI-integrated workforce management module',
     ],
     specs: [
-      { label: 'Live URL', value: 'hr-ai-lake.vercel.app', href: 'https://hr-ai-lake.vercel.app' },
       { label: 'Core Functions', value: 'Resume Screening, HR Q&A' },
       { label: 'Target', value: 'HR Teams & SMBs' },
       { label: 'Architecture', value: 'Multi-tenant SaaS' },
@@ -66,7 +96,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'An AI-powered website that can analyze any image and answer any question you have about it. Leverages cutting-edge computer vision models to unlock deep visual understanding through natural language conversations — making AI-powered image analysis accessible to everyone.',
-    image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80',
+    image: '/images/projects/aitextify.jpg',
     hasVideo: true,
     videoUrl: '/videos/projects/aitextify.mp4',
     liveUrl: 'https://image-reader-f.vercel.app',
@@ -93,10 +123,11 @@ export const projects = [
     badgeType: 'active',
     description:
       'A serene blog platform dedicated to meditation and mindfulness content. Designed to guide readers toward calm, clarity, and inner peace through curated wellness articles. Features a clean, calming UI/UX crafted to reflect the essence of the content it hosts.',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80',
+    image: '/images/projects/meditative-wing.jpg',
     hasVideo: true,
     videoUrl: '/videos/projects/medatitive_wing.mp4',
     liveUrl: 'https://meditative-wings-fe.vercel.app',
+    githubUrl: 'https://github.com/akshatverma1/Meditative_Wings_FE',
     stack: ['Blog Platform', 'Modern Web', 'Responsive Design'],
     tags: ['Blog Platform', 'Wellness', 'Mindfulness', 'Content Site', 'Responsive Design'],
     features: [
@@ -122,7 +153,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'A production-ready ERP system built to help businesses digitize and automate their core operations. The system provides unified dashboards for managing inventory levels, human resources, customer relationships, and financial reporting — all from a single interface.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    image: '/images/projects/enterprise-erp.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://enterprise-resource-planning-omega.vercel.app',
@@ -146,37 +177,6 @@ export const projects = [
     ],
   },
   {
-    slug: 'cred-manage',
-    name: 'Cred-Manage — Secure Credential Management',
-    category: 'IT & Software · Security SaaS Tool',
-    badge: 'Security SaaS',
-    badgeType: 'active',
-    description:
-      'An enterprise-grade credential management platform built for development teams and agencies. All credentials are encrypted at rest using AES-256-GCM with JWT-based httpOnly cookie sessions. Role-based access control ensures granular permissions across admin, manager, and viewer tiers.',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://cred-manage-md3h.vercel.app',
-    githubUrl: 'https://github.com/Metlink-in/cred-manage',
-    stack: ['Python 3.12', 'FastAPI', 'MongoDB Atlas', 'JWT', 'AES-256-GCM'],
-    tags: ['Python 3.12', 'FastAPI', 'MongoDB Atlas', 'JWT', 'AES-256-GCM', 'HTML/CSS/JS', 'Serverless', 'Security'],
-    features: [
-      'AES-256-GCM encryption for all stored credentials',
-      'Role-based access: Admin, Manager, Viewer',
-      'Secure JWT sessions (15 min access / 7-day refresh)',
-      'Document and credential storage with audit trails',
-      'MongoDB Atlas async backend',
-      'Serverless Vercel deployment',
-    ],
-    specs: [
-      { label: 'Type', value: 'Security SaaS Tool' },
-      { label: 'Encryption', value: 'AES-256-GCM' },
-      { label: 'Live Demo', value: 'cred-manage-md3h.vercel.app', href: 'https://cred-manage-md3h.vercel.app' },
-      { label: 'GitHub', value: 'Metlink-in/cred-manage', href: 'https://github.com/Metlink-in/cred-manage' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-  {
     slug: 'gearup',
     name: 'GearUp — Job and Advertising Platform',
     category: 'IT & Software · Full-Stack Marketplace App',
@@ -184,7 +184,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'GearUp is a full-stack job marketplace and advertising platform where Job Givers post jobs, Job Seekers apply using phone-OTP login, and Advertising Companies can promote their services. Built on AWS infrastructure with Twilio for SMS-based authentication.',
-    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80',
+    image: '/images/projects/gearup.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://gearup-frontend-sable.vercel.app',
@@ -216,7 +216,6 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
-    liveUrl: 'https://crewzy-frontend-ten.vercel.app',
     githubUrl: 'https://github.com/akshatverma1/crewzy',
     stack: ['JavaScript', 'React', 'Mappls APIs', 'Node.js'],
     tags: ['JavaScript', 'React', 'Mappls APIs', 'Node.js', 'Geo-Attendance', 'HR SaaS', 'Workforce Management'],
@@ -230,7 +229,6 @@ export const projects = [
     specs: [
       { label: 'Type', value: 'HR SaaS Web App' },
       { label: 'Maps', value: 'Mappls APIs' },
-      { label: 'Live Demo', value: 'crewzy-frontend-ten.vercel.app', href: 'https://crewzy-frontend-ten.vercel.app' },
       { label: 'GitHub', value: 'akshatverma1/crewzy', href: 'https://github.com/akshatverma1/crewzy' },
       { label: 'Status', value: 'Production' },
     ],
@@ -337,7 +335,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'A specialized research pipeline that crawls medical and scientific databases for specific keywords, extracts author details using custom JS scrapers, and enriches contact profiles for targeted B2B outreach. Delivers compiled leads via a Telegram bot notification system.',
-    image: 'https://images.unsplash.com/photo-1532094349884-543559fee2c4?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
     liveUrl: null,
@@ -371,7 +369,6 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
-    liveUrl: 'https://keli-sensing-agent.vercel.app',
     githubUrl: 'https://github.com/Metlink-in/keli-sensing-agent',
     stack: ['JavaScript', 'Node.js', 'OpenAI GPT', 'Google Sheets', 'FastAPI'],
     tags: ['JavaScript', 'Node.js', 'OpenAI GPT', 'Google Sheets', 'FastAPI', 'Market Research', 'AI Outreach'],
@@ -385,7 +382,6 @@ export const projects = [
     specs: [
       { label: 'Type', value: 'AI Agent / Automation Pipeline' },
       { label: 'AI Model', value: 'OpenAI GPT' },
-      { label: 'Live Demo', value: 'keli-sensing-agent.vercel.app', href: 'https://keli-sensing-agent.vercel.app' },
       { label: 'GitHub', value: 'Metlink-in/keli-sensing-agent', href: 'https://github.com/Metlink-in/keli-sensing-agent' },
       { label: 'Status', value: 'Active' },
     ],
@@ -401,7 +397,6 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
-    liveUrl: 'https://experts-agent-fontend.vercel.app',
     githubUrl: 'https://github.com/Metlink-in/Experts_agent',
     stack: ['Python', 'FastAPI', 'OpenAI', 'Web Scraping', 'React'],
     tags: ['Python', 'FastAPI', 'OpenAI', 'Web Scraping', 'React', 'Data Pipeline', 'Pricing Intelligence'],
@@ -415,9 +410,7 @@ export const projects = [
     specs: [
       { label: 'Type', value: 'AI Agent / Data Pipeline' },
       { label: 'Backend', value: 'FastAPI + Python' },
-      { label: 'Live Demo', value: 'experts-agent-fontend.vercel.app', href: 'https://experts-agent-fontend.vercel.app' },
       { label: 'GitHub (BE)', value: 'Metlink-in/Experts_agent', href: 'https://github.com/Metlink-in/Experts_agent' },
-      { label: 'GitHub (FE)', value: 'Metlink-in/Experts_agent_Fontend', href: 'https://github.com/Metlink-in/Experts_agent_Fontend' },
       { label: 'Status', value: 'Active' },
     ],
   },
@@ -458,11 +451,10 @@ export const projects = [
     badgeType: 'active',
     description:
       'An intelligent autonomous sales bot built in TypeScript that handles inbound lead conversations, qualifies prospects using AI reasoning, and manages the early stages of the sales funnel without human intervention.',
-    image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80',
+    image: '/images/projects/autonomous-sales-bot.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://autonomous-sales-bot.vercel.app',
-    githubUrl: 'https://github.com/akshatverma1/autonomous-sales-bot',
     stack: ['TypeScript', 'Node.js', 'AI/LLM'],
     tags: ['TypeScript', 'Node.js', 'AI/LLM', 'Sales Automation', 'Lead Qualification', 'Autonomous Agent'],
     features: [
@@ -476,7 +468,6 @@ export const projects = [
       { label: 'Type', value: 'AI Sales Agent' },
       { label: 'Language', value: 'TypeScript' },
       { label: 'Live Demo', value: 'autonomous-sales-bot.vercel.app', href: 'https://autonomous-sales-bot.vercel.app' },
-      { label: 'GitHub', value: 'akshatverma1/autonomous-sales-bot', href: 'https://github.com/akshatverma1/autonomous-sales-bot' },
       { label: 'Status', value: 'Live' },
     ],
   },
@@ -491,8 +482,6 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
-    liveUrl: 'https://trinity-agent-dun.vercel.app',
-    githubUrl: 'https://github.com/Metlink-in/trinity-agent',
     stack: ['JavaScript', 'React', 'Vite', 'FastAPI'],
     tags: ['JavaScript', 'React', 'Vite', 'FastAPI', 'Multi-Agent', 'AI Orchestration', 'Pipeline'],
     features: [
@@ -505,43 +494,11 @@ export const projects = [
     specs: [
       { label: 'Type', value: 'AI Agent Orchestration' },
       { label: 'Frontend', value: 'React + Vite' },
-      { label: 'Live Demo', value: 'trinity-agent-dun.vercel.app', href: 'https://trinity-agent-dun.vercel.app' },
-      { label: 'GitHub', value: 'Metlink-in/trinity-agent', href: 'https://github.com/Metlink-in/trinity-agent' },
       { label: 'Status', value: 'Active' },
     ],
   },
 
   // ── Automation ───────────────────────────────────────────────────────
-  {
-    slug: 'florida-scraper',
-    name: 'Florida Contractor Scraper',
-    category: 'Lead Gen Platform',
-    badge: 'Active API',
-    badgeType: 'active',
-    description:
-      'A full-stack lead generation web application featuring Google Maps crawling, Florida DBPR license CSV validation, and Apollo.io email enrichment. Built with a FastAPI backend, React SPA frontend, and Apify for scalable scraping. Capable of streaming exports of 100K+ rows with memory-flat CSV generation.',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://contractor-scraper-api-xxx-uc.a.run.app',
-    stack: ['FastAPI', 'React', 'Apify', 'Apollo.io'],
-    tags: ['FastAPI (Python)', 'React SPA', 'Apify API', 'Apollo.io', 'Google Sheets DB', 'Google Maps', 'BBB Scraper', 'DBPR CSV'],
-    features: [
-      'Google Maps & BBB Apify scraping with rate-limit management',
-      'Matches against 266K DBPR Florida license bulk CSV for validation',
-      'Automated keyword-based tiering and lead quality scoring engine',
-      'Memory-flat streaming CSV export supporting 100K+ row downloads',
-      'Full cities, ZIP codes, and keywords CRUD management dashboard',
-      'Apollo.io email enrichment pipeline for verified decision-maker contacts',
-    ],
-    specs: [
-      { label: 'Production API', value: 'contractor-scraper-api-xxx-uc.a.run.app', href: 'https://contractor-scraper-api-xxx-uc.a.run.app' },
-      { label: 'Local Frontend', value: 'localhost:5173 (Vite + React)' },
-      { label: 'Local Backend', value: 'localhost:8000 (FastAPI / Uvicorn)' },
-      { label: 'License Source', value: 'DBPR 266K CSV' },
-      { label: 'Status', value: 'Active API in Production' },
-    ],
-  },
   {
     slug: 'whatsapp-outreach',
     name: 'WhatsApp Outreach — B2B Messaging Platform',
@@ -553,7 +510,6 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
-    liveUrl: 'https://whatspp-outreach.vercel.app',
     githubUrl: 'https://github.com/jaqyi-com/Whatspp-outreach',
     stack: ['JavaScript', 'Node.js', 'WhatsApp Business API'],
     tags: ['JavaScript', 'Node.js', 'WhatsApp Business API', 'B2B Outreach', 'Automation', 'Sales'],
@@ -566,7 +522,6 @@ export const projects = [
     specs: [
       { label: 'Type', value: 'Outreach Automation' },
       { label: 'Platform', value: 'WhatsApp Business API' },
-      { label: 'Live Demo', value: 'whatspp-outreach.vercel.app', href: 'https://whatspp-outreach.vercel.app' },
       { label: 'GitHub', value: 'jaqyi-com/Whatspp-outreach', href: 'https://github.com/jaqyi-com/Whatspp-outreach' },
       { label: 'Status', value: 'Production' },
     ],
@@ -583,7 +538,6 @@ export const projects = [
     hasVideo: false,
     videoUrl: null,
     liveUrl: null,
-    githubUrl: 'https://github.com/jaqyi-com/linkedIn-extension',
     stack: ['JavaScript', 'Chrome Extension MV3', 'Zoho CRM API'],
     tags: ['JavaScript', 'Chrome Extension MV3', 'Zoho CRM API', 'LinkedIn', 'Sales Automation', 'Lead Management'],
     features: [
@@ -596,68 +550,7 @@ export const projects = [
       { label: 'Type', value: 'Browser Extension / CRM Automation' },
       { label: 'Manifest', value: 'MV3 (Manifest V3)' },
       { label: 'CRM', value: 'Zoho CRM' },
-      { label: 'GitHub', value: 'jaqyi-com/linkedIn-extension', href: 'https://github.com/jaqyi-com/linkedIn-extension' },
       { label: 'Status', value: 'Available' },
-    ],
-  },
-  {
-    slug: 'lead-intel',
-    name: 'Lead Intel — AI Lead Generation Scraper',
-    category: 'Automation · Lead Generation',
-    badge: 'AI Automation',
-    badgeType: 'active',
-    description:
-      'A production-ready async FastAPI application that scrapes leads from Google Search, Maps, and Jobs, then enriches them with Gemini AI for detailed lead analysis, contact extraction, scoring, and priority ranking.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://leadscreper.vercel.app',
-    githubUrl: 'https://github.com/Metlink-in/Leadscreper-',
-    stack: ['Python', 'FastAPI', 'Gemini AI', 'SearchAPI', 'Jinja2'],
-    tags: ['Python', 'FastAPI', 'Gemini AI', 'SearchAPI', 'Jinja2', 'Vercel', 'Lead Scoring', 'B2B Leads'],
-    features: [
-      'Multi-source scraping: Google Search, Maps, Jobs',
-      'Gemini AI enrichment with lead scoring and quality assessment',
-      'Export: CSV, JSON, PDF',
-      'Professional dark dashboard',
-      'Async FastAPI for high-throughput scraping',
-    ],
-    specs: [
-      { label: 'Type', value: 'Lead Generation Automation' },
-      { label: 'AI', value: 'Google Gemini AI' },
-      { label: 'Live Demo', value: 'leadscreper.vercel.app', href: 'https://leadscreper.vercel.app' },
-      { label: 'GitHub', value: 'Metlink-in/Leadscreper-', href: 'https://github.com/Metlink-in/Leadscreper-' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-  {
-    slug: 'bulkreach-pro',
-    name: 'BulkReach Pro — Bulk Mail Automation',
-    category: 'Automation · Email Automation SaaS',
-    badge: 'Email SaaS',
-    badgeType: 'active',
-    description:
-      'BulkReach Pro is an AI-powered cold email platform built for agencies and sales teams. It sends personalized emails at scale using Google Gemini for AI copywriting, with a human-like drip engine that introduces natural delays to protect sender reputation.',
-    image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://bulkmail-cyan.vercel.app',
-    githubUrl: 'https://github.com/Metlink-in/Bulkmail',
-    stack: ['HTML', 'CSS', 'JavaScript', 'Gemini AI', 'IMAP/SMTP'],
-    tags: ['HTML', 'CSS', 'JavaScript', 'Gemini AI', 'IMAP/SMTP', 'Cold Email', 'Email Automation'],
-    features: [
-      'Bulk email with human-like sending delays',
-      'Gemini AI personalization per prospect',
-      'Contact import via CSV, paste, or Google Sheets sync',
-      'Reply tracking via IMAP auto-categorization',
-      'Multi-user with isolated SMTP per user',
-    ],
-    specs: [
-      { label: 'Type', value: 'Email Automation SaaS' },
-      { label: 'AI', value: 'Google Gemini AI' },
-      { label: 'Live Demo', value: 'bulkmail-cyan.vercel.app', href: 'https://bulkmail-cyan.vercel.app' },
-      { label: 'GitHub', value: 'Metlink-in/Bulkmail', href: 'https://github.com/Metlink-in/Bulkmail' },
-      { label: 'Status', value: 'Production' },
     ],
   },
   {
@@ -668,11 +561,10 @@ export const projects = [
     badgeType: 'active',
     description:
       'An automated scraper that discovers, collects, and aggregates research publications and academic articles from multiple online sources, making research intelligence accessible through a clean API and web interface.',
-    image: 'https://images.unsplash.com/photo-1532094349884-543559fee2c4?w=800&q=80',
+    image: '/images/projects/research-publications-scraper.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://research-publications-articles-scra.vercel.app',
-    githubUrl: 'https://github.com/jaqyi-com/Research-Publications-Articles-scrapper',
     stack: ['Python', 'FastAPI', 'Web Scraping'],
     tags: ['Python', 'FastAPI', 'Web Scraping', 'Research', 'Academic Publications', 'Data Aggregation'],
     features: [
@@ -685,41 +577,9 @@ export const projects = [
       { label: 'Type', value: 'Research Automation' },
       { label: 'Backend', value: 'FastAPI + Python' },
       { label: 'Live Demo', value: 'research-publications-articles-scra.vercel.app', href: 'https://research-publications-articles-scra.vercel.app' },
-      { label: 'GitHub', value: 'jaqyi-com/Research-Publications-Articles-scrapper', href: 'https://github.com/jaqyi-com/Research-Publications-Articles-scrapper' },
       { label: 'Status', value: 'Production' },
     ],
   },
-  {
-    slug: 'one-link-scraper',
-    name: 'One Link Scraper',
-    category: 'Automation · Data Scraping and API',
-    badge: 'Scheduled API',
-    badgeType: 'active',
-    description:
-      'A scheduled scraper that crawls Intro.co marketplace every 15 minutes via Vercel Cron Jobs, applies a 20% price uplift to expert rates, and serves the enriched data through a FastAPI endpoint.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://one-link-scraper.vercel.app',
-    githubUrl: 'https://github.com/Metlink-in/one_link_scraper',
-    stack: ['Python', 'FastAPI', 'Vercel Cron Jobs'],
-    tags: ['Python', 'FastAPI', 'Vercel Cron Jobs', 'Web Scraping', 'Pricing Intelligence', 'Marketplace Data'],
-    features: [
-      'Scheduled crawl every 15 minutes via Vercel Cron Jobs',
-      'Automated 20% price uplift on expert rates',
-      'Always-fresh data served through FastAPI endpoint',
-      'Lightweight serverless deployment on Vercel',
-    ],
-    specs: [
-      { label: 'Type', value: 'Data Scraping and API' },
-      { label: 'Schedule', value: 'Every 15 minutes (Vercel Cron)' },
-      { label: 'Live Demo', value: 'one-link-scraper.vercel.app', href: 'https://one-link-scraper.vercel.app' },
-      { label: 'GitHub', value: 'Metlink-in/one_link_scraper', href: 'https://github.com/Metlink-in/one_link_scraper' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-
-  // ── SaaS Products ────────────────────────────────────────────────────
   {
     slug: 'metlink',
     name: 'Metlink — B2B Agency Platform',
@@ -731,7 +591,6 @@ export const projects = [
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
     hasVideo: false,
     videoUrl: null,
-    liveUrl: 'https://metlink-smoky.vercel.app',
     githubUrl: 'https://github.com/Metlink-in/metlink',
     stack: ['TypeScript', 'Next.js', 'Node.js'],
     tags: ['TypeScript', 'Next.js', 'Node.js', 'B2B SaaS', 'Lead Generation', 'AI Agency', 'Automation'],
@@ -745,7 +604,6 @@ export const projects = [
     specs: [
       { label: 'Type', value: 'SaaS Platform' },
       { label: 'Stack', value: 'TypeScript + Next.js' },
-      { label: 'Live Demo', value: 'metlink-smoky.vercel.app', href: 'https://metlink-smoky.vercel.app' },
       { label: 'GitHub', value: 'Metlink-in/metlink', href: 'https://github.com/Metlink-in/metlink' },
       { label: 'Status', value: 'Production' },
     ],
@@ -758,7 +616,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'Deal Source is a SaaS platform purpose-built for private equity and venture capital professionals. It automates the discovery and tracking of investment opportunities, with AI-assisted deal analysis and pipeline management.',
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
+    image: '/images/projects/deal-source.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://deal-deploy-phi.vercel.app',
@@ -788,7 +646,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'Medzo is a digital health platform connecting patients with healthcare providers. Built as a modern web application, it streamlines medical consultations, appointment scheduling, and patient record management.',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
+    image: '/images/projects/medzo.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://medzo-rho.vercel.app',
@@ -817,7 +675,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'A clickable prototype for a full-featured omnichannel real estate AI-CRM and B2B Broker Portal. Features AI-scripted answers grounded in real property data, multi-channel communication management, lead routing, and a professional interface.',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
+    image: '/images/projects/real-estate-ai-crm.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://proprietary-omnichannel-real-estate.vercel.app',
@@ -840,66 +698,6 @@ export const projects = [
     ],
   },
   {
-    slug: 'email-sender',
-    name: 'Email Sender Platform',
-    category: 'SaaS Products · Email SaaS Utility',
-    badge: 'Email SaaS',
-    badgeType: 'active',
-    description:
-      'A lightweight email delivery service for sending automated or manual campaigns. Designed as a standalone utility for applications needing reliable outbound email capabilities.',
-    image: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://email-sender-pied-one.vercel.app',
-    githubUrl: 'https://github.com/akshatverma1/Email-Sender',
-    stack: ['JavaScript', 'Node.js'],
-    tags: ['JavaScript', 'Node.js', 'Email Automation', 'Campaign Management', 'SMTP', 'Outbound Email'],
-    features: [
-      'Automated email sending for campaigns and notifications',
-      'Manual and scheduled email delivery',
-      'Lightweight, standalone utility design',
-      'Reliable outbound email infrastructure',
-    ],
-    specs: [
-      { label: 'Type', value: 'Email SaaS Utility' },
-      { label: 'Runtime', value: 'Node.js' },
-      { label: 'Live Demo', value: 'email-sender-pied-one.vercel.app', href: 'https://email-sender-pied-one.vercel.app' },
-      { label: 'GitHub', value: 'akshatverma1/Email-Sender', href: 'https://github.com/akshatverma1/Email-Sender' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-
-  // ── Mobile Apps & Web Apps ───────────────────────────────────────────
-  {
-    slug: 'meditative-wings',
-    name: 'Meditative Wings — Mental Wellness App',
-    category: 'Mobile & Web Apps · Health and Wellness',
-    badge: 'Wellness App',
-    badgeType: 'active',
-    description:
-      'Meditative Wings is a mental wellness web application offering guided meditation sessions, mindfulness exercises, and mental health tracking. Built with a calming UI to help users establish consistent wellness routines.',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://meditative-wings-fe.vercel.app',
-    githubUrl: 'https://github.com/akshatverma1/Meditative_Wings_FE',
-    stack: ['JavaScript', 'React', 'Vite'],
-    tags: ['JavaScript', 'React', 'Vite', 'Mental Wellness', 'Meditation', 'Mindfulness', 'Health App'],
-    features: [
-      'Guided meditation sessions with structured programs',
-      'Mindfulness exercises for daily mental health routines',
-      'Mental health tracking and progress monitoring',
-      'Calming, accessible UI designed for wellness',
-    ],
-    specs: [
-      { label: 'Type', value: 'Health and Wellness Web App' },
-      { label: 'Framework', value: 'React + Vite' },
-      { label: 'Live Demo', value: 'meditative-wings-fe.vercel.app', href: 'https://meditative-wings-fe.vercel.app' },
-      { label: 'GitHub', value: 'akshatverma1/Meditative_Wings_FE', href: 'https://github.com/akshatverma1/Meditative_Wings_FE' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-  {
     slug: 'ashirwad-enterprises',
     name: 'Ashirwad Enterprises — Business Web App',
     category: 'Mobile & Web Apps · Business Web App',
@@ -907,7 +705,7 @@ export const projects = [
     badgeType: 'active',
     description:
       'A professional web presence and business management portal built for Ashirwad Enterprises, featuring service showcasing, inquiry management, and a polished corporate UI.',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
+    image: '/images/projects/ashirwad-enterprises.jpg',
     hasVideo: false,
     videoUrl: null,
     liveUrl: 'https://ashirwad-enterprises.vercel.app',
@@ -958,98 +756,6 @@ export const projects = [
     ],
   },
   {
-    slug: 'jaqyi-website',
-    name: 'JAQYI — Creative Software Studio Website',
-    category: 'Mobile & Web Apps · Agency / Studio Website',
-    badge: 'Agency Site',
-    badgeType: 'active',
-    description:
-      "The official website for JAQYI Creative Software Studio — showcasing the agency's services, portfolio, and case studies with a modern, creative design aesthetic.",
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://jaaxl-ku6o.vercel.app',
-    githubUrl: 'https://github.com/akshatverma1/jaaxl_website',
-    stack: ['JavaScript', 'React', 'Vite'],
-    tags: ['JavaScript', 'React', 'Vite', 'Agency Website', 'Portfolio', 'Creative Studio'],
-    features: [
-      'Agency services and capabilities showcase',
-      'Portfolio and case studies presentation',
-      'Modern creative design aesthetic',
-      'Fully responsive across all devices',
-    ],
-    specs: [
-      { label: 'Type', value: 'Agency / Studio Website' },
-      { label: 'Framework', value: 'React + Vite' },
-      { label: 'Live Demo', value: 'jaaxl-ku6o.vercel.app', href: 'https://jaaxl-ku6o.vercel.app' },
-      { label: 'GitHub', value: 'akshatverma1/jaaxl_website', href: 'https://github.com/akshatverma1/jaaxl_website' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-  {
-    slug: 'onkaam',
-    name: 'Onkaam — Job Platform',
-    category: 'Mobile & Web Apps · Job Board Web App',
-    badge: 'Job Board',
-    badgeType: 'active',
-    description:
-      'Onkaam is a job platform connecting employers and job seekers, with a full-stack architecture featuring both a traditional web frontend and a modern React SPA with a dedicated Node.js backend.',
-    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://web-onkaam-nine.vercel.app',
-    githubUrl: 'https://github.com/akshatverma1/webOnkaam',
-    stack: ['JavaScript', 'React', 'Node.js'],
-    tags: ['JavaScript', 'React', 'Node.js', 'Job Board', 'Full-Stack', 'Employment Platform'],
-    features: [
-      'Employer job posting and management',
-      'Job seeker profile and application system',
-      'Full-stack architecture with React SPA frontend',
-      'Dedicated Node.js backend API',
-    ],
-    specs: [
-      { label: 'Type', value: 'Job Board Web App' },
-      { label: 'Frontend', value: 'React SPA' },
-      { label: 'Live Demo', value: 'web-onkaam-nine.vercel.app', href: 'https://web-onkaam-nine.vercel.app' },
-      { label: 'GitHub (Web)', value: 'akshatverma1/webOnkaam', href: 'https://github.com/akshatverma1/webOnkaam' },
-      { label: 'GitHub (React)', value: 'akshatverma1/reactOnkaam', href: 'https://github.com/akshatverma1/reactOnkaam' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-
-  // ── Cloud ────────────────────────────────────────────────────────────
-  {
-    slug: 'keli-sensing',
-    name: 'Keli Sensing Sales Agent',
-    category: 'Keli Sensing · B2B Sales Platform',
-    badge: 'Active System',
-    badgeType: 'active',
-    description:
-      'An autonomous B2B lead scraping and outreach platform built for the robotics sensor industry. Uses GPT-4o to draft highly personalized cold emails and automatically classify inbound replies. Features a 5-dimension lead scoring engine and an intuitive React dashboard for campaign management.',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: null,
-    stack: ['Node.js', 'React', 'GPT-4o', 'Apollo.io'],
-    tags: ['Node.js / Express', 'React + Vite', 'OpenAI GPT-4o', 'Apollo.io', 'MX DNS Validation', 'TechCrunch Scraper', 'Robot Report'],
-    features: [
-      'News scraper targeting TechCrunch Robotics, Robot Report, and industry blogs',
-      'Decision-maker search with email guess fallback algorithm',
-      'Custom GPT-4o cold outreach email writer with context injection',
-      '5-dimension lead scoring engine (0-100) for lead prioritization',
-      'Inbound reply classification and automated draft response generation',
-      'MX DNS email validation for deliverability assurance',
-    ],
-    specs: [
-      { label: 'Backend', value: 'localhost:3001 (Express)' },
-      { label: 'Frontend', value: 'localhost:5173 (React + Vite)' },
-      { label: 'CRM Engine', value: 'Google Sheets (5 live synchronized tabs)' },
-      { label: 'AI Model', value: 'OpenAI GPT-4o (full model)' },
-      { label: 'Client', value: 'Keli Sensing' },
-      { label: 'Status', value: 'Active System' },
-    ],
-  },
-  {
     slug: 'cloud-contractor-scraper',
     name: 'Contractor Scraper — Google Cloud Run Pipeline',
     category: 'Cloud · Cloud Data Pipeline',
@@ -1079,159 +785,6 @@ export const projects = [
       { label: 'Status', value: 'Production' },
     ],
   },
-  {
-    slug: 'leader-backend',
-    name: 'Leader Backend — Cloud AI Agent Backend',
-    category: 'Cloud · Cloud Backend / AI Infrastructure',
-    badge: 'Cloud Backend',
-    badgeType: 'active',
-    description:
-      'The cloud-deployed backend powering the Keli Sensing multi-agent AI system. Manages agent orchestration, task queuing, and inter-agent communication for the robotics market intelligence pipeline.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://leader-backend.vercel.app',
-    githubUrl: 'https://github.com/jaqyi-com/Leader-Backend',
-    stack: ['JavaScript', 'Node.js', 'OpenAI', 'Cloud Deployment'],
-    tags: ['JavaScript', 'Node.js', 'OpenAI', 'Cloud Deployment', 'AI Orchestration', 'Multi-Agent', 'Backend'],
-    features: [
-      'Cloud-deployed agent orchestration for the Keli Sensing system',
-      'Task queuing and inter-agent communication management',
-      'Robotics market intelligence pipeline coordination',
-      'Scalable Node.js cloud backend',
-    ],
-    specs: [
-      { label: 'Type', value: 'Cloud Backend / AI Infrastructure' },
-      { label: 'Runtime', value: 'Node.js' },
-      { label: 'Live Demo', value: 'leader-backend.vercel.app', href: 'https://leader-backend.vercel.app' },
-      { label: 'GitHub', value: 'jaqyi-com/Leader-Backend', href: 'https://github.com/jaqyi-com/Leader-Backend' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-  {
-    slug: 'cred-manage-cloud',
-    name: 'Cred-Manage — Serverless Cloud Platform',
-    category: 'Cloud · Cloud-Native SaaS',
-    badge: 'Serverless',
-    badgeType: 'active',
-    description:
-      'Demonstrates a fully serverless Python FastAPI application deployed on Vercel with MongoDB Atlas as the cloud database. Features async I/O throughout, efficient cold-start handling, and production-grade security without managing any servers.',
-    image: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://cred-manage-md3h.vercel.app',
-    githubUrl: 'https://github.com/Metlink-in/cred-manage',
-    stack: ['Python FastAPI', 'MongoDB Atlas', 'Vercel Serverless', 'Motor async driver'],
-    tags: ['Python FastAPI', 'MongoDB Atlas', 'Vercel Serverless', 'Motor async driver', 'Cloud-Native', 'Async I/O', 'Zero-Server'],
-    features: [
-      'Fully serverless deployment on Vercel',
-      'MongoDB Atlas as cloud database',
-      'Async I/O with Motor driver throughout',
-      'Efficient cold-start handling for production performance',
-      'Production-grade security without server management',
-    ],
-    specs: [
-      { label: 'Type', value: 'Cloud-Native SaaS' },
-      { label: 'Compute', value: 'Vercel Serverless Functions' },
-      { label: 'Database', value: 'MongoDB Atlas' },
-      { label: 'Live Demo', value: 'cred-manage-md3h.vercel.app', href: 'https://cred-manage-md3h.vercel.app' },
-      { label: 'GitHub', value: 'Metlink-in/cred-manage', href: 'https://github.com/Metlink-in/cred-manage' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-
-  // ── FinTech ──────────────────────────────────────────────────────────
-  {
-    slug: 'eth-builder',
-    name: 'ETH Builder — Ethereum Development Platform',
-    category: 'FinTech · Web3 / Blockchain Dev Tool',
-    badge: 'Web3',
-    badgeType: 'active',
-    description:
-      'ETH Builder is a Next.js-based development platform for building, deploying, and interacting with Ethereum smart contracts. Built in TypeScript with full type safety for Web3 development workflows.',
-    image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: 'https://eth-builder-app.vercel.app',
-    githubUrl: 'https://github.com/akshatverma1/ETH-Builder',
-    stack: ['TypeScript', 'Next.js', 'Ethereum', 'Web3'],
-    tags: ['TypeScript', 'Next.js', 'Ethereum', 'Web3', 'Smart Contracts', 'Blockchain', 'DApp'],
-    features: [
-      'Ethereum smart contract development toolkit',
-      'Web3 wallet integration',
-      'TypeScript for type-safe blockchain interactions',
-      'Next.js for fast, server-rendered Web3 UIs',
-    ],
-    specs: [
-      { label: 'Type', value: 'Web3 / Blockchain Dev Tool' },
-      { label: 'Blockchain', value: 'Ethereum' },
-      { label: 'Live Demo', value: 'eth-builder-app.vercel.app', href: 'https://eth-builder-app.vercel.app' },
-      { label: 'GitHub', value: 'akshatverma1/ETH-Builder', href: 'https://github.com/akshatverma1/ETH-Builder' },
-      { label: 'Status', value: 'Production' },
-    ],
-  },
-
-  // ── Platforms / Proposals ────────────────────────────────────────────
-  {
-    slug: 'tennessee-upgrade',
-    name: 'Tennessee Scraper Upgrade',
-    category: 'Platform Expansion · Architecture',
-    badge: 'Implementation Spec',
-    badgeType: 'proposal',
-    description:
-      'A detailed developer roadmap and specification to expand the contractor scraper platform into Tennessee, including custom vendor scraping mode, geocoding configurations, lumber exclusion filters, and strict multi-tenant client isolation layers.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: null,
-    stack: ['FastAPI', 'YAML Config', 'Google Geocoding'],
-    tags: ['FastAPI', 'Google Geocoding API', 'YAML Config', 'Row-Level Security', 'TDCI API', 'Nashville Open Data'],
-    features: [
-      'Geography configuration supporting Tennessee and Florida simultaneously',
-      'Hard territory exclusion system filtering the Memphis metro area',
-      'Drywall material vendor scraper mode with radius configuration',
-      '3-layer lumber-exclusion filter with clean audit log for compliance',
-      'Strict multi-tenant client isolation layer with row-level security',
-      'Nashville open data + TDCI API for Tennessee license validation',
-    ],
-    specs: [
-      { label: 'Vendor Radius', value: 'Default 20 miles' },
-      { label: 'Contractor Radius', value: 'Default 50 miles' },
-      { label: 'TN License Sources', value: 'Nashville Open Data, TDCI API' },
-      { label: 'Multi-tenancy', value: 'Tag-based client isolation + RLS' },
-      { label: 'Status', value: 'Spec / Implementation Ready' },
-    ],
-  },
-  {
-    slug: 'spa-app',
-    name: 'Spa Booking App Proposal',
-    category: 'Mobile App · iOS & Android',
-    badge: 'Project Proposal',
-    badgeType: 'proposal',
-    description:
-      'A full-featured mobile booking application proposal for iOS & Android, backed by an Express REST API and a Web Admin Panel. The proposal outlines a 7-phase delivery plan, complete tech stack, cost breakdown, and hosting requirements for an end-to-end spa management solution.',
-    image: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80',
-    hasVideo: false,
-    videoUrl: null,
-    liveUrl: null,
-    stack: ['React Native', 'Express', 'PostgreSQL', 'Razorpay'],
-    tags: ['React Native 0.74', 'Express', 'PostgreSQL', 'Prisma ORM', 'Ant Design', 'Firebase FCM', 'Cloudinary', 'Razorpay', 'MSG91'],
-    features: [
-      'iOS & Android mobile client with shared React Native codebase',
-      'Secure Web Admin Panel for booking and service management',
-      'Razorpay payment gateway integration for Indian market',
-      'Cloud media storage via Cloudinary & Firebase FCM push notifications',
-      'OTP authentication via MSG91 for secure user registration',
-      '7-phase delivery timeline with full developer handover documentation',
-    ],
-    specs: [
-      { label: 'Estimated Cost', value: 'INR 49,700' },
-      { label: 'Timeline', value: '< 16 Weeks (7 Phases)' },
-      { label: 'Hosting', value: 'DigitalOcean Droplet (~INR 850/mo)' },
-      { label: 'Platforms', value: 'iOS + Android + Web Admin' },
-      { label: 'Status', value: 'Project Proposal' },
-    ],
-  },
 ];
 
 /** Get a single project by slug */
@@ -1241,5 +794,11 @@ export function getProject(slug) {
 
 /** Get all slugs (for generateStaticParams) */
 export function getAllSlugs() {
-  return projects.map((p) => ({ slug: p.slug }));
+  // Projects with their own `href` (e.g. Doott → /products/doott) don't get a /projects/ page
+  return projects.filter((p) => !p.href).map((p) => ({ slug: p.slug }));
+}
+
+/** URL a project card should link to. */
+export function projectHref(p) {
+  return p.href || `/projects/${p.slug}`;
 }

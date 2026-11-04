@@ -1,5 +1,7 @@
 import { projects } from '@/data/projects';
 import { products } from '@/data/products';
+import { comparisons } from '@/data/comparisons';
+import { posts } from '@/data/posts';
 
 const BASE = 'https://jaqyi.com';
 
@@ -34,7 +36,21 @@ export default function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.9,
     })),
-    ...projects.map((p) => ({
+    ...comparisons.map((c) => ({
+      url: `${BASE}/products/doott/vs/${c.slug}`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })),
+    { url: `${BASE}/about`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/blog`, lastModified, changeFrequency: 'weekly', priority: 0.7 },
+    ...posts.map((post) => ({
+      url: `${BASE}/blog/${post.slug}`,
+      lastModified: new Date(post.updated || post.date),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })),
+    ...projects.filter((p) => !p.href).map((p) => ({
       url: `${BASE}/projects/${p.slug}`,
       lastModified,
       changeFrequency: 'monthly',

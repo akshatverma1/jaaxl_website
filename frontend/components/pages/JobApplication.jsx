@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronLeft, Send, CheckCircle, AlertCircle, Loader2, UploadCloud, X } from 'lucide-react';
 
 import { API_BASE_URL } from '@/lib/config';
+import { track } from '@/lib/track';
 
 // ─── Data ─────────────────────────────────────────────────────────────────
 const sections = [
@@ -170,6 +171,7 @@ const JobApplication = () => {
 
       if (res.ok && data.success) {
         setStatus('success');
+        track('job_application');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setStatus('error');

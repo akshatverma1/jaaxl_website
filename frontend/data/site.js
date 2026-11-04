@@ -10,6 +10,10 @@ export const company = {
     'JAQYI is a software company from Indore, India with two arms: JAQYI Studio builds custom websites, mobile apps, SaaS and AI automation for clients, and JAQYI Products builds our own software — starting with Doott, a B2B contact database.',
   email: 'akshat@jaqyi.com',
   phone: '+91 9109621850',
+  whatsapp: '919109621850', // international format, digits only (wa.me)
+  whatsappMessage: "Hi JAQYI! I'd like to discuss a project.",
+  // Optional: set NEXT_PUBLIC_BOOKING_URL (Cal.com / Calendly) to show "Book a call" buttons
+  bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || '',
   founder: 'Akshat Verma',
   address: {
     streetAddress: 'Industrial Estate, Sector-C',
@@ -23,6 +27,9 @@ export const company = {
     x: 'https://x.com/jaqyi_com',
   },
 };
+
+export const whatsappUrl = (message = company.whatsappMessage) =>
+  `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(message)}`;
 
 /** The two business segments, used on the home page, nav and hubs. */
 export const segments = {

@@ -14,6 +14,7 @@ const iconMap = {
 };
 
 import { API_BASE_URL } from '@/lib/config';
+import { track } from '@/lib/track';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -52,6 +53,7 @@ const Contact = () => {
 
       if (response.ok && data.success) {
         setStatus('success');
+        track('contact_submit');
         setStatusMessage(data.message || 'Your message has been sent successfully!');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {

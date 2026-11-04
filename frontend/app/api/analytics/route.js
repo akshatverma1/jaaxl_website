@@ -16,6 +16,18 @@ function parseUA(ua = '') {
 
 const BOT_RE = /bot|crawler|spider|crawling|headless|lighthouse|preview/i;
 
+// Conversion events the site may send (anything else is rejected)
+const EVENT_NAMES = new Set([
+  'whatsapp_click',
+  'doott_click',
+  'phone_click',
+  'email_click',
+  'booking_click',
+  'contact_submit',
+  'chatbot_lead',
+  'job_application',
+]);
+
 /** Pseudonymous visitor id — raw IPs are never stored. */
 function visitorId(ip, ua) {
   const salt = process.env.ANALYTICS_SALT || 'jaqyi-analytics';
@@ -45,8 +57,15 @@ export async function POST(request) {
       }
     };
 
+    const isEvent = body?.type === 'event';
+    if (isEvent && !EVENT_NAMES.has(body?.name)) {
+      return Response.json({ ok: false }, { status: 400 });
+    }
+
     await addEvent({
       ts: Date.now(),
+      type: isEvent ? 'event' : 'pageview',
+      ...(isEvent ? { name: body.name } : {}),
       path,
       ref: typeof body?.referrer === 'string' ? body.referrer.slice(0, 500) : '',
       device: parseUA(ua),

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, User, CheckCircle, Loader2, Sparkles } from "lucide-react";
 
 import { API_BASE_URL } from "@/lib/config";
+import { track } from "@/lib/track";
 
 /* ─── Typing indicator ─── */
 const TypingDots = () => (
@@ -247,6 +248,8 @@ const ChatbotForm = () => {
       return;
     }
 
+    track("chatbot_lead");
+
     // Tell the AI that contact was submitted
     const thankYou =
       "🎉 Thank you! I've sent your details to our team. Someone from JAQYI will reach out within 24 hours with a tailored proposal. Looking forward to working with you!";
@@ -370,6 +373,7 @@ const ChatbotForm = () => {
               <button
                 type="submit"
                 className="cb-send-btn"
+                aria-label="Send message"
                 disabled={!inputValue.trim() || isStreaming}
               >
                 {isStreaming ? (

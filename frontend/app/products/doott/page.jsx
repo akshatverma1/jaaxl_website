@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getProduct } from '@/data/products';
 import { SITE_URL, jsonLd } from '@/data/site';
+import { comparisons } from '@/data/comparisons';
 
 const p = getProduct('doott');
 const PAGE_URL = `${SITE_URL}/products/doott`;
@@ -256,6 +257,25 @@ export default function DoottPage() {
               Get lifetime access <ArrowUpRight size={18} />
             </a>
             <p className="pricing-card__note">{p.pricing.note}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparisons */}
+      <section className="svc-page-section svc-page-section--alt">
+        <div className="svc-page-container">
+          <div className="section-header">
+            <h2 className="section-title">How Doott compares</h2>
+            <p className="section-subtitle">Honest, side-by-side comparisons with the tools you already know.</p>
+          </div>
+          <div className="svc-hub-grid">
+            {comparisons.map((c) => (
+              <Link key={c.slug} href={`/products/doott/vs/${c.slug}`} className="svc-hub-card">
+                <h3 className="service-name">{c.title}</h3>
+                <p className="service-description">{c.intro}</p>
+                <span className="svc-hub-card__cta">Read the comparison <ArrowRight size={16} /></span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

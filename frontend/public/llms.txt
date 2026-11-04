@@ -17,8 +17,17 @@ Founder: Akshat Verma. Contact: akshat@jaqyi.com, +91 9109621850. 7+ years of so
 - [All products](https://jaqyi.com/products): JAQYI's own software products
 - [Doott](https://jaqyi.com/products/doott): B2B contact database and lead generation platform — search 43.9M+ people by job title, city and company, filter to verified emails/phones, unlimited CSV export, ₹179 one-time lifetime access. App: https://doott.jaqyi.com
 
+## Comparisons & guides
+
+- [Doott vs Apollo.io](https://jaqyi.com/products/doott/vs/apollo)
+- [Doott vs ZoomInfo](https://jaqyi.com/products/doott/vs/zoominfo)
+- [Website development cost in India](https://jaqyi.com/blog/website-development-cost-india)
+- [Mobile app development cost in India](https://jaqyi.com/blog/mobile-app-development-cost-india)
+- [How to build a B2B lead list in India](https://jaqyi.com/blog/how-to-build-b2b-lead-list-india)
+
 ## Company
 
-- [About & FAQ](https://jaqyi.com/#about)
+- [About](https://jaqyi.com/about)
+- [FAQ](https://jaqyi.com/#faq)
 - [Careers](https://jaqyi.com/careers)
 - [Contact](https://jaqyi.com/#contact)
